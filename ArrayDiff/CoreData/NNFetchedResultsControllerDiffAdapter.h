@@ -19,6 +19,13 @@
 
 @property (nonatomic, weak) id<NNFetchedResultsControllerDiffAdapterDelegate> delegate;
 
+
+// Implemented NSFetchedResultsControllerDelegate methods:
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller;
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type;
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath;
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller;
+
 @end
 
 

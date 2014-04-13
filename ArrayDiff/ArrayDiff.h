@@ -11,7 +11,7 @@
 #import "NSArray+NNSectionsDiffDataSource.h"
 #import "NNArraySections.h"
 
-#import "NNFetchedResultsControllerDiffAdapter"
+#import "NNFetchedResultsControllerDiffAdapter.h"
 
 #import "UITableView+NNSectionsDiff.h"
 #import "UICollectionView+NNSectionsDiff.h"
