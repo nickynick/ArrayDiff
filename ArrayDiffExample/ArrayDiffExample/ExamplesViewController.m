@@ -7,6 +7,7 @@
 //
 
 #import "ExamplesViewController.h"
+#import "StringsViewController.h"
 #import "PeopleTableViewController.h"
 #import "PeopleCollectionViewController.h"
 
@@ -37,6 +38,7 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellReuseIdentifier];
     
     self.exampleTitles = @[
+        @"UITableView + array (huge!)",
         @"UITableView + manual sections",
         @"UITableView + FRC",
         @"UICollectionView + manual sections",
@@ -49,7 +51,6 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.exampleTitles count];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellReuseIdentifier forIndexPath:indexPath];
@@ -64,15 +65,18 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
     
     switch (indexPath.row) {
         case 0:
-            vc = [[PeopleTableViewController alloc] initWithFRC:NO];
+            vc = [[StringsViewController alloc] initWithStyle:UITableViewStylePlain];
             break;
         case 1:
-            vc = [[PeopleTableViewController alloc] initWithFRC:YES];
+            vc = [[PeopleTableViewController alloc] initWithFRC:NO];
             break;
         case 2:
-            vc = [[PeopleCollectionViewController alloc] initWithFRC:NO];
+            vc = [[PeopleTableViewController alloc] initWithFRC:YES];
             break;
         case 3:
+            vc = [[PeopleCollectionViewController alloc] initWithFRC:NO];
+            break;
+        case 4:
             vc = [[PeopleCollectionViewController alloc] initWithFRC:YES];
             break;
         default:

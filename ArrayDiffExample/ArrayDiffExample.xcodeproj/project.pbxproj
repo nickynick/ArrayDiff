@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A718306818FB5F2300245806 /* StringsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A718306718FB5F2300245806 /* StringsViewController.m */; };
 		A792C76718F9ECD20095EA22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C76618F9ECD20095EA22 /* Foundation.framework */; };
 		A792C76918F9ECD20095EA22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C76818F9ECD20095EA22 /* CoreGraphics.framework */; };
 		A792C76B18F9ECD20095EA22 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C76A18F9ECD20095EA22 /* UIKit.framework */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A718306618FB5F2300245806 /* StringsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringsViewController.h; sourceTree = "<group>"; };
+		A718306718FB5F2300245806 /* StringsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringsViewController.m; sourceTree = "<group>"; };
 		A792C76318F9ECD20095EA22 /* ArrayDiffExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArrayDiffExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A792C76618F9ECD20095EA22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A792C76818F9ECD20095EA22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -146,6 +149,8 @@
 				A7FFB43B18FA8BAD00510BF2 /* Person.m */,
 				A7FFB44B18FADC9F00510BF2 /* ExamplesViewController.h */,
 				A7FFB44C18FADC9F00510BF2 /* ExamplesViewController.m */,
+				A718306618FB5F2300245806 /* StringsViewController.h */,
+				A718306718FB5F2300245806 /* StringsViewController.m */,
 				A7FFB44E18FB0D2600510BF2 /* PeopleViewController.h */,
 				A7FFB44F18FB0D2600510BF2 /* PeopleViewController.m */,
 				A7FFB44818FAB8A500510BF2 /* PeopleTableViewController.h */,
@@ -292,6 +297,7 @@
 				A7FFB44D18FADC9F00510BF2 /* ExamplesViewController.m in Sources */,
 				A7FFB45018FB0D2600510BF2 /* PeopleViewController.m in Sources */,
 				A7FFB44A18FAB8A500510BF2 /* PeopleTableViewController.m in Sources */,
+				A718306818FB5F2300245806 /* StringsViewController.m in Sources */,
 				A792C77C18F9ECD30095EA22 /* ArrayDiffExample.xcdatamodeld in Sources */,
 				A7FFB43C18FA8BAD00510BF2 /* Person.m in Sources */,
 				A792C77518F9ECD30095EA22 /* main.m in Sources */,
