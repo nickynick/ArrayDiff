@@ -41,16 +41,14 @@
 
 - (id)initWithDeleted:(NSIndexSet *)deleted
              inserted:(NSIndexSet *)inserted
-                moved:(NSSet *)moved
-              updated:(NSIndexSet *)updated
+              changed:(NSArray *)changed
 {
     self = [super init];
     if (!self) return nil;
     
     _deleted = [deleted copy] ?: [NSIndexSet indexSet];
     _inserted = [inserted copy] ?: [NSIndexSet indexSet];
-    _moved = [moved copy] ?: [NSSet set];
-    _updated = [updated copy] ?: [NSIndexSet indexSet];
+    _changed = [changed copy] ?: @[];
     
     return self;
 }
@@ -64,43 +62,31 @@
 {
     // TODO: docs!
     
-    NSMutableIndexSet *updated = [NSMutableIndexSet indexSet];
     NSMutableIndexSet *deleted = [NSMutableIndexSet indexSet];
     NSMutableIndexSet *inserted = [NSMutableIndexSet indexSet];
-    NSMutableSet *moved = [NSMutableSet set];
+    NSMutableArray *changed = [NSMutableArray array];
 
     
-    NSArray *before = [self arrayIds:objectsBefore withBlock:idBlock];
-    NSArray *after = [self arrayIds:objectsAfter withBlock:idBlock];
-    
-    NSMapTable *beforeOrderTable = [NSMapTable strongToStrongObjectsMapTable];
-    [before enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [beforeOrderTable setObject:@(idx) forKey:obj];
-    }];
-    
-    NSMapTable *afterOrderTable = [NSMapTable strongToStrongObjectsMapTable];
-    [after enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [afterOrderTable setObject:@(idx) forKey:obj];
-    }];
-    
+    NSOrderedSet *before = [self idsOfObjects:objectsBefore withBlock:idBlock];
+    NSOrderedSet *after = [self idsOfObjects:objectsAfter withBlock:idBlock];
     
     [before enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (![afterOrderTable objectForKey:obj]) {
+        if (![after containsObject:obj]) {
             [deleted addIndex:idx];
         }
     }];
     
     [after enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (![beforeOrderTable objectForKey:obj]) {
+        if (![before containsObject:obj]) {
             [inserted addIndex:idx];
         }
     }];
     
     
-    NSMutableArray *sameBefore = [before mutableCopy];
+    NSMutableOrderedSet *sameBefore = [before mutableCopy];
     [sameBefore removeObjectsAtIndexes:deleted];
     
-    NSMutableArray *sameAfter = [after mutableCopy];
+    NSMutableOrderedSet *sameAfter = [after mutableCopy];
     [sameAfter removeObjectsAtIndexes:inserted];
     
     
@@ -112,7 +98,7 @@
     NSUInteger *P = malloc(sizeof(NSUInteger) * n);
     
     [sameBefore enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        X[idx] = [[afterOrderTable objectForKey:obj] unsignedIntegerValue];
+        X[idx] = [after indexOfObject:obj];
     }];
     
     NSInteger L = 0;
@@ -173,36 +159,36 @@
     
     
     [sameAfter enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSUInteger beforeIndex = [[beforeOrderTable objectForKey:obj] unsignedIntegerValue];
-        NSUInteger afterIndex = [[afterOrderTable objectForKey:obj] unsignedIntegerValue];
+        NSUInteger beforeIndex = [before indexOfObject:obj];
+        NSUInteger afterIndex = [after indexOfObject:obj];
+                
+        NNDiffChangeType changeType = 0;
+        if (![afterStaticIndexes containsIndex:afterIndex]) {
+            changeType |= NNDiffChangeMove;
+        }
+        if (updatedBlock(objectsBefore[beforeIndex], objectsAfter[afterIndex])) {
+            changeType |= NNDiffChangeUpdate;
+        }
         
-        id objectBefore = objectsBefore[beforeIndex];
-        id objectAfter = objectsAfter[afterIndex];
-        BOOL objectUpdated = updatedBlock(objectBefore, objectAfter);
-        
-        if ([afterStaticIndexes containsIndex:afterIndex]) {
-            if (objectUpdated) {
-                [updated addIndex:afterIndex];
-            }
-        } else {
-            [moved addObject:[[NNArrayDiffMove alloc] initWithFrom:beforeIndex to:afterIndex updated:objectUpdated]];
+        if (changeType != 0) {
+            NNArrayDiffChange *change = [[NNArrayDiffChange alloc] initWithBefore:beforeIndex after:afterIndex type:changeType];
+            [changed addObject:change];
         }
     }];
     
     
-    _updated = [updated copy];
     _deleted = [deleted copy];
     _inserted = [inserted copy];
-    _moved = [moved copy];
+    _changed = [changed copy];
 }
 
-- (NSArray *)arrayIds:(NSArray *)array withBlock:(NNDiffObjectIdBlock)block
+- (NSOrderedSet *)idsOfObjects:(NSArray *)array withBlock:(NNDiffObjectIdBlock)block
 {
-    NSMutableArray *arrayIds = [NSMutableArray arrayWithCapacity:[array count]];
+    NSMutableArray *ids = [NSMutableArray arrayWithCapacity:[array count]];
     for (id object in array) {
-        [arrayIds addObject:block(object)];
+        [ids addObject:block(object)];
     }
-    return arrayIds;
+    return [NSOrderedSet orderedSetWithArray:ids];
 }
 
 #pragma mark - Description
@@ -219,12 +205,8 @@
         [description appendFormat:@"  Inserted: %@\n", [self descriptionForIndexes:self.inserted]];
     }
     
-    if ([self.moved count] > 0) {
-        [description appendFormat:@"  Moved: %@\n", [self descriptionForMoved:self.moved]];
-    }
-    
-    if ([self.updated count] > 0) {
-        [description appendFormat:@"  Updated: %@\n", [self descriptionForIndexes:self.updated]];
+    if ([self.changed count] > 0) {
+        [description appendFormat:@"  Changed: %@\n", [self descriptionForChanged:self.changed]];
     }
     
     [description appendString:@"}"];
@@ -239,20 +221,20 @@
     return [strings componentsJoinedByString:@", "];
 }
 
-- (NSString *)descriptionForMoved:(NSSet *)set {
-    NSArray *sortedMoves = [[set allObjects] sortedArrayUsingComparator:^NSComparisonResult(NNArrayDiffMove *obj1, NNArrayDiffMove *obj2) {
-        if (obj1.from != obj2.from) {
-            return obj1.from < obj2.from ? NSOrderedAscending : NSOrderedDescending;
+- (NSString *)descriptionForChanged:(NSArray *)array {
+    NSArray *sortedChanges = [array sortedArrayUsingComparator:^NSComparisonResult(NNArrayDiffChange *obj1, NNArrayDiffChange *obj2) {
+        if (obj1.before != obj2.before) {
+            return obj1.before < obj2.before ? NSOrderedAscending : NSOrderedDescending;
         }
-        if (obj1.to != obj2.to) {
-            return obj1.to < obj2.to ? NSOrderedAscending : NSOrderedDescending;
+        if (obj1.after != obj2.after) {
+            return obj1.after < obj2.after ? NSOrderedAscending : NSOrderedDescending;
         }
         return NSOrderedSame;
     }];
 
     NSMutableArray *strings = [NSMutableArray array];
-    for (NNArrayDiff *move in sortedMoves) {
-        [strings addObject:[move description]];
+    for (NNArrayDiffChange *change in sortedChanges) {
+        [strings addObject:[change description]];
     };
     return [strings componentsJoinedByString:@", "];
 }

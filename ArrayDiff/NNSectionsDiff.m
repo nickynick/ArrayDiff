@@ -33,10 +33,9 @@
     
     NSMutableIndexSet *deletedSections = [NSMutableIndexSet indexSet];
     NSMutableIndexSet *insertedSections = [NSMutableIndexSet indexSet];
-    NSMutableSet *deleted = [NSMutableSet set];
-    NSMutableSet *inserted = [NSMutableSet set];
-    NSMutableSet *moved = [NSMutableSet set];
-    NSMutableSet *updated = [NSMutableSet set];
+    NSMutableArray *deleted = [NSMutableArray array];
+    NSMutableArray *inserted = [NSMutableArray array];
+    NSMutableArray *changed = [NSMutableArray array];
     
     
     NSArray *beforeSectionKeys = [before diffSectionKeys];
@@ -47,9 +46,9 @@
     [deletedSections addIndexes:sectionKeysDiff.deleted];
     [insertedSections addIndexes:sectionKeysDiff.inserted];
     
-    for (NNArrayDiffMove *move in sectionKeysDiff.moved) {
-        [deletedSections addIndex:move.from];
-        [insertedSections addIndex:move.to];
+    for (NNArrayDiffChange *change in sectionKeysDiff.changed) {
+        [deletedSections addIndex:change.before];
+        [insertedSections addIndex:change.after];
     };
     
     
@@ -82,10 +81,12 @@
             id sectionKeyAfter = afterSectionKeys[[indexPathAfter indexAtPosition:0]];
             
             if (![sectionKeyBefore isEqual:sectionKeyAfter]) {
-                id objectBefore = flatBefore[flatBeforeIndex];
-                id objectAfter = flatAfter[flatAfterIndex];
-                BOOL objectUpdated = updatedBlock(objectBefore, objectAfter);
-                [moved addObject:[[NNSectionsDiffMove alloc] initWithFrom:indexPathBefore to:indexPathAfter updated:objectUpdated]];
+                NNDiffChangeType changeType = NNDiffChangeMove;
+                if (updatedBlock(flatBefore[flatBeforeIndex], flatAfter[flatAfterIndex])) {
+                    changeType |= NNDiffChangeUpdate;
+                }
+                
+                [changed addObject:[[NNSectionsDiffChange alloc] initWithBefore:indexPathBefore after:indexPathAfter type:changeType]];
                 
                 [flatBeforeIndexesToRemove addIndex:flatBeforeIndex];
                 [flatAfterIndexesToRemove addIndex:flatAfterIndex];
@@ -109,14 +110,10 @@
         [inserted addObject:flatAfterIndexPaths[idx]];
     }];
     
-    [flatDiff.updated enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [updated addObject:flatAfterIndexPaths[idx]];
-    }];
-    
-    for (NNArrayDiffMove *move in flatDiff.moved) {
-        NSIndexPath *from = flatBeforeIndexPaths[move.from];
-        NSIndexPath *to = flatAfterIndexPaths[move.to];
-        [moved addObject:[[NNSectionsDiffMove alloc] initWithFrom:from to:to updated:move.updated]];
+    for (NNArrayDiffChange *change in flatDiff.changed) {
+        NSIndexPath *before = flatBeforeIndexPaths[change.before];
+        NSIndexPath *after = flatAfterIndexPaths[change.after];
+        [changed addObject:[[NNSectionsDiffChange alloc] initWithBefore:before after:after type:change.type]];
     };
     
 
@@ -124,8 +121,7 @@
     _insertedSections = [insertedSections copy];
     _deleted = [deleted copy];
     _inserted = [inserted copy];
-    _moved = [moved copy];
-    _updated = [updated copy];
+    _changed = [changed copy];
     
     [self sanitizeRowDiffs];
     
@@ -134,20 +130,18 @@
 
 - (id)initWithDeletedSections:(NSIndexSet *)deletedSections
              insertedSections:(NSIndexSet *)insertedSections
-                      deleted:(NSSet *)deleted
-                     inserted:(NSSet *)inserted
-                        moved:(NSSet *)moved
-                      updated:(NSSet *)updated
+                      deleted:(NSArray *)deleted
+                     inserted:(NSArray *)inserted
+                      changed:(NSArray *)changed
 {
     self = [super init];
     if (!self) return nil;
     
     _deletedSections = [deletedSections copy] ?: [NSIndexSet indexSet];
     _insertedSections = [insertedSections copy] ?: [NSIndexSet indexSet];
-    _deleted = [deleted copy] ?: [NSSet set];
-    _inserted = [inserted copy] ?: [NSSet set];
-    _moved = [moved copy] ?: [NSSet set];
-    _updated = [updated copy] ?: [NSSet set];
+    _deleted = [deleted copy] ?: @[];
+    _inserted = [inserted copy] ?: @[];
+    _changed = [changed copy] ?: @[];
     
     [self sanitizeRowDiffs];
     
@@ -167,34 +161,28 @@
     NSMutableIndexSet *insertedSections = [self.insertedSections mutableCopy];
     [insertedSections shiftIndexesStartingAtIndex:0 by:offset];
     
-    NSMutableSet *deleted = [NSMutableSet setWithCapacity:[self.deleted count]];
+    NSMutableArray *deleted = [NSMutableArray arrayWithCapacity:[self.deleted count]];
     for (NSIndexPath *indexPath in self.deleted) {
         [deleted addObject:[self offsetIndexPath:indexPath by:offset]];
     }
     
-    NSMutableSet *inserted = [NSMutableSet setWithCapacity:[self.inserted count]];
+    NSMutableArray *inserted = [NSMutableArray arrayWithCapacity:[self.inserted count]];
     for (NSIndexPath *indexPath in self.inserted) {
         [deleted addObject:[self offsetIndexPath:indexPath by:offset]];
     }
     
-    NSMutableSet *updated = [NSMutableSet setWithCapacity:[self.updated count]];
-    for (NSIndexPath *indexPath in self.updated) {
-        [deleted addObject:[self offsetIndexPath:indexPath by:offset]];
-    }
-    
-    NSMutableSet *moved = [NSMutableSet setWithCapacity:[self.moved count]];
-    for (NNSectionsDiffMove *move in self.moved) {
-        [moved addObject:[[NNSectionsDiffMove alloc] initWithFrom:[self offsetIndexPath:move.from by:offset]
-                                                               to:[self offsetIndexPath:move.to by:offset]
-                                                          updated:move.updated]];
+    NSMutableArray *changed = [NSMutableArray arrayWithCapacity:[self.changed count]];
+    for (NNSectionsDiffChange *change in self.changed) {
+        [changed addObject:[[NNSectionsDiffChange alloc] initWithBefore:[self offsetIndexPath:change.before by:offset]
+                                                                  after:[self offsetIndexPath:change.after by:offset]
+                                                                   type:change.type]];
     }
     
     return [[NNSectionsDiff alloc] initWithDeletedSections:deletedSections
                                           insertedSections:insertedSections
                                                    deleted:deleted
                                                   inserted:inserted
-                                                     moved:moved
-                                                   updated:updated];
+                                                   changed:changed];
 }
 
 #pragma mark - Private
@@ -231,35 +219,40 @@
 }
 
 - (void)sanitizeRowDiffs {
-    NSMutableSet *deleted = [_deleted mutableCopy];
-    NSMutableSet *inserted = [_inserted mutableCopy];
-    NSMutableSet *moved = [_moved mutableCopy];
+    NSMutableArray *additionalDeleted = [NSMutableArray array];
+    NSMutableArray *additionalInserted = [NSMutableArray array];
     
-    for (NSIndexPath *indexPath in _deleted) {
-        if ([_deletedSections containsIndex:[indexPath indexAtPosition:0]]) {
-            [deleted removeObject:indexPath];
+    _changed = [_changed objectsAtIndexes:[_changed indexesOfObjectsPassingTest:^BOOL(NNSectionsDiffChange *obj, NSUInteger idx, BOOL *stop) {
+        if ((obj.type & NNDiffChangeMove) == 0) return YES;
+        
+        if ([_deletedSections containsIndex:[obj.before indexAtPosition:0]]) {
+            [additionalInserted addObject:obj.after];
+            return NO;
         }
-    }
-    for (NSIndexPath *indexPath in _inserted) {
-        if ([_insertedSections containsIndex:[indexPath indexAtPosition:0]]) {
-            [inserted removeObject:indexPath];
+        
+        if ([_insertedSections containsIndex:[obj.after indexAtPosition:0]]) {
+            [additionalDeleted addObject:obj.before];
+            return NO;
         }
-    }
+        
+        return YES;
+	}]];
     
-    for (NNSectionsDiffMove *move in _moved) {
-        if ([_deletedSections containsIndex:[move.from indexAtPosition:0]]) {
-            [inserted addObject:move.to];
-            [moved removeObject:move];
-        }
-        if ([_insertedSections containsIndex:[move.to indexAtPosition:0]]) {
-            [deleted addObject:move.from];
-            [moved removeObject:move];
-        }
+    if ([additionalDeleted count] > 0) {
+        _deleted = [_deleted arrayByAddingObjectsFromArray:additionalDeleted];
     }
     
-    _deleted = [deleted copy];
-    _inserted = [inserted copy];
-    _moved = [moved copy];
+    if ([additionalInserted count] > 0) {
+        _inserted = [_inserted arrayByAddingObjectsFromArray:additionalInserted];
+    }
+    
+    _deleted = [_deleted objectsAtIndexes:[_deleted indexesOfObjectsPassingTest:^BOOL(NSIndexPath *obj, NSUInteger idx, BOOL *stop) {
+		return ![_deletedSections containsIndex:[obj indexAtPosition:0]];
+	}]];
+    
+    _inserted = [_inserted objectsAtIndexes:[_inserted indexesOfObjectsPassingTest:^BOOL(NSIndexPath *obj, NSUInteger idx, BOOL *stop) {
+		return ![_insertedSections containsIndex:[obj indexAtPosition:0]];
+	}]];
 }
 
 #pragma mark - Description
@@ -284,14 +277,10 @@
         [description appendFormat:@"  Inserted: %@\n", [self descriptionForIndexPaths:self.inserted]];
     }
     
-    if ([self.moved count] > 0) {
-        [description appendFormat:@"  Moved: %@\n", [self descriptionForMoved:self.moved]];
+    if ([self.changed count] > 0) {
+        [description appendFormat:@"  Changed: %@\n", [self descriptionForChanged:self.changed]];
     }
     
-    if ([self.updated count] > 0) {
-        [description appendFormat:@"  Updated: %@\n", [self descriptionForIndexPaths:self.updated]];
-    }
-
     [description appendString:@"}"];
     return description;
 }
@@ -304,8 +293,8 @@
     return [strings componentsJoinedByString:@", "];
 }
 
-- (NSString *)descriptionForIndexPaths:(NSSet *)set {
-    NSArray *sortedIndexPaths = [set sortedArrayUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES selector:@selector(compare:)] ]];
+- (NSString *)descriptionForIndexPaths:(NSArray *)array {
+    NSArray *sortedIndexPaths = [array sortedArrayUsingDescriptors:@[ [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES selector:@selector(compare:)] ]];
     
     NSMutableArray *strings = [NSMutableArray array];
     for (NSIndexPath *indexPath in sortedIndexPaths) {
@@ -316,18 +305,18 @@
     return [strings componentsJoinedByString:@", "];
 }
 
-- (NSString *)descriptionForMoved:(NSSet *)set {
-    NSArray *sortedMoves = [[set allObjects] sortedArrayUsingComparator:^NSComparisonResult(NNSectionsDiffMove *obj1, NNSectionsDiffMove *obj2) {
-        if ([obj1.from compare:obj2.from] != NSOrderedSame) {
-            return [obj1.from compare:obj2.from];
+- (NSString *)descriptionForChanged:(NSArray *)array {
+    NSArray *sortedChanges = [array sortedArrayUsingComparator:^NSComparisonResult(NNSectionsDiffChange *obj1, NNSectionsDiffChange *obj2) {
+        if ([obj1.before compare:obj2.before] != NSOrderedSame) {
+            return [obj1.before compare:obj2.before];
         } else {
-            return [obj1.to compare:obj2.to];
+            return [obj1.after compare:obj2.after];
         }
     }];
 
     NSMutableArray *strings = [NSMutableArray array];
-    for (NNSectionsDiffMove *move in sortedMoves) {
-        [strings addObject:[move description]];
+    for (NNSectionsDiffChange *change in sortedChanges) {
+        [strings addObject:[change description]];
     };
     return [strings componentsJoinedByString:@", "];
 }

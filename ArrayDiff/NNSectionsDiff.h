@@ -9,9 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "NNArrayDiff.h"
 #import "NNSectionsDiffDataSource.h"
-#import "NNSectionsDiffMove.h"
+#import "NNSectionsDiffChange.h"
 
 @interface NNSectionsDiff : NSObject
+
+@property (nonatomic, readonly) NSIndexSet *deletedSections;
+@property (nonatomic, readonly) NSIndexSet *insertedSections;
+@property (nonatomic, readonly) NSArray *deleted;
+@property (nonatomic, readonly) NSArray *inserted;
+@property (nonatomic, readonly) NSArray *changed;
 
 - (id)initWithBefore:(id<NNSectionsDiffDataSource>)before
                after:(id<NNSectionsDiffDataSource>)after
@@ -20,19 +26,10 @@
 
 - (id)initWithDeletedSections:(NSIndexSet *)deletedSections
              insertedSections:(NSIndexSet *)insertedSections
-                      deleted:(NSSet *)deleted
-                     inserted:(NSSet *)inserted
-                        moved:(NSSet *)moved
-                      updated:(NSSet *)updated;
+                      deleted:(NSArray *)deleted
+                     inserted:(NSArray *)inserted
+                      changed:(NSArray *)changed;
 
 - (instancetype)diffByOffsetting:(NSUInteger)offset;
-
-@property (nonatomic, readonly) NSIndexSet *deletedSections;
-@property (nonatomic, readonly) NSIndexSet *insertedSections;
-
-@property (nonatomic, readonly) NSSet *deleted;
-@property (nonatomic, readonly) NSSet *inserted;
-@property (nonatomic, readonly) NSSet *moved;
-@property (nonatomic, readonly) NSSet *updated;
 
 @end

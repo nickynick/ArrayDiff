@@ -15,9 +15,9 @@
 
 @interface NNFetchedResultsControllerDiffAdapter : NSObject <NSFetchedResultsControllerDelegate>
 
-- (id)initWithDelegate:(id<NNFetchedResultsControllerDiffAdapterDelegate>)delegate;
-
 @property (nonatomic, weak) id<NNFetchedResultsControllerDiffAdapterDelegate> delegate;
+
+- (id)initWithDelegate:(id<NNFetchedResultsControllerDiffAdapterDelegate>)delegate;
 
 
 // Implemented NSFetchedResultsControllerDelegate methods:

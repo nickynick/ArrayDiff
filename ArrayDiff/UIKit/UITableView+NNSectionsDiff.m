@@ -24,25 +24,31 @@
 {
     NSAssert(!(updateType == NNTableViewCellUpdateTypeSetup && cellSetupBlock == nil), @"NNTableViewCellUpdateTypeSetup requires a non-nil cellSetupBlock.");
 
-    NSMutableSet *indexPathsToSetup = [NSMutableSet set];
+    NSMutableArray *indexPathsToSetup = [NSMutableArray array];
+    NSMutableArray *indexPathsToUpdate = [NSMutableArray array];
     
     [self beginUpdates];
     
     [self deleteSections:sectionsDiff.deletedSections withRowAnimation:animation];
     [self insertSections:sectionsDiff.insertedSections withRowAnimation:animation];
     
-    [self deleteRowsAtIndexPaths:[sectionsDiff.deleted allObjects] withRowAnimation:animation];
-    [self insertRowsAtIndexPaths:[sectionsDiff.inserted allObjects] withRowAnimation:animation];
+    [self deleteRowsAtIndexPaths:sectionsDiff.deleted withRowAnimation:animation];
+    [self insertRowsAtIndexPaths:sectionsDiff.inserted withRowAnimation:animation];
     
-    for (NNSectionsDiffMove *move in sectionsDiff.moved) {
-        if ((move.updated && cellSetupBlock) || !move.updated) {
-            [self moveRowAtIndexPath:move.from toIndexPath:move.to];
-            if (move.updated) {
-                [indexPathsToSetup addObject:move.to];
+    for (NNSectionsDiffChange *change in sectionsDiff.changed) {
+        if (change.type & NNDiffChangeMove) {
+            BOOL updated = change.type & NNDiffChangeUpdate;
+            if (!updated || (updated && cellSetupBlock)) {
+                [self moveRowAtIndexPath:change.before toIndexPath:change.after];
+                if (updated) {
+                    [indexPathsToSetup addObject:change.after];
+                }
+            } else {
+                [self deleteRowsAtIndexPaths:@[ change.before ] withRowAnimation:animation];
+                [self insertRowsAtIndexPaths:@[ change.after ] withRowAnimation:animation];
             }
         } else {
-            [self deleteRowsAtIndexPaths:@[ move.from ] withRowAnimation:animation];
-            [self insertRowsAtIndexPaths:@[ move.to ] withRowAnimation:animation];
+            [indexPathsToUpdate addObject:change.after];
         }
     };
         
@@ -50,10 +56,10 @@
 
     switch (updateType) {
         case NNTableViewCellUpdateTypeReload:
-            [self reloadRowsAtIndexPaths:[sectionsDiff.updated allObjects] withRowAnimation:animation];
+            [self reloadRowsAtIndexPaths:indexPathsToUpdate withRowAnimation:animation];
             break;
         case NNTableViewCellUpdateTypeSetup:
-            [indexPathsToSetup unionSet:sectionsDiff.updated];
+            [indexPathsToSetup addObjectsFromArray:indexPathsToUpdate];
             break;
     }
     

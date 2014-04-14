@@ -12,10 +12,9 @@
 
 @property (nonatomic, strong) NSMutableIndexSet *deletedSections;
 @property (nonatomic, strong) NSMutableIndexSet *insertedSections;
-@property (nonatomic, strong) NSMutableSet *deletedRows;
-@property (nonatomic, strong) NSMutableSet *insertedRows;
-@property (nonatomic, strong) NSMutableSet *movedRows;
-@property (nonatomic, strong) NSMutableSet *updatedRows;
+@property (nonatomic, strong) NSMutableArray *deletedRows;
+@property (nonatomic, strong) NSMutableArray *insertedRows;
+@property (nonatomic, strong) NSMutableArray *changedRows;
 
 @end
 
@@ -36,10 +35,9 @@
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     self.deletedSections = [NSMutableIndexSet indexSet];
     self.insertedSections = [NSMutableIndexSet indexSet];
-    self.deletedRows = [NSMutableSet set];
-    self.insertedRows = [NSMutableSet set];
-    self.movedRows = [NSMutableSet set];
-    self.updatedRows = [NSMutableSet set];
+    self.deletedRows = [NSMutableArray array];
+    self.insertedRows = [NSMutableArray array];
+    self.changedRows = [NSMutableArray array];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
@@ -64,10 +62,14 @@
             [self.deletedRows addObject:indexPath];
             break;
         case NSFetchedResultsChangeMove:
-            [self.movedRows addObject:[[NNSectionsDiffMove alloc] initWithFrom:indexPath to:newIndexPath updated:[anObject isUpdated]]];
+            [self.changedRows addObject:[[NNSectionsDiffChange alloc] initWithBefore:indexPath
+                                                                               after:newIndexPath
+                                                                                type:([anObject isUpdated] ? NNDiffChangeMove | NNDiffChangeUpdate : NNDiffChangeMove)]];
             break;
         case NSFetchedResultsChangeUpdate:
-            [self.updatedRows addObject:indexPath];
+            [self.changedRows addObject:[[NNSectionsDiffChange alloc] initWithBefore:indexPath
+                                                                               after:indexPath
+                                                                                type:NNDiffChangeUpdate]];
             break;
     }
 }
@@ -77,8 +79,7 @@
                                                           insertedSections:self.insertedSections
                                                                    deleted:self.deletedRows
                                                                   inserted:self.insertedRows
-                                                                     moved:self.movedRows
-                                                                   updated:self.updatedRows];
+                                                                   changed:self.changedRows];
     
     [self.delegate controller:controller didChangeContentWithDiff:diff];
     
@@ -86,8 +87,7 @@
     self.insertedSections = nil;
     self.deletedRows = nil;
     self.insertedRows = nil;
-    self.movedRows = nil;
-    self.updatedRows = nil;
+    self.changedRows = nil;
 }
 
 @end

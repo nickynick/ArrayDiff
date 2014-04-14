@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNArrayDiffMove.h"
+#import "NNArrayDiffChange.h"
 
 typedef id (^NNDiffObjectIdBlock)(id object);
 typedef BOOL (^NNDiffObjectUpdatedBlock)(id objectBefore, id objectAfter);
 
 
 @interface NNArrayDiff : NSObject
+
+@property (nonatomic, readonly) NSIndexSet *deleted;
+@property (nonatomic, readonly) NSIndexSet *inserted;
+@property (nonatomic, readonly) NSArray *changed;
 
 - (id)initWithBefore:(NSArray *)before
                after:(NSArray *)after
@@ -22,12 +26,6 @@ typedef BOOL (^NNDiffObjectUpdatedBlock)(id objectBefore, id objectAfter);
 
 - (id)initWithDeleted:(NSIndexSet *)deleted
              inserted:(NSIndexSet *)inserted
-                moved:(NSSet *)moved
-              updated:(NSIndexSet *)updated;
-
-@property (nonatomic, readonly) NSIndexSet *deleted;
-@property (nonatomic, readonly) NSIndexSet *inserted;
-@property (nonatomic, readonly) NSSet *moved;
-@property (nonatomic, readonly) NSIndexSet *updated;
+              changed:(NSArray *)changed;
 
 @end

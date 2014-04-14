@@ -11,11 +11,11 @@
 
 @interface NNArraySections : NSObject <NNSectionsDiffDataSource>
 
+@property (nonatomic, copy) NSArray *sectionKeys;
+@property (nonatomic, copy) NSArray *sections; // array of arrays
+
 - (id)initWithSectionKeys:(NSArray *)sectionKeys sections:(NSArray *)sections;
 
 - (id)initWithSnapshotOfDataSource:(id<NNSectionsDiffDataSource>)dataSource;
-
-@property (nonatomic, copy) NSArray *sectionKeys;
-@property (nonatomic, copy) NSArray *sections; // array of arrays
 
 @end

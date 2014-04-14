@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A718306218FB431F00245806 /* NNArrayDiffChange.m in Sources */ = {isa = PBXBuildFile; fileRef = A718306118FB431F00245806 /* NNArrayDiffChange.m */; };
+		A718306518FB49FA00245806 /* NNSectionsDiffChange.m in Sources */ = {isa = PBXBuildFile; fileRef = A718306418FB49FA00245806 /* NNSectionsDiffChange.m */; };
 		A792C71118F98A780095EA22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C71018F98A780095EA22 /* Foundation.framework */; };
 		A792C71618F98A780095EA22 /* NNArrayDiff.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A792C71518F98A780095EA22 /* NNArrayDiff.h */; };
 		A792C71818F98A780095EA22 /* NNArrayDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C71718F98A780095EA22 /* NNArrayDiff.m */; };
@@ -18,8 +20,6 @@
 		A792C72D18F98A780095EA22 /* ArrayDiffTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C72C18F98A780095EA22 /* ArrayDiffTests.m */; };
 		A792C73C18F99B420095EA22 /* NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C73718F99B420095EA22 /* NNSectionsDiff.m */; };
 		A792C73D18F99B420095EA22 /* NNArraySections.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C73918F99B420095EA22 /* NNArraySections.m */; };
-		A792C74718F9A07B0095EA22 /* NNArrayDiffMove.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C74618F9A07B0095EA22 /* NNArrayDiffMove.m */; };
-		A792C74A18F9A0860095EA22 /* NNSectionsDiffMove.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C74918F9A0860095EA22 /* NNSectionsDiffMove.m */; };
 		A792C74E18F9D7390095EA22 /* NSArray+NNSectionsDiffDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C74D18F9D7390095EA22 /* NSArray+NNSectionsDiffDataSource.m */; };
 		A792C75718F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75118F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m */; };
 		A792C75818F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */; };
@@ -50,6 +50,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A718306018FB431F00245806 /* NNArrayDiffChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNArrayDiffChange.h; sourceTree = "<group>"; };
+		A718306118FB431F00245806 /* NNArrayDiffChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNArrayDiffChange.m; sourceTree = "<group>"; };
+		A718306318FB49FA00245806 /* NNSectionsDiffChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSectionsDiffChange.h; sourceTree = "<group>"; };
+		A718306418FB49FA00245806 /* NNSectionsDiffChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSectionsDiffChange.m; sourceTree = "<group>"; };
 		A792C70D18F98A780095EA22 /* libArrayDiff.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libArrayDiff.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A792C71018F98A780095EA22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A792C71418F98A780095EA22 /* ArrayDiff-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArrayDiff-Prefix.pch"; sourceTree = "<group>"; };
@@ -65,10 +69,6 @@
 		A792C73718F99B420095EA22 /* NNSectionsDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSectionsDiff.m; sourceTree = "<group>"; };
 		A792C73818F99B420095EA22 /* NNArraySections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNArraySections.h; sourceTree = "<group>"; };
 		A792C73918F99B420095EA22 /* NNArraySections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNArraySections.m; sourceTree = "<group>"; };
-		A792C74518F9A07B0095EA22 /* NNArrayDiffMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNArrayDiffMove.h; sourceTree = "<group>"; };
-		A792C74618F9A07B0095EA22 /* NNArrayDiffMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNArrayDiffMove.m; sourceTree = "<group>"; };
-		A792C74818F9A0860095EA22 /* NNSectionsDiffMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSectionsDiffMove.h; sourceTree = "<group>"; };
-		A792C74918F9A0860095EA22 /* NNSectionsDiffMove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSectionsDiffMove.m; sourceTree = "<group>"; };
 		A792C74B18F9A86A0095EA22 /* NNSectionsDiffDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNSectionsDiffDataSource.h; sourceTree = "<group>"; };
 		A792C74C18F9D7390095EA22 /* NSArray+NNSectionsDiffDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+NNSectionsDiffDataSource.h"; sourceTree = "<group>"; };
 		A792C74D18F9D7390095EA22 /* NSArray+NNSectionsDiffDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+NNSectionsDiffDataSource.m"; sourceTree = "<group>"; };
@@ -141,12 +141,12 @@
 				A7FFB45218FB184600510BF2 /* ArrayDiff.h */,
 				A792C71518F98A780095EA22 /* NNArrayDiff.h */,
 				A792C71718F98A780095EA22 /* NNArrayDiff.m */,
-				A792C74518F9A07B0095EA22 /* NNArrayDiffMove.h */,
-				A792C74618F9A07B0095EA22 /* NNArrayDiffMove.m */,
+				A718306018FB431F00245806 /* NNArrayDiffChange.h */,
+				A718306118FB431F00245806 /* NNArrayDiffChange.m */,
 				A792C73618F99B420095EA22 /* NNSectionsDiff.h */,
 				A792C73718F99B420095EA22 /* NNSectionsDiff.m */,
-				A792C74818F9A0860095EA22 /* NNSectionsDiffMove.h */,
-				A792C74918F9A0860095EA22 /* NNSectionsDiffMove.m */,
+				A718306318FB49FA00245806 /* NNSectionsDiffChange.h */,
+				A718306418FB49FA00245806 /* NNSectionsDiffChange.m */,
 				A792C74B18F9A86A0095EA22 /* NNSectionsDiffDataSource.h */,
 				A792C74C18F9D7390095EA22 /* NSArray+NNSectionsDiffDataSource.h */,
 				A792C74D18F9D7390095EA22 /* NSArray+NNSectionsDiffDataSource.m */,
@@ -285,13 +285,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A792C73C18F99B420095EA22 /* NNSectionsDiff.m in Sources */,
-				A792C74718F9A07B0095EA22 /* NNArrayDiffMove.m in Sources */,
 				A792C74E18F9D7390095EA22 /* NSArray+NNSectionsDiffDataSource.m in Sources */,
 				A792C75918F9EBA90095EA22 /* UITableView+NNSectionsDiff.m in Sources */,
 				A792C75818F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m in Sources */,
-				A792C74A18F9A0860095EA22 /* NNSectionsDiffMove.m in Sources */,
+				A718306518FB49FA00245806 /* NNSectionsDiffChange.m in Sources */,
 				A792C73D18F99B420095EA22 /* NNArraySections.m in Sources */,
 				A792C71818F98A780095EA22 /* NNArrayDiff.m in Sources */,
+				A718306218FB431F00245806 /* NNArrayDiffChange.m in Sources */,
 				A792C75718F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
