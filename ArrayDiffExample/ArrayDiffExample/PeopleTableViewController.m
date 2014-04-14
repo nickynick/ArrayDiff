@@ -35,7 +35,7 @@ static NSString * const kCellReuseIdentifier = @"PersonCell";
 
 - (void)reloadWithDiff:(NNSectionsDiff *)diff {
     [self.tableView reloadWithSectionsDiff:diff
-                                   options:0
+                                   options:NNDiffReloadMovedWithMove
                                  animation:UITableViewRowAnimationFade
                             cellSetupBlock:^(id cell, NSIndexPath *indexPath) {
                                 [self setupCell:cell forRowAtIndexPath:indexPath];

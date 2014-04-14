@@ -87,7 +87,7 @@
 }
 
 - (void)updateBarButtonPressed {
-    [Person updateRandomPerson];
+    [Person updateRandomPeople];
 }
 
 #pragma mark - Notifications

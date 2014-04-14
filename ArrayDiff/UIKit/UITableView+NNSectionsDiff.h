@@ -14,8 +14,8 @@ typedef NS_OPTIONS(NSInteger, NNDiffReloadOptions) {
     NNDiffReloadUpdatedWithReload        = 1 << 0, // default
     NNDiffReloadUpdatedWithSetup         = 1 << 1,
     
-    NNDiffReloadMovedWithMove            = 1 << 4, // default
-    NNDiffReloadMovedWithDeleteAndInsert = 1 << 5
+    NNDiffReloadMovedWithDeleteAndInsert = 1 << 4, // default
+    NNDiffReloadMovedWithMove            = 1 << 5
 };
 
 

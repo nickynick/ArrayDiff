@@ -20,8 +20,8 @@
 + (NSFetchRequest *)requestForSortedPeople;
 
 + (void)setupPeople;
-+ (Person *)addRandomPerson;
-+ (Person *)updateRandomPerson;
++ (void)addRandomPerson;
++ (void)updateRandomPeople;
 + (void)deleteRandomPerson;
 
 + (NNArraySections *)fetchSortedPeopleGroupedIntoSections;

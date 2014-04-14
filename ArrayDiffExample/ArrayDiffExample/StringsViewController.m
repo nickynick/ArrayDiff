@@ -68,8 +68,8 @@ static NSString * const kCellReuseIdentifier = @"StringCell";
     
     NNSectionsDiff *diff = [[NNSectionsDiff alloc] initWithBefore:strings after:self.strings idBlock:nil updatedBlock:nil];
     [self.tableView reloadWithSectionsDiff:diff
-                                   options:0
-                                 animation:UITableViewRowAnimationAutomatic
+                                   options:NNDiffReloadMovedWithMove
+                                 animation:UITableViewRowAnimationFade
                             cellSetupBlock:nil];
 }
 

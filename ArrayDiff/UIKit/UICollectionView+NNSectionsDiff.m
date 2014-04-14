@@ -20,10 +20,21 @@
                        options:(NNDiffReloadOptions)options
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
 {
+    if (!(options & (NNDiffReloadUpdatedWithReload | NNDiffReloadUpdatedWithSetup))) {
+        options |= NNDiffReloadUpdatedWithReload;
+    }
+    if (!(options & (NNDiffReloadMovedWithDeleteAndInsert | NNDiffReloadMovedWithMove))) {
+        options |= NNDiffReloadMovedWithDeleteAndInsert;
+    }
+    
     NSAssert(!((options & NNDiffReloadUpdatedWithSetup) && cellSetupBlock == nil), @"NNDiffReloadUpdatedWithSetup requires a non-nil cellSetupBlock.");
+    NSAssert(!((options & NNDiffReloadMovedWithMove) && cellSetupBlock == nil), @"NNDiffReloadMovedWithMove requires a non-nil cellSetupBlock.");
+    
+    
+    // TODO: describe how reloads and moves do not play together
     
     NSMutableArray *indexPathsToSetup = [NSMutableArray array];
-    NSMutableArray *indexPathsToUpdate = [NSMutableArray array];
+    
     
     [self performBatchUpdates:^{
         [self deleteSections:sectionsDiff.deletedSections];
@@ -33,29 +44,31 @@
         [self insertItemsAtIndexPaths:sectionsDiff.inserted];
         
         for (NNSectionsDiffChange *change in sectionsDiff.changed) {
-            if (change.type & NNDiffChangeMove) {
-                BOOL updated = change.type & NNDiffChangeUpdate;
-                
-                if ((options & NNDiffReloadMovedWithDeleteAndInsert) || (updated && !cellSetupBlock)) {
+            if (change.type == NNDiffChangeUpdate) {
+                if (options & NNDiffReloadUpdatedWithReload) {
+                    if (options & NNDiffReloadMovedWithMove) {
+                        // Have to use delete+insert to co-exist with moves
+                        [self deleteItemsAtIndexPaths:@[ change.before ]];
+                        [self insertItemsAtIndexPaths:@[ change.after ]];
+                    } else {
+                        [self reloadItemsAtIndexPaths:@[ change.before ]];
+                    }
+                } else {
+                    [indexPathsToSetup addObject:change.after];
+                }
+            } else {
+                if (options & NNDiffReloadMovedWithDeleteAndInsert) {
                     [self deleteItemsAtIndexPaths:@[ change.before ]];
                     [self insertItemsAtIndexPaths:@[ change.after ]];
                 } else {
                     [self moveItemAtIndexPath:change.before toIndexPath:change.after];
-                    if (updated) {
+                    if (change.type & NNDiffChangeUpdate) {
                         [indexPathsToSetup addObject:change.after];
                     }
                 }
-            } else {
-                [indexPathsToUpdate addObject:change.after];
             }
-        };
+        }
     } completion:nil];
-    
-    if (options & NNDiffReloadUpdatedWithSetup) {
-        [indexPathsToSetup addObjectsFromArray:indexPathsToUpdate];
-    } else {
-        [self reloadItemsAtIndexPaths:indexPathsToUpdate];
-    }
     
     for (NSIndexPath *indexPath in indexPathsToSetup) {
         UICollectionViewCell *cell = [self cellForItemAtIndexPath:indexPath];

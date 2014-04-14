@@ -8,6 +8,30 @@
 
 #import "NNFetchedResultsControllerDiffAdapter.h"
 
+@interface NNFetchedResultsControllerUpdate : NSObject
+
+@property (nonatomic, readonly) id object;
+@property (nonatomic, readonly) NSIndexPath *indexPath;
+
+- (id)initWithObject:(id)object indexPath:(NSIndexPath *)indexPath;
+
+@end
+
+@implementation NNFetchedResultsControllerUpdate
+
+- (id)initWithObject:(id)object indexPath:(NSIndexPath *)indexPath {
+    self = [super init];
+    if (!self) return nil;
+    
+    _object = object;
+    _indexPath = indexPath;
+    
+    return self;
+}
+
+@end
+
+
 @interface NNFetchedResultsControllerDiffAdapter ()
 
 @property (nonatomic, strong) NSMutableIndexSet *deletedSections;
@@ -15,6 +39,8 @@
 @property (nonatomic, strong) NSMutableArray *deletedRows;
 @property (nonatomic, strong) NSMutableArray *insertedRows;
 @property (nonatomic, strong) NSMutableArray *changedRows;
+
+@property (nonatomic, strong) NSMutableArray *updates;
 
 @end
 
@@ -38,6 +64,7 @@
     self.deletedRows = [NSMutableArray array];
     self.insertedRows = [NSMutableArray array];
     self.changedRows = [NSMutableArray array];
+    self.updates = [NSMutableArray array];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
@@ -64,17 +91,26 @@
         case NSFetchedResultsChangeMove:
             [self.changedRows addObject:[[NNSectionsDiffChange alloc] initWithBefore:indexPath
                                                                                after:newIndexPath
-                                                                                type:([anObject isUpdated] ? NNDiffChangeMove | NNDiffChangeUpdate : NNDiffChangeMove)]];
+                                                                                type:[anObject isUpdated] ? (NNDiffChangeUpdate | NNDiffChangeMove) : NNDiffChangeMove]];
             break;
         case NSFetchedResultsChangeUpdate:
-            [self.changedRows addObject:[[NNSectionsDiffChange alloc] initWithBefore:indexPath
-                                                                               after:indexPath
-                                                                                type:NNDiffChangeUpdate]];
+            // We don't have newIndexPath to create NNSectionsDiffChange object, let's retrieve it later.
+            [self.updates addObject:[[NNFetchedResultsControllerUpdate alloc] initWithObject:anObject indexPath:indexPath]];
             break;
     }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    for (NNFetchedResultsControllerUpdate *update in self.updates) {
+        // https://developer.apple.com/library/iOS/releasenotes/iPhone/NSFetchedResultsChangeMoveReportedAsNSFetchedResultsChangeUpdate/index.html
+        // NSFetchedResultsChangeUpdate is returned for all cases when object's initial and final index paths are equal.
+        // However, this doesn't mean that object hasn't moved.
+        // Therefore, we should always treat this as a move.
+        [self.changedRows addObject:[[NNSectionsDiffChange alloc] initWithBefore:update.indexPath
+                                                                           after:[controller indexPathForObject:update.object]
+                                                                            type:NNDiffChangeUpdate | NNDiffChangeMove]];
+    }
+    
     NNSectionsDiff *diff = [[NNSectionsDiff alloc] initWithDeletedSections:self.deletedSections
                                                           insertedSections:self.insertedSections
                                                                    deleted:self.deletedRows
@@ -88,6 +124,7 @@
     self.deletedRows = nil;
     self.insertedRows = nil;
     self.changedRows = nil;
+    self.updates = nil;
 }
 
 @end

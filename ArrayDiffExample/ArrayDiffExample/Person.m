@@ -39,29 +39,29 @@
     [context save:NULL];
 }
 
-+ (Person *)addRandomPerson {
++ (void)addRandomPerson {
     NSManagedObjectContext *context = [self managedObjectContext];
     
     Person *person = [[Person alloc] initWithEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
     person.name = [self randomName];
     [context save:NULL];
-    
-    return person;
 }
 
-+ (Person *)updateRandomPerson {
++ (void)updateRandomPeople {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSArray *existingPeople = [context executeFetchRequest:[Person requestForSortedPeople] error:NULL];
     if ([existingPeople count] == 0) {
-        return nil;
+        return;
     }
     
-    NSUInteger randomIndex = arc4random_uniform((int32_t)[existingPeople count]);
-    Person *person = existingPeople[randomIndex];
-    person.name = [self randomName];
-    [context save:NULL];
+    NSUInteger count = 1 + arc4random_uniform(4);
+    for (NSUInteger i = 0; i < count; ++i) {
+        NSUInteger randomIndex = arc4random_uniform((int32_t)[existingPeople count]);
+        Person *person = existingPeople[randomIndex];
+        person.name = [self randomName];
+    }
     
-    return person;
+    [context save:NULL];
 }
 
 + (void)deleteRandomPerson {
