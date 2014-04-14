@@ -168,7 +168,7 @@
     
     NSMutableArray *inserted = [NSMutableArray arrayWithCapacity:[self.inserted count]];
     for (NSIndexPath *indexPath in self.inserted) {
-        [deleted addObject:[self offsetIndexPath:indexPath by:offset]];
+        [inserted addObject:[self offsetIndexPath:indexPath by:offset]];
     }
     
     NSMutableArray *changed = [NSMutableArray arrayWithCapacity:[self.changed count]];

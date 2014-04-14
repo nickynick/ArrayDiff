@@ -6,7 +6,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'ArrayDiff'
-  s.version          = '0.2.1'
+  s.version          = '0.2.2'
   s.summary          = 'A short description of ArrayDiff.'
   s.description      = <<-DESC
                        An optional longer description of ArrayDiff
