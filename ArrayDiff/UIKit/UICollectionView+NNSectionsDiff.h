@@ -7,13 +7,9 @@
 //
 
 #import "NNSectionsDiff.h"
+#import "UITableView+NNSectionsDiff.h"
 
 @import UIKit;
-
-typedef NS_ENUM(NSInteger, NNCollectionViewCellUpdateType) {
-    NNCollectionViewCellUpdateTypeReload = 0,
-    NNCollectionViewCellUpdateTypeSetup  = 1
-};
 
 
 @interface UICollectionView (NNSectionsDiff)
@@ -21,7 +17,7 @@ typedef NS_ENUM(NSInteger, NNCollectionViewCellUpdateType) {
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                    updateType:(NNCollectionViewCellUpdateType)updateType
+                       options:(NNDiffReloadOptions)options
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock;
 
 @end

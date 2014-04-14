@@ -12,15 +12,15 @@
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff {
     [self reloadWithSectionsDiff:sectionsDiff
-                      updateType:NNCollectionViewCellUpdateTypeReload
+                         options:0
                   cellSetupBlock:nil];
 }
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                    updateType:(NNCollectionViewCellUpdateType)updateType
+                       options:(NNDiffReloadOptions)options
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
 {
-    NSAssert(!(updateType == NNCollectionViewCellUpdateTypeSetup && cellSetupBlock == nil), @"NNCollectionViewCellUpdateTypeSetup requires a non-nil cellSetupBlock.");
+    NSAssert(!((options & NNDiffReloadUpdatedWithSetup) && cellSetupBlock == nil), @"NNDiffReloadUpdatedWithSetup requires a non-nil cellSetupBlock.");
     
     NSMutableArray *indexPathsToSetup = [NSMutableArray array];
     NSMutableArray *indexPathsToUpdate = [NSMutableArray array];
@@ -35,14 +35,15 @@
         for (NNSectionsDiffChange *change in sectionsDiff.changed) {
             if (change.type & NNDiffChangeMove) {
                 BOOL updated = change.type & NNDiffChangeUpdate;
-                if (!updated || (updated && cellSetupBlock)) {
+                
+                if ((options & NNDiffReloadMovedWithDeleteAndInsert) || (updated && !cellSetupBlock)) {
+                    [self deleteItemsAtIndexPaths:@[ change.before ]];
+                    [self insertItemsAtIndexPaths:@[ change.after ]];
+                } else {
                     [self moveItemAtIndexPath:change.before toIndexPath:change.after];
                     if (updated) {
                         [indexPathsToSetup addObject:change.after];
                     }
-                } else {
-                    [self deleteItemsAtIndexPaths:@[ change.before ]];
-                    [self insertItemsAtIndexPaths:@[ change.after ]];
                 }
             } else {
                 [indexPathsToUpdate addObject:change.after];
@@ -50,13 +51,10 @@
         };
     } completion:nil];
     
-    switch (updateType) {
-        case NNCollectionViewCellUpdateTypeReload:
-            [self reloadItemsAtIndexPaths:indexPathsToUpdate];
-            break;
-        case NNCollectionViewCellUpdateTypeSetup:
-            [indexPathsToSetup addObjectsFromArray:indexPathsToUpdate];
-            break;
+    if (options & NNDiffReloadUpdatedWithSetup) {
+        [indexPathsToSetup addObjectsFromArray:indexPathsToUpdate];
+    } else {
+        [self reloadItemsAtIndexPaths:indexPathsToUpdate];
     }
     
     for (NSIndexPath *indexPath in indexPathsToSetup) {

@@ -47,9 +47,9 @@ static NSString * const kCellReuseIdentifier = @"PersonCell";
 
 - (void)reloadWithDiff:(NNSectionsDiff *)diff {
     [self.collectionView reloadWithSectionsDiff:diff
-                                     updateType:NNCollectionViewCellUpdateTypeReload
+                                        options:0
                                  cellSetupBlock:^(id cell, NSIndexPath *indexPath) {
-                                         [self setupCell:cell forItemAtIndexPath:indexPath];
+                                     [self setupCell:cell forItemAtIndexPath:indexPath];
                                  }];
 }
 

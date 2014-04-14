@@ -10,9 +10,12 @@
 
 @import UIKit;
 
-typedef NS_ENUM(NSInteger, NNTableViewCellUpdateType) {
-    NNTableViewCellUpdateTypeReload = 0,
-    NNTableViewCellUpdateTypeSetup  = 1
+typedef NS_OPTIONS(NSInteger, NNDiffReloadOptions) {
+    NNDiffReloadUpdatedWithReload        = 1 << 0, // default
+    NNDiffReloadUpdatedWithSetup         = 1 << 1,
+    
+    NNDiffReloadMovedWithMove            = 1 << 4, // default
+    NNDiffReloadMovedWithDeleteAndInsert = 1 << 5
 };
 
 
@@ -21,8 +24,8 @@ typedef NS_ENUM(NSInteger, NNTableViewCellUpdateType) {
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
+                       options:(NNDiffReloadOptions)options
                      animation:(UITableViewRowAnimation)animation
-                    updateType:(NNTableViewCellUpdateType)updateType
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock;
 
 @end

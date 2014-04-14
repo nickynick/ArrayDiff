@@ -36,7 +36,7 @@ static NSString * const kCellReuseIdentifier = @"StringCell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellReuseIdentifier];
     
     self.strings = [NSMutableArray array];
-    for (NSUInteger i = 0; i < 10000; ++i) {
+    for (NSUInteger i = 0; i < 3000; ++i) {
         [self.strings addObject:[@(i) stringValue]];
     }
     
@@ -48,18 +48,28 @@ static NSString * const kCellReuseIdentifier = @"StringCell";
     
     // Randomly move 100 rows.
     for (NSUInteger i = 0; i < 100; ++i) {
-        NSUInteger randomFrom = arc4random_uniform([self.strings count]);
-        NSUInteger randomTo = arc4random_uniform([self.strings count]);
+        NSUInteger randomFrom = arc4random_uniform((int32_t)[self.strings count]);
+        NSUInteger randomTo = arc4random_uniform((int32_t)[self.strings count]);
 
         NSString *string = self.strings[randomFrom];
         [self.strings removeObjectAtIndex:randomFrom];
         [self.strings insertObject:string atIndex:randomTo];
     }
+
+    // Naive implementation:
+//    NSOrderedSet *before = [NSOrderedSet orderedSetWithArray:strings];
+//    NSOrderedSet *after = [NSOrderedSet orderedSetWithArray:self.strings];
+//    [self.tableView beginUpdates];
+//    [before enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        NSUInteger afterIdx = [after indexOfObject:obj];
+//        [self.tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:idx inSection:0] toIndexPath:[NSIndexPath indexPathForRow:afterIdx inSection:0]];
+//    }];
+//    [self.tableView endUpdates];
     
     NNSectionsDiff *diff = [[NNSectionsDiff alloc] initWithBefore:strings after:self.strings idBlock:nil updatedBlock:nil];
     [self.tableView reloadWithSectionsDiff:diff
+                                   options:0
                                  animation:UITableViewRowAnimationAutomatic
-                                updateType:NNTableViewCellUpdateTypeReload
                             cellSetupBlock:nil];
 }
 

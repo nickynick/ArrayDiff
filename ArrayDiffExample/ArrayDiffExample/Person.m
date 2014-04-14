@@ -56,7 +56,7 @@
         return nil;
     }
     
-    NSUInteger randomIndex = arc4random_uniform([existingPeople count]);
+    NSUInteger randomIndex = arc4random_uniform((int32_t)[existingPeople count]);
     Person *person = existingPeople[randomIndex];
     person.name = [self randomName];
     [context save:NULL];
@@ -71,7 +71,7 @@
         return;
     }
     
-    NSUInteger randomIndex = arc4random_uniform([existingPeople count]);
+    NSUInteger randomIndex = arc4random_uniform((int32_t)[existingPeople count]);
     Person *person = existingPeople[randomIndex];
     [context deleteObject:person];
     
