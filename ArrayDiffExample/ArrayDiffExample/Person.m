@@ -29,7 +29,6 @@
         [context deleteObject:person];
     }
     
-    //NSArray *names = @[ @"A1", @"B1", @"C1" ];
     NSArray *names = @[ @"A1", @"A2", @"A3", @"A4", @"B1", @"B2", @"B3", @"C1", @"C2", @"C3", @"C4" ];
     for (NSString *name in names) {
         Person *person = [[Person alloc] initWithEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
@@ -49,6 +48,7 @@
 
 + (void)updateRandomPeople {
     NSManagedObjectContext *context = [self managedObjectContext];
+    
     NSArray *existingPeople = [context executeFetchRequest:[Person requestForSortedPeople] error:NULL];
     if ([existingPeople count] == 0) {
         return;
@@ -76,6 +76,13 @@
     [context deleteObject:person];
     
     [context save:NULL];
+}
+
++ (Person *)existingPersonWithName:(NSString *)name {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
+    request.predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"name", name];
+    NSArray *result = [[self managedObjectContext] executeFetchRequest:request error:NULL];
+    return [result firstObject];
 }
 
 + (NSFetchRequest *)requestForSortedPeople {

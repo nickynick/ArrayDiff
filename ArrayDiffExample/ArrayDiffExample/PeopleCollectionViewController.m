@@ -53,6 +53,10 @@ static NSString * const kCellReuseIdentifier = @"PersonCell";
                                  }];
 }
 
+- (NSString *)displayedNameAtIndexPath:(NSIndexPath *)indexPath {
+    return ((PersonCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath]).nameLabel.text;
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

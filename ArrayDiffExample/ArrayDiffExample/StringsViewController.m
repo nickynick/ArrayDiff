@@ -70,7 +70,7 @@ static NSString * const kCellReuseIdentifier = @"StringCell";
     [self.tableView reloadWithSectionsDiff:diff
                                    options:NNDiffReloadMovedWithMove
                                  animation:UITableViewRowAnimationFade
-                            cellSetupBlock:nil];
+                            cellSetupBlock:^(id cell, NSIndexPath *indexPath) {}];
 }
 
 #pragma mark - Table view data source

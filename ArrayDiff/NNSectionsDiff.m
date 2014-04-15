@@ -8,6 +8,13 @@
 
 #import "NNSectionsDiff.h"
 
+@interface NNSectionsDiff ()
+
+@property (nonatomic, strong) NSArray *sectionPreviousIndexes;
+
+@end
+
+
 @implementation NNSectionsDiff
 
 #pragma mark - Init
@@ -183,6 +190,47 @@
                                                    deleted:deleted
                                                   inserted:inserted
                                                    changed:changed];
+}
+
+- (NSUInteger)previousIndexForSection:(NSUInteger)section {
+    if (!self.sectionPreviousIndexes) {
+        NSUInteger lastDeleted = [self.deletedSections count] > 0 ? [self.deletedSections lastIndex] + 1 : 0;
+        NSUInteger lastInserted = [self.insertedSections count] > 0 ? [self.insertedSections lastIndex] + 1 : 0;
+        
+        NSMutableArray *indexesAfterDeleting = [NSMutableArray arrayWithCapacity:lastDeleted + 1];
+        for (NSUInteger i = 0; i <= lastDeleted; ++i) {
+            [indexesAfterDeleting addObject:@(i)];
+        }
+        [indexesAfterDeleting removeObjectsAtIndexes:self.deletedSections];
+        
+        NSMutableArray *sectionPreviousIndexes = [NSMutableArray array];
+        NSUInteger d = 0, i = 0;
+        NSUInteger current = [indexesAfterDeleting[d] unsignedIntegerValue];
+        
+        while (d < [indexesAfterDeleting count] || i <= lastInserted) {
+            if ([self.insertedSections containsIndex:i]) {
+                [sectionPreviousIndexes addObject:@(NSNotFound)];
+            } else {
+                [sectionPreviousIndexes addObject:@(current)];
+                
+                ++d;
+                if (d < [indexesAfterDeleting count]) {
+                    current = [indexesAfterDeleting[d] unsignedIntegerValue];
+                } else {
+                    ++current;
+                }
+            }
+            ++i;
+        }
+        
+        self.sectionPreviousIndexes = [sectionPreviousIndexes copy];
+    }
+    
+    if (section < [self.sectionPreviousIndexes count]) {
+        return [self.sectionPreviousIndexes[section] unsignedIntegerValue];
+    } else {
+        return [[self.sectionPreviousIndexes lastObject] unsignedIntegerValue] + section + 1 - [self.sectionPreviousIndexes count];
+    }
 }
 
 #pragma mark - Private

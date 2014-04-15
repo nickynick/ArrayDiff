@@ -42,6 +42,10 @@ static NSString * const kCellReuseIdentifier = @"PersonCell";
                             }];
 }
 
+- (NSString *)displayedNameAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

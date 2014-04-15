@@ -25,5 +25,6 @@
 
 // Override in subclasses:
 - (void)reloadWithDiff:(NNSectionsDiff *)diff;
+- (NSString *)displayedNameAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

@@ -90,6 +90,18 @@
     [Person updateRandomPeople];
 }
 
+- (void)checkDisplayedData {
+    for (NSUInteger section = 0; section < [self numberOfSections]; ++section) {
+        for (NSUInteger row = 0; row < [self numberOfItemsInSection:section]; ++row) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            Person *person = [self personAtIndexPath:indexPath];
+            NSString *displayedName = [self displayedNameAtIndexPath:indexPath];
+            
+            NSAssert([person.name isEqualToString:displayedName], @"We are displaying wrong data, something went wrong.");
+        }
+    }
+}
+
 #pragma mark - Notifications
 
 - (void)managedObjectContextDidSave:(NSNotification *)notification {
@@ -106,12 +118,14 @@
     self.people = people;
     
     [self reloadWithDiff:diff];
+    [self checkDisplayedData];
 }
 
 #pragma mark - NNFetchedResultsControllerDiffAdapterDelegate
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeContentWithDiff:(NNSectionsDiff *)diff {
     [self reloadWithDiff:diff];
+    [self checkDisplayedData];
 }
 
 #pragma mark - Public
@@ -152,6 +166,10 @@
 }
 
 - (void)reloadWithDiff:(NNSectionsDiff *)diff {
+}
+
+- (NSString *)displayedNameAtIndexPath:(NSIndexPath *)indexPath {
+    return nil;
 }
 
 @end

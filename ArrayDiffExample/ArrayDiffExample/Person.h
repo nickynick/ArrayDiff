@@ -24,6 +24,8 @@
 + (void)updateRandomPeople;
 + (void)deleteRandomPerson;
 
++ (Person *)existingPersonWithName:(NSString *)name;
+
 + (NNArraySections *)fetchSortedPeopleGroupedIntoSections;
 
 @end

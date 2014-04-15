@@ -47,7 +47,7 @@
             if (change.type == NNDiffChangeUpdate) {
                 if (options & NNDiffReloadUpdatedWithReload) {
                     if (options & NNDiffReloadMovedWithMove) {
-                        // Have to use delete+insert to co-exist with moves
+                        // Have to use delete+insert to co-exist with moves (thanks UIKit!)
                         [self deleteItemsAtIndexPaths:@[ change.before ]];
                         [self insertItemsAtIndexPaths:@[ change.after ]];
                     } else {
@@ -57,7 +57,9 @@
                     [indexPathsToSetup addObject:change.after];
                 }
             } else {
-                if (options & NNDiffReloadMovedWithDeleteAndInsert) {
+                // Move animations between different sections may crash (thanks UIKit!), so we may need to use delete+insert instead of move
+                if ((options & NNDiffReloadMovedWithDeleteAndInsert) ||
+                    [sectionsDiff previousIndexForSection:change.after.section] != change.after.section) {
                     [self deleteItemsAtIndexPaths:@[ change.before ]];
                     [self insertItemsAtIndexPaths:@[ change.after ]];
                 } else {
