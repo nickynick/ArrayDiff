@@ -97,7 +97,9 @@
             Person *person = [self personAtIndexPath:indexPath];
             NSString *displayedName = [self displayedNameAtIndexPath:indexPath];
             
-            NSAssert([person.name isEqualToString:displayedName], @"We are displaying wrong data, something went wrong.");
+            if (displayedName) {
+                NSAssert([person.name isEqualToString:displayedName], @"We are displaying wrong data, something went wrong.");
+            }
         }
     }
 }

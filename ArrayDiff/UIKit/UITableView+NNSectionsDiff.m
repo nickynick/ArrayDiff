@@ -33,10 +33,7 @@
     NSAssert(!((options & NNDiffReloadMovedWithMove) && cellSetupBlock == nil), @"NNDiffReloadMovedWithMove requires a non-nil cellSetupBlock.");
     
     
-    // TODO: describe how reloads and moves do not play together
-    
     NSMutableArray *indexPathsToSetup = [NSMutableArray array];
-    
     
     [self beginUpdates];
     
@@ -60,16 +57,25 @@
                 [indexPathsToSetup addObject:change.after];
             }
         } else {
-            // Move animations between different sections may crash (thanks UIKit!), so we may need to use delete+insert instead of move
-            if ((options & NNDiffReloadMovedWithDeleteAndInsert) ||
-                [sectionsDiff previousIndexForSection:change.after.section] != change.after.section) {
-                [self deleteRowsAtIndexPaths:@[ change.before ] withRowAnimation:animation];
-                [self insertRowsAtIndexPaths:@[ change.after ] withRowAnimation:animation];
-            } else {
+            BOOL shouldMove = (options & NNDiffReloadMovedWithMove);
+            
+            if (shouldMove) {
+                // Move animations between different sections will crash for this specific occasion (thanks UIKit!)
+                NSUInteger destinationSectionIndex = change.after.section;
+                NSUInteger previousDestinationSectionIndex = [sectionsDiff previousIndexForSection:destinationSectionIndex];
+                if (previousDestinationSectionIndex != destinationSectionIndex) {
+                    shouldMove = NO;
+                }
+            }
+            
+            if (shouldMove) {
                 [self moveRowAtIndexPath:change.before toIndexPath:change.after];
                 if (change.type & NNDiffChangeUpdate) {
                     [indexPathsToSetup addObject:change.after];
                 }
+            } else {
+                [self deleteRowsAtIndexPaths:@[ change.before ] withRowAnimation:animation];
+                [self insertRowsAtIndexPaths:@[ change.after ] withRowAnimation:animation];
             }
         }
     }
