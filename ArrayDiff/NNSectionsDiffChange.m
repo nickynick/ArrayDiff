@@ -39,7 +39,7 @@
         typeString = @"=>";
     }
 
-    return [[super description] stringByAppendingFormat:@" %@-%@ %@ %@-%@",
+    return [NSString stringWithFormat:@"%@.%@ %@ %@.%@",
             @([self.before indexAtPosition:0]), @([self.before indexAtPosition:1]),
             typeString,
             @([self.after indexAtPosition:0]), @([self.after indexAtPosition:1])];
