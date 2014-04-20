@@ -26,11 +26,11 @@
     self = [super init];
     if (!self) return nil;
     
-    _sectionKeys = [[dataSource diffSectionKeys] copy];
+    _sectionKeys = [[dataSource sectionKeys] copy];
     
     NSMutableArray *sections = [NSMutableArray arrayWithCapacity:[_sectionKeys count]];
     for (NSUInteger i = 0; i < [_sectionKeys count]; ++i) {
-        [sections addObject:[[dataSource diffObjectsForSection:i] copy]];
+        [sections addObject:[[dataSource objectsForSection:i] copy]];
     }
     _sections = [sections copy];
     
@@ -39,11 +39,7 @@
 
 #pragma mark - NNSectionsDiffDataSource
 
-- (NSArray *)diffSectionKeys {
-    return self.sectionKeys;
-}
-
-- (NSArray *)diffObjectsForSection:(NSUInteger)section {
+- (NSArray *)objectsForSection:(NSUInteger)section {
     return self.sections[section];
 }
 

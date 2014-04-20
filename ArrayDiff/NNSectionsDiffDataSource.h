@@ -10,7 +10,7 @@
 
 @protocol NNSectionsDiffDataSource <NSObject>
 
-- (NSArray *)diffSectionKeys;
-- (NSArray *)diffObjectsForSection:(NSUInteger)section;
+- (NSArray *)sectionKeys;
+- (NSArray *)objectsForSection:(NSUInteger)section;
 
 @end

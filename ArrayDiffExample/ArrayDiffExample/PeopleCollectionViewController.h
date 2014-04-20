@@ -11,4 +11,6 @@
 
 @interface PeopleCollectionViewController : PeopleViewController
 
+@property (nonatomic, readonly) UICollectionView *collectionView;
+
 @end

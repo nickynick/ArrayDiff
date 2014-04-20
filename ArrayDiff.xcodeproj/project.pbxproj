@@ -24,6 +24,9 @@
 		A792C75718F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75118F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m */; };
 		A792C75818F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */; };
 		A792C75918F9EBA90095EA22 /* UITableView+NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75618F9EBA90095EA22 /* UITableView+NNSectionsDiff.m */; };
+		A7C5F5A61903CC0F0087C063 /* NNSectionsDiff+CocoaTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5A51903CC0F0087C063 /* NNSectionsDiff+CocoaTouch.m */; };
+		A7C5F5AA1903CC4B0087C063 /* NNTableViewCocoaTouchCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5A91903CC4B0087C063 /* NNTableViewCocoaTouchCollection.m */; };
+		A7C5F5AD1903CD770087C063 /* NNCollectionViewCocoaTouchCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5AC1903CD770087C063 /* NNCollectionViewCocoaTouchCollection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +81,14 @@
 		A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+NNSectionsDiff.m"; sourceTree = "<group>"; };
 		A792C75518F9EBA90095EA22 /* UITableView+NNSectionsDiff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+NNSectionsDiff.h"; sourceTree = "<group>"; };
 		A792C75618F9EBA90095EA22 /* UITableView+NNSectionsDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+NNSectionsDiff.m"; sourceTree = "<group>"; };
+		A7C5F5A21903CAA00087C063 /* NNDiffReloadOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNDiffReloadOptions.h; sourceTree = "<group>"; };
+		A7C5F5A41903CC0F0087C063 /* NNSectionsDiff+CocoaTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NNSectionsDiff+CocoaTouch.h"; sourceTree = "<group>"; };
+		A7C5F5A51903CC0F0087C063 /* NNSectionsDiff+CocoaTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NNSectionsDiff+CocoaTouch.m"; sourceTree = "<group>"; };
+		A7C5F5A71903CC200087C063 /* NNCocoaTouchCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNCocoaTouchCollection.h; sourceTree = "<group>"; };
+		A7C5F5A81903CC4B0087C063 /* NNTableViewCocoaTouchCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNTableViewCocoaTouchCollection.h; sourceTree = "<group>"; };
+		A7C5F5A91903CC4B0087C063 /* NNTableViewCocoaTouchCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNTableViewCocoaTouchCollection.m; sourceTree = "<group>"; };
+		A7C5F5AB1903CD770087C063 /* NNCollectionViewCocoaTouchCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCollectionViewCocoaTouchCollection.h; sourceTree = "<group>"; };
+		A7C5F5AC1903CD770087C063 /* NNCollectionViewCocoaTouchCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCollectionViewCocoaTouchCollection.m; sourceTree = "<group>"; };
 		A7FFB45218FB184600510BF2 /* ArrayDiff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayDiff.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,12 +206,28 @@
 		A792C75218F9EBA90095EA22 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				A7C5F5A31903CC0F0087C063 /* Private */,
+				A7C5F5A21903CAA00087C063 /* NNDiffReloadOptions.h */,
 				A792C75518F9EBA90095EA22 /* UITableView+NNSectionsDiff.h */,
 				A792C75618F9EBA90095EA22 /* UITableView+NNSectionsDiff.m */,
 				A792C75318F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.h */,
 				A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		A7C5F5A31903CC0F0087C063 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				A7C5F5A71903CC200087C063 /* NNCocoaTouchCollection.h */,
+				A7C5F5A41903CC0F0087C063 /* NNSectionsDiff+CocoaTouch.h */,
+				A7C5F5A51903CC0F0087C063 /* NNSectionsDiff+CocoaTouch.m */,
+				A7C5F5A81903CC4B0087C063 /* NNTableViewCocoaTouchCollection.h */,
+				A7C5F5A91903CC4B0087C063 /* NNTableViewCocoaTouchCollection.m */,
+				A7C5F5AB1903CD770087C063 /* NNCollectionViewCocoaTouchCollection.h */,
+				A7C5F5AC1903CD770087C063 /* NNCollectionViewCocoaTouchCollection.m */,
+			);
+			path = Private;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,7 +318,10 @@
 				A718306518FB49FA00245806 /* NNSectionsDiffChange.m in Sources */,
 				A792C73D18F99B420095EA22 /* NNArraySections.m in Sources */,
 				A792C71818F98A780095EA22 /* NNArrayDiff.m in Sources */,
+				A7C5F5AA1903CC4B0087C063 /* NNTableViewCocoaTouchCollection.m in Sources */,
+				A7C5F5AD1903CD770087C063 /* NNCollectionViewCocoaTouchCollection.m in Sources */,
 				A718306218FB431F00245806 /* NNArrayDiffChange.m in Sources */,
+				A7C5F5A61903CC0F0087C063 /* NNSectionsDiff+CocoaTouch.m in Sources */,
 				A792C75718F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,4 +11,6 @@
 
 @interface PeopleTableViewController : PeopleViewController
 
+@property (nonatomic, readonly) UITableView *tableView;
+
 @end

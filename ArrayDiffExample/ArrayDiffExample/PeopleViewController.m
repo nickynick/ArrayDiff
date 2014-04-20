@@ -49,15 +49,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteBarButtonPressed)],
-        [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStyleBordered target:self action:@selector(updateBarButtonPressed)],
-        [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addBarButtonPressed)]
-    ];
+    self.navigationItem.rightBarButtonItems = [self barButtonItems];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [Person setupPeople];
+    [self setupPeople];
     
     if (self.usesFRC) {
         [self.frc performFetch:NULL];
@@ -165,6 +161,20 @@
     } else {
         return self.people.sections[indexPath.section][indexPath.row];
     }
+}
+
+#pragma mark - 
+
+- (void)setupPeople {
+    [Person setupPeopleWithNames:@[ @"A1", @"A2", @"A3", @"A4", @"B1", @"B2", @"B3", @"C1", @"C2", @"C3", @"C4" ]];
+}
+
+- (NSArray *)barButtonItems {
+    return @[
+        [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStyleBordered target:self action:@selector(deleteBarButtonPressed)],
+        [[UIBarButtonItem alloc] initWithTitle:@"Update" style:UIBarButtonItemStyleBordered target:self action:@selector(updateBarButtonPressed)],
+        [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addBarButtonPressed)]
+    ];
 }
 
 - (void)reloadWithDiff:(NNSectionsDiff *)diff {

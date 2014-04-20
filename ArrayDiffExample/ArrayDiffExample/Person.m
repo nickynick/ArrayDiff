@@ -21,7 +21,7 @@
     return ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
 }
 
-+ (void)setupPeople {
++ (void)setupPeopleWithNames:(NSArray *)names {
     NSManagedObjectContext *context = [self managedObjectContext];
     
     NSArray *existingPeople = [context executeFetchRequest:[Person requestForSortedPeople] error:NULL];
@@ -29,7 +29,6 @@
         [context deleteObject:person];
     }
     
-    NSArray *names = @[ @"A1", @"A2", @"A3", @"A4", @"B1", @"B2", @"B3", @"C1", @"C2", @"C3", @"C4" ];
     for (NSString *name in names) {
         Person *person = [[Person alloc] initWithEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
         person.name = name;

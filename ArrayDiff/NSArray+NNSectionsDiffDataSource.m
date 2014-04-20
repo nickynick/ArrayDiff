@@ -10,11 +10,11 @@
 
 @implementation NSArray (NNSectionsDiffDataSource)
 
-- (NSArray *)diffSectionKeys {
+- (NSArray *)sectionKeys {
     return @[ [NSNull null] ];
 }
 
-- (NSArray *)diffObjectsForSection:(NSUInteger)section {
+- (NSArray *)objectsForSection:(NSUInteger)section {
     return self;
 }
 

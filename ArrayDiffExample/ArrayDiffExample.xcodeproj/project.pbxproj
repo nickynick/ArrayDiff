@@ -23,6 +23,9 @@
 		A792C78818F9ECD30095EA22 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C76C18F9ECD20095EA22 /* CoreData.framework */; };
 		A792C79018F9ECD30095EA22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A792C78E18F9ECD30095EA22 /* InfoPlist.strings */; };
 		A792C79218F9ECD30095EA22 /* ArrayDiffExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C79118F9ECD30095EA22 /* ArrayDiffExampleTests.m */; };
+		A7C5F53E18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F53D18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m */; };
+		A7C5F54118FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F54018FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m */; };
+		A7C5F5B01903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5AF1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m */; };
 		A7FFB43C18FA8BAD00510BF2 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB43B18FA8BAD00510BF2 /* Person.m */; };
 		A7FFB43F18FAA3A500510BF2 /* PeopleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB43E18FAA3A500510BF2 /* PeopleCollectionViewController.m */; };
 		A7FFB44218FAA9D500510BF2 /* PersonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44118FAA9D500510BF2 /* PersonCollectionViewCell.m */; };
@@ -64,6 +67,12 @@
 		A792C78D18F9ECD30095EA22 /* ArrayDiffExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ArrayDiffExampleTests-Info.plist"; sourceTree = "<group>"; };
 		A792C78F18F9ECD30095EA22 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A792C79118F9ECD30095EA22 /* ArrayDiffExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArrayDiffExampleTests.m; sourceTree = "<group>"; };
+		A7C5F53C18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveAndUpdateRowCrashViewController.h; sourceTree = "<group>"; };
+		A7C5F53D18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveAndUpdateRowCrashViewController.m; sourceTree = "<group>"; };
+		A7C5F53F18FFAC080087C063 /* MoveAndInsertSectionCrashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveAndInsertSectionCrashViewController.h; sourceTree = "<group>"; };
+		A7C5F54018FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveAndInsertSectionCrashViewController.m; sourceTree = "<group>"; };
+		A7C5F5AE1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveAndDeleteSectionCrashViewController.h; sourceTree = "<group>"; };
+		A7C5F5AF1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveAndDeleteSectionCrashViewController.m; sourceTree = "<group>"; };
 		A7FFB43A18FA8BAD00510BF2 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		A7FFB43B18FA8BAD00510BF2 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		A7FFB43D18FAA3A500510BF2 /* PeopleCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleCollectionViewController.h; sourceTree = "<group>"; };
@@ -161,6 +170,12 @@
 				A7FFB44118FAA9D500510BF2 /* PersonCollectionViewCell.m */,
 				A7FFB44318FAAC2F00510BF2 /* PeopleCollectionViewHeader.h */,
 				A7FFB44418FAAC2F00510BF2 /* PeopleCollectionViewHeader.m */,
+				A7C5F53C18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.h */,
+				A7C5F53D18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m */,
+				A7C5F53F18FFAC080087C063 /* MoveAndInsertSectionCrashViewController.h */,
+				A7C5F54018FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m */,
+				A7C5F5AE1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.h */,
+				A7C5F5AF1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m */,
 				A792C77D18F9ECD30095EA22 /* Images.xcassets */,
 				A792C77A18F9ECD30095EA22 /* ArrayDiffExample.xcdatamodeld */,
 				A792C76F18F9ECD30095EA22 /* Supporting Files */,
@@ -292,13 +307,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7C5F5B01903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m in Sources */,
 				A792C77918F9ECD30095EA22 /* AppDelegate.m in Sources */,
+				A7C5F53E18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m in Sources */,
 				A7FFB44218FAA9D500510BF2 /* PersonCollectionViewCell.m in Sources */,
 				A7FFB44D18FADC9F00510BF2 /* ExamplesViewController.m in Sources */,
 				A7FFB45018FB0D2600510BF2 /* PeopleViewController.m in Sources */,
 				A7FFB44A18FAB8A500510BF2 /* PeopleTableViewController.m in Sources */,
 				A718306818FB5F2300245806 /* StringsViewController.m in Sources */,
 				A792C77C18F9ECD30095EA22 /* ArrayDiffExample.xcdatamodeld in Sources */,
+				A7C5F54118FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m in Sources */,
 				A7FFB43C18FA8BAD00510BF2 /* Person.m in Sources */,
 				A792C77518F9ECD30095EA22 /* main.m in Sources */,
 				A7FFB44518FAAC2F00510BF2 /* PeopleCollectionViewHeader.m in Sources */,

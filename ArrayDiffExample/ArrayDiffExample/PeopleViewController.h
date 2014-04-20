@@ -24,6 +24,8 @@
 - (Person *)personAtIndexPath:(NSIndexPath *)indexPath;
 
 // Override in subclasses:
+- (void)setupPeople;
+- (NSArray *)barButtonItems;
 - (void)reloadWithDiff:(NNSectionsDiff *)diff;
 - (NSString *)displayedNameAtIndexPath:(NSIndexPath *)indexPath;
 

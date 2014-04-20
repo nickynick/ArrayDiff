@@ -11,7 +11,6 @@
 
 @import UIKit;
 
-
 @interface UICollectionView (NNSectionsDiff)
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;

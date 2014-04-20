@@ -45,8 +45,8 @@
     NSMutableArray *changed = [NSMutableArray array];
     
     
-    NSArray *beforeSectionKeys = [before diffSectionKeys];
-    NSArray *afterSectionKeys = [after diffSectionKeys];
+    NSArray *beforeSectionKeys = [before sectionKeys];
+    NSArray *afterSectionKeys = [after sectionKeys];
     
     NNArrayDiff *sectionKeysDiff = [[NNArrayDiff alloc] initWithBefore:beforeSectionKeys after:afterSectionKeys idBlock:nil updatedBlock:nil];
     
@@ -238,9 +238,9 @@
 - (NSMutableArray *)flattenDataSource:(id<NNSectionsDiffDataSource>)dataSource {
     NSMutableArray *objects = [NSMutableArray array];
     
-    NSUInteger sectionsCount = [[dataSource diffSectionKeys] count];
+    NSUInteger sectionsCount = [[dataSource sectionKeys] count];
     for (NSUInteger i = 0; i < sectionsCount; ++i) {
-        [objects addObjectsFromArray:[dataSource diffObjectsForSection:i]];
+        [objects addObjectsFromArray:[dataSource objectsForSection:i]];
     }
     
     return objects;
@@ -249,9 +249,9 @@
 - (NSMutableArray *)flatIndexPathsForDataSource:(id<NNSectionsDiffDataSource>)dataSource {
     NSMutableArray *indexPaths = [NSMutableArray array];
     
-    NSUInteger sectionsCount = [[dataSource diffSectionKeys] count];
+    NSUInteger sectionsCount = [[dataSource sectionKeys] count];
     for (NSUInteger section = 0; section < sectionsCount; ++section) {
-        NSUInteger objectsCount = [[dataSource diffObjectsForSection:section] count];
+        NSUInteger objectsCount = [[dataSource objectsForSection:section] count];
         for (NSUInteger row = 0; row < objectsCount; ++row) {
             NSUInteger indexes[] = { section, row };
             [indexPaths addObject:[NSIndexPath indexPathWithIndexes:indexes length:2]];

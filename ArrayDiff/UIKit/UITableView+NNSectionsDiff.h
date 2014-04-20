@@ -7,17 +7,9 @@
 //
 
 #import "NNSectionsDiff.h"
+#import "NNDiffReloadOptions.h"
 
 @import UIKit;
-
-typedef NS_OPTIONS(NSInteger, NNDiffReloadOptions) {
-    NNDiffReloadUpdatedWithReload        = 1 << 0, // default
-    NNDiffReloadUpdatedWithSetup         = 1 << 1,
-    
-    NNDiffReloadMovedWithDeleteAndInsert = 1 << 4, // default
-    NNDiffReloadMovedWithMove            = 1 << 5
-};
-
 
 @interface UITableView (NNSectionsDiff)
 

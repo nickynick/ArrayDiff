@@ -2,7 +2,7 @@
 //  NNArrayDiffChange.m
 //  ArrayDiff
 //
-//  Created by Nikolay Timchenko on 14/04/14.
+//  Created by Nick Tymchenko on 14/04/14.
 //  Copyright (c) 2014 Nick Tymchenko. All rights reserved.
 //
 

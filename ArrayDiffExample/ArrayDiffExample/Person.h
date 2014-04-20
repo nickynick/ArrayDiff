@@ -19,7 +19,7 @@
 + (NSManagedObjectContext *)managedObjectContext;
 + (NSFetchRequest *)requestForSortedPeople;
 
-+ (void)setupPeople;
++ (void)setupPeopleWithNames:(NSArray *)names;
 + (void)addRandomPerson;
 + (void)updateRandomPeople;
 + (void)deleteRandomPerson;
