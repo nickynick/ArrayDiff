@@ -16,14 +16,16 @@
 
 - (id)initWithFRC:(BOOL)usesFRC;
 
-
-// For use in subclasses:
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfItemsInSection:(NSInteger)section;
 - (NSString *)titleForSection:(NSUInteger)section;
 - (Person *)personAtIndexPath:(NSIndexPath *)indexPath;
 
-// Override in subclasses:
+@end
+
+
+@interface PeopleViewController (Customization)
+
 - (void)setupPeople;
 - (NSArray *)barButtonItems;
 - (void)reloadWithDiff:(NNSectionsDiff *)diff;
