@@ -10,6 +10,8 @@
 
 @implementation NNSectionsDiffChange
 
+#pragma mark - Init
+
 - (id)init {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:@"-init is not available, use -initWithBefore:after:type: instead."
@@ -17,6 +19,8 @@
 }
 
 - (id)initWithBefore:(NSIndexPath *)before after:(NSIndexPath *)after type:(NNDiffChangeType)type {
+    NSParameterAssert(before != nil);
+    NSParameterAssert(after != nil);
     NSParameterAssert(type != 0);
     
     self = [super init];
@@ -27,6 +31,32 @@
     _type = type;
     
     return self;
+}
+
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)other {
+    if (other == self) return YES;
+    if (!other || ![other isKindOfClass:[NNSectionsDiffChange class]]) return NO;
+    return [self isEqualToSectionsDiffChange:other];
+}
+
+- (BOOL)isEqualToSectionsDiffChange:(NNSectionsDiffChange *)other {
+    if (![self.before isEqual:other.before]) return NO;
+    if (![self.after isEqual:other.after]) return NO;
+    if (self.type != other.type) return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger prime = 31;
+    NSUInteger result = 1;
+    
+    result = prime * result + [self.before hash];
+    result = prime * result + [self.after hash];
+    result = prime * result + self.type;
+    
+    return result;
 }
 
 - (NSString *)description {
@@ -43,6 +73,12 @@
             @([self.before indexAtPosition:0]), @([self.before indexAtPosition:1]),
             typeString,
             @([self.after indexAtPosition:0]), @([self.after indexAtPosition:1])];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+    return self;
 }
 
 @end

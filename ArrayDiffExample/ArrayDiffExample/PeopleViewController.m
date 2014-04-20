@@ -7,13 +7,10 @@
 //
 
 #import "PeopleViewController.h"
-#import "NNFetchedResultsControllerDiffAdapter.h"
-#import "NNArraySections.h"
-
 
 @interface PeopleViewController () <NNFetchedResultsControllerDiffAdapterDelegate>
 
-@property (nonatomic, strong) NNArraySections *people;
+@property (nonatomic, strong) NSArray *people;
 
 @property (nonatomic, strong) NSFetchedResultsController *frc;
 @property (nonatomic, strong) NNFetchedResultsControllerDiffAdapter *frcDiffAdapter;
@@ -58,7 +55,7 @@
     if (self.usesFRC) {
         [self.frc performFetch:NULL];
     } else {
-        self.people = [Person fetchSortedPeopleGroupedIntoSections];
+        self.people = [Person fetchSortedPeopleSections];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:[Person managedObjectContext]];
     }
@@ -105,14 +102,14 @@
 - (void)managedObjectContextDidSave:(NSNotification *)notification {
     NSSet *updatedPeople = notification.userInfo[NSUpdatedObjectsKey];
     
-    NNArraySections *people = [Person fetchSortedPeopleGroupedIntoSections];
-    NNSectionsDiff *diff = [[NNSectionsDiff alloc] initWithBefore:self.people
-                                                            after:people
-                                                          idBlock:^id(id object) {
-                                                              return object;
-                                                          } updatedBlock:^BOOL(id objectBefore, id objectAfter) {
-                                                              return [updatedPeople containsObject:objectAfter];
-                                                          }];
+    NSArray *people = [Person fetchSortedPeopleSections];
+    NNSectionsDiff *diff = [[NNSectionsDiff alloc] initWithSectionsBefore:self.people
+                                                            sectionsAfter:people
+                                                                  idBlock:^id(id object) {
+                                                                      return object;
+                                                                  } updatedBlock:^BOOL(id objectBefore, id objectAfter) {
+                                                                      return [updatedPeople containsObject:objectAfter];
+                                                                  }];
     self.people = people;
     
     [self reloadWithDiff:diff];
@@ -132,7 +129,7 @@
     if (self.usesFRC) {
         return [self.frc.sections count];
     } else {
-        return [self.people.sections count];
+        return [self.people count];
     }
 }
 
@@ -141,7 +138,8 @@
         id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
         return sectionInfo.numberOfObjects;
     } else {
-        return [self.people.sections[section] count];
+        NNSectionData *sectionData = self.people[section];
+        return [sectionData.objects count];
     }
 }
 
@@ -150,7 +148,8 @@
         id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
         return sectionInfo.name;
     } else {
-        return self.people.sectionKeys[section];
+        NNSectionData *sectionData = self.people[section];
+        return sectionData.key;
     }
 }
 
@@ -159,7 +158,8 @@
         id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[indexPath.section];
         return sectionInfo.objects[indexPath.row];
     } else {
-        return self.people.sections[indexPath.section][indexPath.row];
+        NNSectionData *sectionData = self.people[indexPath.section];
+        return sectionData.objects[indexPath.row];
     }
 }
 

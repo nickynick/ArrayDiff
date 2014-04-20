@@ -7,7 +7,6 @@
 //
 
 #import "ExamplesViewController.h"
-#import "NNArraySections.h"
 
 #import "StringsViewController.h"
 #import "PeopleTableViewController.h"
@@ -23,7 +22,7 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
 
 @interface ExamplesViewController ()
 
-@property (nonatomic, strong) NNArraySections *titles;
+@property (nonatomic, strong) NSArray *sections;
 
 @end
 
@@ -44,41 +43,42 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellReuseIdentifier];
     
-    self.titles = [[NNArraySections alloc] init];
-    self.titles.sectionKeys = @[ @"Examples", @"Crashes" ];
-    
-    NSArray *examples = @[
+    NNSectionData *examplesSection = [[NNSectionData alloc] initWithKey:@"Examples" objects:@[
         @"UITableView + array (huge!)",
         @"UITableView + manual sections",
         @"UITableView + FRC",
         @"UICollectionView + manual sections",
         @"UICollectionView + FRC"
-    ];
+    ]];
     
-    NSArray *crashes = @[
+    NNSectionData *crashesSection = [[NNSectionData alloc] initWithKey:@"Crashes" objects:@[
         @"Move row + update another row",
         @"Move row + insert section",
         @"Move row + delete section"
-    ];
+    ]];
     
-    self.titles.sections = @[ examples, crashes ];
+    self.sections = @[ examplesSection, crashesSection ];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.titles.sections count];
+    return [self.sections count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.titles.sections[section] count];
+    NNSectionData *data = self.sections[section];
+    return [data.objects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellReuseIdentifier forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
-    cell.textLabel.text = self.titles.sections[indexPath.section][indexPath.row];
+    
+    NNSectionData *data = self.sections[indexPath.section];
+    cell.textLabel.text = data.objects[indexPath.row];
+    
     return cell;
 }
 

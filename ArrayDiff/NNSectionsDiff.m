@@ -19,10 +19,25 @@
 
 #pragma mark - Init
 
-- (id)initWithBefore:(id<NNSectionsDiffDataSource>)before
-               after:(id<NNSectionsDiffDataSource>)after
-             idBlock:(NNDiffObjectIdBlock)idBlock
-        updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock
+- (id)init {
+    return [self initWithDeletedSections:nil insertedSections:nil deleted:nil inserted:nil changed:nil];
+}
+
+- (id)initWithObjectsBefore:(NSArray *)objectsBefore
+               objectsAfter:(NSArray *)objectsAfter
+                    idBlock:(NNDiffObjectIdBlock)idBlock
+               updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock
+{
+    return [self initWithSectionsBefore:@[ [[NNSectionData alloc] initWithKey:[NSNull null] objects:objectsBefore] ]
+                          sectionsAfter:@[ [[NNSectionData alloc] initWithKey:[NSNull null] objects:objectsAfter] ]
+                                idBlock:idBlock
+                           updatedBlock:updatedBlock];
+}
+
+- (id)initWithSectionsBefore:(NSArray *)sectionsBefore
+               sectionsAfter:(NSArray *)sectionsAfter
+                     idBlock:(NNDiffObjectIdBlock)idBlock
+                updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock
 {
     self = [super init];
     if (!self) return nil;
@@ -45,10 +60,12 @@
     NSMutableArray *changed = [NSMutableArray array];
     
     
-    NSArray *beforeSectionKeys = [before sectionKeys];
-    NSArray *afterSectionKeys = [after sectionKeys];
+    NSArray *sectionKeysBefore = [sectionsBefore valueForKey:@"key"];
+    NSArray *sectionKeysAfter = [sectionsAfter valueForKey:@"key"];
     
-    NNArrayDiff *sectionKeysDiff = [[NNArrayDiff alloc] initWithBefore:beforeSectionKeys after:afterSectionKeys idBlock:nil updatedBlock:nil];
+    NNArrayDiff *sectionKeysDiff = [[NNArrayDiff alloc] initWithBefore:sectionKeysBefore
+                                                                 after:sectionKeysAfter
+                                                               idBlock:nil updatedBlock:nil];
     
     [deletedSections addIndexes:sectionKeysDiff.deleted];
     [insertedSections addIndexes:sectionKeysDiff.inserted];
@@ -59,12 +76,12 @@
     };
     
     
-    NSMutableArray *flatBefore = [self flattenDataSource:before];
-    NSMutableArray *flatAfter = [self flattenDataSource:after];
-    NSMutableArray *flatBeforeIndexPaths = [self flatIndexPathsForDataSource:before];
-    NSMutableArray *flatAfterIndexPaths = [self flatIndexPathsForDataSource:after];
+    NSMutableArray *flatBefore = [self flattenSections:sectionsBefore];
+    NSMutableArray *flatAfter = [self flattenSections:sectionsAfter];
+    NSMutableArray *flatBeforeIndexPaths = [self flatIndexPathsForSections:sectionsBefore];
+    NSMutableArray *flatAfterIndexPaths = [self flatIndexPathsForSections:sectionsAfter];
     
-    if ([beforeSectionKeys count] > 1 || [afterSectionKeys count] > 1) {
+    if ([sectionsBefore count] > 1 || [sectionsAfter count] > 1) {
         NSMutableOrderedSet *flatBeforeIds = [NSMutableOrderedSet orderedSetWithCapacity:[flatBefore count]];
         for (id object in flatBefore) {
             [flatBeforeIds addObject:idBlock(object)];
@@ -84,8 +101,8 @@
             NSIndexPath *indexPathBefore = flatBeforeIndexPaths[flatBeforeIndex];
             NSIndexPath *indexPathAfter = flatAfterIndexPaths[flatAfterIndex];
             
-            id sectionKeyBefore = beforeSectionKeys[[indexPathBefore indexAtPosition:0]];
-            id sectionKeyAfter = afterSectionKeys[[indexPathAfter indexAtPosition:0]];
+            id sectionKeyBefore = sectionKeysBefore[[indexPathBefore indexAtPosition:0]];
+            id sectionKeyAfter = sectionKeysAfter[[indexPathAfter indexAtPosition:0]];
             
             if (![sectionKeyBefore isEqual:sectionKeyAfter]) {
                 NNDiffChangeType changeType = NNDiffChangeMove;
@@ -235,28 +252,23 @@
 
 #pragma mark - Private
 
-- (NSMutableArray *)flattenDataSource:(id<NNSectionsDiffDataSource>)dataSource {
+- (NSMutableArray *)flattenSections:(NSArray *)sections {
     NSMutableArray *objects = [NSMutableArray array];
-    
-    NSUInteger sectionsCount = [[dataSource sectionKeys] count];
-    for (NSUInteger i = 0; i < sectionsCount; ++i) {
-        [objects addObjectsFromArray:[dataSource objectsForSection:i]];
+    for (NNSectionData *section in sections) {
+        [objects addObjectsFromArray:section.objects];
     }
-    
     return objects;
 }
 
-- (NSMutableArray *)flatIndexPathsForDataSource:(id<NNSectionsDiffDataSource>)dataSource {
+- (NSMutableArray *)flatIndexPathsForSections:(NSArray *)sections {
     NSMutableArray *indexPaths = [NSMutableArray array];
     
-    NSUInteger sectionsCount = [[dataSource sectionKeys] count];
-    for (NSUInteger section = 0; section < sectionsCount; ++section) {
-        NSUInteger objectsCount = [[dataSource objectsForSection:section] count];
-        for (NSUInteger row = 0; row < objectsCount; ++row) {
-            NSUInteger indexes[] = { section, row };
+    [sections enumerateObjectsUsingBlock:^(NNSectionData *section, NSUInteger idx, BOOL *stop) {
+        for (NSUInteger row = 0; row < [section.objects count]; ++row) {
+            NSUInteger indexes[] = { idx, row };
             [indexPaths addObject:[NSIndexPath indexPathWithIndexes:indexes length:2]];
         }
-    }
+    }];
     
     return indexPaths;
 }
@@ -303,7 +315,35 @@
 	}]];
 }
 
-#pragma mark - Description
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)other {
+    if (other == self) return YES;
+    if (!other || ![other isKindOfClass:[NNSectionsDiff class]]) return NO;
+    return [self isEqualToSectionsDiff:other];
+}
+
+- (BOOL)isEqualToSectionsDiff:(NNSectionsDiff *)other {
+    if (![self.deletedSections isEqualToIndexSet:other.deletedSections]) return NO;
+    if (![self.insertedSections isEqualToIndexSet:other.insertedSections]) return NO;
+    if (![self.deleted isEqualToArray:other.deleted]) return NO;
+    if (![self.inserted isEqualToArray:other.inserted]) return NO;
+    if (![self.changed isEqualToArray:other.changed]) return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger prime = 31;
+    NSUInteger result = 1;
+    
+    result = prime * result + [self.deletedSections hash];
+    result = prime * result + [self.insertedSections hash];
+    result = prime * result + [self.deleted hash];
+    result = prime * result + [self.inserted hash];
+    result = prime * result + [self.changed hash];
+    
+    return result;
+}
 
 - (NSString *)description {
     NSMutableString *description = [NSMutableString stringWithString:[super description]];

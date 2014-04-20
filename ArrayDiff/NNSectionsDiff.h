@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "NNArrayDiff.h"
-#import "NNSectionsDiffDataSource.h"
 #import "NNSectionsDiffChange.h"
+#import "NNSectionData.h"
 
 @interface NNSectionsDiff : NSObject
 
@@ -19,10 +19,15 @@
 @property (nonatomic, readonly) NSArray *inserted;
 @property (nonatomic, readonly) NSArray *changed;
 
-- (id)initWithBefore:(id<NNSectionsDiffDataSource>)before
-               after:(id<NNSectionsDiffDataSource>)after
-             idBlock:(NNDiffObjectIdBlock)idBlock
-        updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
+- (id)initWithSectionsBefore:(NSArray *)sectionsBefore
+               sectionsAfter:(NSArray *)sectionsAfter
+                     idBlock:(NNDiffObjectIdBlock)idBlock
+                updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
+
+- (id)initWithObjectsBefore:(NSArray *)objectsBefore
+               objectsAfter:(NSArray *)objectsAfter
+                    idBlock:(NNDiffObjectIdBlock)idBlock
+               updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
 
 - (id)initWithDeletedSections:(NSIndexSet *)deletedSections
              insertedSections:(NSIndexSet *)insertedSections

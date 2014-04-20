@@ -8,8 +8,7 @@
 
 #import "NNArrayDiff.h"
 #import "NNSectionsDiff.h"
-#import "NSArray+NNSectionsDiffDataSource.h"
-#import "NNArraySections.h"
+#import "NNSectionData.h"
 
 #import "NNFetchedResultsControllerDiffAdapter.h"
 

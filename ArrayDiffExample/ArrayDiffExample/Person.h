@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "NNArraySections.h"
 
 @interface Person : NSManagedObject
 
@@ -26,6 +25,6 @@
 
 + (Person *)existingPersonWithName:(NSString *)name;
 
-+ (NNArraySections *)fetchSortedPeopleGroupedIntoSections;
++ (NSArray *)fetchSortedPeopleSections;
 
 @end

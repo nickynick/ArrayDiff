@@ -17,6 +17,10 @@
 
 @implementation NNArrayDiff
 
+- (id)init {
+    return [self initWithDeleted:nil inserted:nil changed:nil];
+}
+
 - (id)initWithBefore:(NSArray *)before
                after:(NSArray *)after
              idBlock:(NNDiffObjectIdBlock)idBlock
@@ -191,7 +195,31 @@
     return [NSOrderedSet orderedSetWithArray:ids];
 }
 
-#pragma mark - Description
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)other {
+    if (other == self) return YES;
+    if (!other || ![other isKindOfClass:[NNArrayDiff class]]) return NO;
+    return [self isEqualToArrayDiff:other];
+}
+
+- (BOOL)isEqualToArrayDiff:(NNArrayDiff *)other {
+    if (![self.deleted isEqualToIndexSet:other.deleted]) return NO;
+    if (![self.inserted isEqualToIndexSet:other.inserted]) return NO;
+    if (![self.changed isEqualToArray:other.changed]) return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger prime = 31;
+    NSUInteger result = 1;
+    
+    result = prime * result + [self.deleted hash];
+    result = prime * result + [self.inserted hash];
+    result = prime * result + [self.changed hash];
+    
+    return result;
+}
 
 - (NSString *)description {
     NSMutableString *description = [NSMutableString stringWithString:[super description]];

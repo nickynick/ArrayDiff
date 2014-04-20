@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "NNArrayDiffChange.h"
 
-@interface NNSectionsDiffChange : NSObject
+@interface NNSectionsDiffChange : NSObject <NSCopying>
 
 @property (nonatomic, readonly) NSIndexPath *before;
 @property (nonatomic, readonly) NSIndexPath *after;

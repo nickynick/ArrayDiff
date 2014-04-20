@@ -14,7 +14,7 @@ typedef NS_OPTIONS(NSInteger, NNDiffChangeType) {
 };
 
 
-@interface NNArrayDiffChange : NSObject
+@interface NNArrayDiffChange : NSObject <NSCopying>
 
 @property (nonatomic, readonly) NSUInteger before;
 @property (nonatomic, readonly) NSUInteger after;

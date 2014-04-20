@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NNSectionsDiff.h"
 #import "Person.h"
 
 @interface PeopleViewController : UIViewController

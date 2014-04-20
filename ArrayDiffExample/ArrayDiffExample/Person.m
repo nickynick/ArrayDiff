@@ -90,34 +90,30 @@
     return request;
 }
 
-+ (NNArraySections *)fetchSortedPeopleGroupedIntoSections {
++ (NSArray *)fetchSortedPeopleSections {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSArray *sortedPeople = [context executeFetchRequest:[Person requestForSortedPeople] error:NULL];
 
-    NSMutableArray *sectionKeys = [NSMutableArray array];
-    NSMutableArray *sections = [NSMutableArray array];
-    NSString *currentSectionTitle = nil;
-    NSMutableArray *currentSection = nil;
+    NSMutableDictionary *sectionsByKeys = [NSMutableDictionary dictionary];
+    NSMutableOrderedSet *sectionKeys = [NSMutableOrderedSet orderedSet];
     
     for (Person *person in sortedPeople) {
-        if (![person.sectionTitle isEqualToString:currentSectionTitle]) {
-            if (currentSectionTitle) {
-                [sectionKeys addObject:currentSectionTitle];
-                [sections addObject:currentSection];
-            }
-            currentSectionTitle = person.sectionTitle;
-            currentSection = [NSMutableArray array];
-        }
+        [sectionKeys addObject:person.sectionTitle];
         
-        [currentSection addObject:person];
+        NNMutableSectionData *section = sectionsByKeys[person.sectionTitle];
+        if (!section) {
+            section = [[NNMutableSectionData alloc] initWithKey:person.sectionTitle objects:nil];
+            sectionsByKeys[person.sectionTitle] = section;
+        }
+        [section.objects addObject:person];
     }
     
-    if (currentSectionTitle) {
-        [sectionKeys addObject:currentSectionTitle];
-        [sections addObject:currentSection];
+    NSMutableArray *sections = [NSMutableArray array];
+    for (NSString *sectionKey in sectionKeys) {
+        [sections addObject:sectionsByKeys[sectionKey]];
     }
     
-    return [[NNArraySections alloc] initWithSectionKeys:sectionKeys sections:sections];
+    return sections;
 }
 
 #pragma mark - Private

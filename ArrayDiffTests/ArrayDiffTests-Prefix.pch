@@ -1,0 +1,16 @@
+//
+//  ArrayDiffTests-Prefix.pch
+//  ArrayDiff
+//
+//  Created by Nick Tymchenko on 20/04/14.
+//  Copyright (c) 2014 Nick Tymchenko. All rights reserved.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import "Specta.h"
+    #define EXP_SHORTHAND
+    #import "Expecta.h"
+
+    #import "ArrayDiff.h"
+#endif
