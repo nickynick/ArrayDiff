@@ -36,6 +36,30 @@
     return _objects;
 }
 
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)other {
+    if (other == self) return YES;
+    if (!other || ![other isKindOfClass:[NNSectionData class]]) return NO;
+    return [self isEqualToSectionData:other];
+}
+
+- (BOOL)isEqualToSectionData:(NNSectionData *)other {
+    if (self.key != other.key && ![self.key isEqual:other.key]) return NO;
+    if (![self.objects isEqual:other.objects]) return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger prime = 31;
+    NSUInteger result = 1;
+    
+    result = prime * result + [self.key hash];
+    result = prime * result + [self.objects hash];
+    
+    return result;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {

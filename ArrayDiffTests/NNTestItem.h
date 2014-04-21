@@ -14,8 +14,9 @@
 @property (nonatomic, strong) NSString *name;
 
 - (id)initWithId:(NSUInteger)itemId;
-
 + (instancetype)itemWithId:(NSUInteger)itemId name:(NSString *)name;
+
+- (BOOL)testItemUpdated:(NNTestItem *)other;
 
 + (NNDiffObjectIdBlock)idBlock;
 + (NNDiffObjectUpdatedBlock)updatedBlock;

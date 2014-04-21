@@ -8,73 +8,59 @@
 
 #import "NNArrayDiffValidator.h"
 #import "NNTestItem.h"
-#import "EXPMatchers+containIndex.h"
 
 @implementation NNArrayDiffValidator
 
 + (void)validateDiff:(NNArrayDiff *)diff betweenArray:(NSArray *)before andArray:(NSArray *)after {
     NSMutableIndexSet *deleted = [[NSMutableIndexSet alloc] initWithIndexSet:diff.deleted];
     NSMutableIndexSet *inserted = [[NSMutableIndexSet alloc] initWithIndexSet:diff.inserted];
-    
-    [before enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([self indexOfObject:obj inArray:after] == NSNotFound) {
-            expect(diff.deleted).to.containIndex(idx);
-        }
-    }];
-    
-    [after enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([self indexOfObject:obj inArray:before] == NSNotFound) {
-            expect(diff.inserted).to.containIndex(idx);
-        }
-    }];
-    
     for (NNArrayDiffChange *change in diff.changed) {
         if (change.type & NNDiffChangeMove) {
             [deleted addIndex:change.before];
             [inserted addIndex:change.after];
         }
-        
-        id objectBefore = [before objectAtIndex:change.before];
-        id objectAfter = [after objectAtIndex:change.after];
-        
-        expect(change.after).to.equal([self indexOfObject:objectBefore inArray:after]);
-        
-        if (change.type & NNDiffChangeUpdate) {
-            expect(objectBefore).notTo.equal(objectAfter);
-        } else {
-            expect(objectBefore).to.equal(objectAfter);
-        }
     }
-
-    NSMutableArray *sameBefore = [before mutableCopy];
-    [sameBefore removeObjectsAtIndexes:deleted];
     
-    NSMutableArray *sameAfter = [after mutableCopy];
-    [sameAfter removeObjectsAtIndexes:inserted];
-
-    expect([sameBefore count]).to.equal([sameAfter count]);
+    NSMutableArray *array = [NSMutableArray arrayWithArray:before];
+    expect(array).to.equal(before);
+    [array removeObjectsAtIndexes:deleted];
+    [array insertObjects:[after objectsAtIndexes:inserted] atIndexes:inserted];
+    expect(array).to.equal(after);
     
-    [sameBefore enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        expect(idx).to.equal([self indexOfObject:obj inArray:sameAfter]);
-        expect(obj).to.equal(sameAfter[idx]);
+    
+    [before enumerateObjectsUsingBlock:^(id objectBefore, NSUInteger indexBefore, BOOL *stop) {
+        NSUInteger indexAfter = [self indexOfObject:objectBefore inArray:after];
+        if (indexAfter == NSNotFound) return;
+        id objectAfter = after[indexAfter];
+        
+        NSUInteger changeIndex = [diff.changed indexOfObjectPassingTest:^BOOL(NNArrayDiffChange *change, NSUInteger idx, BOOL *stop) {
+            return (change.before == indexBefore && change.after == indexAfter);
+        }];
+        NNArrayDiffChange *change = (changeIndex != NSNotFound) ? diff.changed[changeIndex] : nil;
+        
+        BOOL objectUpdated = NO;
+        if ([objectBefore isKindOfClass:[NNTestItem class]]) {
+            objectUpdated = [(NNTestItem *)objectBefore testItemUpdated:objectAfter];
+        }
+        
+        if (change && (change.type & NNDiffChangeUpdate)) {
+            expect(objectUpdated).to.beTruthy();
+        } else {
+            expect(objectUpdated).to.beFalsy();
+        }
     }];
 }
 
 #pragma mark - Private
 
 + (NSUInteger)indexOfObject:(id)object inArray:(NSArray *)array {
-    if ([object isKindOfClass:[NNTestItem class]]) {
-        __block NSUInteger index = NSNotFound;
-        [array enumerateObjectsUsingBlock:^(NNTestItem *item, NSUInteger idx, BOOL *stop) {
-            if (item.itemId == ((NNTestItem *)object).itemId) {
-                index = idx;
-                *stop = YES;
-            }
-        }];
-        return index;
-    } else {
-        return [array indexOfObject:object];
-    }
+    return [array indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        if ([object isKindOfClass:[NNTestItem class]]) {
+            return (((NNTestItem *)obj).itemId == ((NNTestItem *)object).itemId);
+        } else {
+            return [obj isEqual:object];
+        }
+    }];
 }
 
 @end

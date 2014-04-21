@@ -36,9 +36,7 @@
 }
 
 - (BOOL)isEqualToTestItem:(NNTestItem *)other {
-    if (self.itemId != other.itemId) return NO;
-    if (self.name != other.name && ![self.name isEqualToString:other.name]) return NO;
-    return YES;
+    return (self.itemId == other.itemId);
 }
 
 - (NSUInteger)hash {
@@ -46,9 +44,13 @@
     NSUInteger result = 1;
     
     result = prime * result + self.itemId;
-    result = prime * result + [self.name hash];
     
     return result;
+}
+
+- (BOOL)testItemUpdated:(NNTestItem *)other {
+    expect(self.itemId).to.equal(other.itemId);
+    return (self.name != other.name && ![self.name isEqualToString:other.name]);
 }
 
 + (NNDiffObjectIdBlock)idBlock {
@@ -58,7 +60,7 @@
 }
 + (NNDiffObjectUpdatedBlock)updatedBlock {
     return ^(NNTestItem *itemBefore, NNTestItem *itemAfter) {
-        return (BOOL) ![itemBefore isEqualToTestItem:itemAfter];
+        return [itemBefore testItemUpdated:itemAfter];
     };
 }
 

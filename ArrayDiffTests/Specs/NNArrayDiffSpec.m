@@ -93,12 +93,68 @@ describe(@"diff calculation", ^{
         expect(calculatedDiff).to.equal(expectedDiff);
     });
     
-    it(@"should return diff between arrays of strings", ^{
+    it(@"should return diff between string arrays (test case 1)", ^{
+        NSArray *before = @[ @"1", @"2", @"3", @"4", @"5" ];
+        NSArray *after = @[ @"3", @"5", @"1", @"4", @"2" ];
+        
+        NNArrayDiff *diff = [[NNArrayDiff alloc] initWithBefore:before after:after idBlock:nil updatedBlock:nil];
+        [NNArrayDiffValidator validateDiff:diff betweenArray:before andArray:after];
+    });
+    
+    it(@"should return diff between string arrays (test case 2)", ^{
+        NSArray *before = @[ @"1", @"2", @"3", @"4" ];
+        NSArray *after = @[ @"5", @"6", @"7", @"8" ];
+        
+        NNArrayDiff *diff = [[NNArrayDiff alloc] initWithBefore:before after:after idBlock:nil updatedBlock:nil];
+        [NNArrayDiffValidator validateDiff:diff betweenArray:before andArray:after];
+    });
+    
+    it(@"should return diff between string arrays (test case 3)", ^{
+        NSArray *before = @[ @"1", @"2", @"3" ];
+        NSArray *after = @[ @"0", @"1", @"3", @"4", @"5" ];
+        
+        NNArrayDiff *diff = [[NNArrayDiff alloc] initWithBefore:before after:after idBlock:nil updatedBlock:nil];
+        [NNArrayDiffValidator validateDiff:diff betweenArray:before andArray:after];
+    });
+    
+    it(@"should return diff between string arrays (test case 4)", ^{
         NSArray *before = @[ @"1", @"2", @"3", @"4", @"5" ];
         NSArray *after = @[ @"2", @"cat", @"dog", @"5", @"rat", @"4", @"bat" ];
         
         NNArrayDiff *diff = [[NNArrayDiff alloc] initWithBefore:before after:after idBlock:nil updatedBlock:nil];
+        [NNArrayDiffValidator validateDiff:diff betweenArray:before andArray:after];
+    });
+    
+    it(@"should return diff between object arrays (test case 1)", ^{
+        NSArray *before = @[
+            [NNTestItem itemWithId:1 name:@"One"],
+            [NNTestItem itemWithId:2 name:@"Two"],
+            [NNTestItem itemWithId:3 name:@"Three"]
+        ];
+        NSArray *after = @[
+            [NNTestItem itemWithId:1 name:@"One *"],
+            [NNTestItem itemWithId:2 name:@"Two"],
+            [NNTestItem itemWithId:3 name:@"Three *"]
+        ];
         
+        NNArrayDiff *diff = [[NNArrayDiff alloc] initWithBefore:before after:after idBlock:[NNTestItem idBlock] updatedBlock:[NNTestItem updatedBlock]];
+        [NNArrayDiffValidator validateDiff:diff betweenArray:before andArray:after];
+    });
+    
+    it(@"should return diff between object arrays (test case 2)", ^{
+        NSArray *before = @[
+            [NNTestItem itemWithId:1 name:@"One"],
+            [NNTestItem itemWithId:2 name:@"Two"],
+            [NNTestItem itemWithId:3 name:@"Three"]
+        ];
+        NSArray *after = @[
+            [NNTestItem itemWithId:5 name:@"Five"],
+            [NNTestItem itemWithId:3 name:@"Three"],
+            [NNTestItem itemWithId:2 name:@"Two *"],
+            [NNTestItem itemWithId:4 name:@"Four"],
+        ];
+        
+        NNArrayDiff *diff = [[NNArrayDiff alloc] initWithBefore:before after:after idBlock:[NNTestItem idBlock] updatedBlock:[NNTestItem updatedBlock]];
         [NNArrayDiffValidator validateDiff:diff betweenArray:before andArray:after];
     });
 });
