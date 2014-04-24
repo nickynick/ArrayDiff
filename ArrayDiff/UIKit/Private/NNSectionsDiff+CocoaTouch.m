@@ -8,23 +8,32 @@
 
 #import "NNSectionsDiff+CocoaTouch.h"
 
+static void GetDefaultOptions(NNDiffReloadOptions *options) {
+    if (!(*options & (NNDiffReloadUpdatedWithReload | NNDiffReloadUpdatedWithSetup))) {
+        *options |= NNDiffReloadUpdatedWithReload;
+    }
+    if (!(*options & (NNDiffReloadMovedWithDeleteAndInsert | NNDiffReloadMovedWithMove))) {
+        *options |= NNDiffReloadMovedWithDeleteAndInsert;
+    }
+}
+
+
 @implementation NNSectionsDiff (CocoaTouch)
 
 - (void)reloadCocoaTouchCollection:(id<NNCocoaTouchCollection>)collection
                            options:(NNDiffReloadOptions)options
                     cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
 {
-    if (!(options & (NNDiffReloadUpdatedWithReload | NNDiffReloadUpdatedWithSetup))) {
-        options |= NNDiffReloadUpdatedWithReload;
-    }
-    if (!(options & (NNDiffReloadMovedWithDeleteAndInsert | NNDiffReloadMovedWithMove))) {
-        options |= NNDiffReloadMovedWithDeleteAndInsert;
-    }
+    GetDefaultOptions(&options);
     
     NSAssert(!((options & NNDiffReloadUpdatedWithSetup) && cellSetupBlock == nil), @"NNDiffReloadUpdatedWithSetup requires a non-nil cellSetupBlock.");
     NSAssert(!((options & NNDiffReloadMovedWithMove) && cellSetupBlock == nil), @"NNDiffReloadMovedWithMove requires a non-nil cellSetupBlock.");
     
-    
+    if ([self isEqual:[[NNSectionsDiff alloc] init]]) {
+        return;
+    }
+
+         
     NSMutableArray *indexPathsToSetup = [NSMutableArray array];
     
     [collection performUpdates:^{
