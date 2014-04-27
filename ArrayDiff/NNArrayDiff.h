@@ -24,6 +24,11 @@ typedef BOOL (^NNDiffObjectUpdatedBlock)(id objectBefore, id objectAfter);
              idBlock:(NNDiffObjectIdBlock)idBlock
         updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
 
+@end
+
+
+@interface NNArrayDiff (Handmade)
+
 - (id)initWithDeleted:(NSIndexSet *)deleted
              inserted:(NSIndexSet *)inserted
               changed:(NSArray *)changed;

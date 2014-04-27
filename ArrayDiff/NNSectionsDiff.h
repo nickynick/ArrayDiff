@@ -29,12 +29,17 @@
                     idBlock:(NNDiffObjectIdBlock)idBlock
                updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
 
+- (instancetype)diffByOffsetting:(NSUInteger)offset;
+
+@end
+
+
+@interface NNSectionsDiff (Handmade)
+
 - (id)initWithDeletedSections:(NSIndexSet *)deletedSections
              insertedSections:(NSIndexSet *)insertedSections
                       deleted:(NSArray *)deleted
                      inserted:(NSArray *)inserted
                       changed:(NSArray *)changed;
-
-- (instancetype)diffByOffsetting:(NSUInteger)offset;
 
 @end
