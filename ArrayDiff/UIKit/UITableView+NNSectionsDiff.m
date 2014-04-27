@@ -7,7 +7,7 @@
 //
 
 #import "UITableView+NNSectionsDiff.h"
-#import "NNSectionsDiff+CocoaTouch.h"
+#import "NNCocoaTouchCollectionReloader.h"
 #import "NNTableViewCocoaTouchCollection.h"
 
 @implementation UITableView (NNSectionsDiff)
@@ -25,7 +25,11 @@
                 cellSetupBlock:(void (^)(id, NSIndexPath *))cellSetupBlock
 {
     NNTableViewCocoaTouchCollection *collection = [[NNTableViewCocoaTouchCollection alloc] initWithTableView:self rowAnimation:animation];
-    [sectionsDiff reloadCocoaTouchCollection:collection options:options cellSetupBlock:cellSetupBlock];
+    
+    [NNCocoaTouchCollectionReloader reloadCocoaTouchCollection:collection
+                                                      withDiff:sectionsDiff
+                                                       options:options
+                                                cellSetupBlock:cellSetupBlock];
 }
 
 @end

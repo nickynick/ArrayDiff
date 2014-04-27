@@ -8,13 +8,6 @@
 
 #import "NNSectionsDiff.h"
 
-@interface NNSectionsDiff ()
-
-@property (nonatomic, strong) NSArray *sectionPreviousIndexes;
-
-@end
-
-
 @implementation NNSectionsDiff
 
 #pragma mark - Init
@@ -147,7 +140,7 @@
     _inserted = [inserted copy];
     _changed = [changed copy];
     
-    [self sanitizeRowDiffs];
+    [self cleanupForDeletedAndInsertedSections];
     
     return self;
 }
@@ -167,7 +160,7 @@
     _inserted = [inserted copy] ?: @[];
     _changed = [changed copy] ?: @[];
     
-    [self sanitizeRowDiffs];
+    [self cleanupForDeletedAndInsertedSections];
     
     return self;
 }
@@ -209,47 +202,6 @@
                                                    changed:changed];
 }
 
-- (NSUInteger)previousIndexForSection:(NSUInteger)section {
-    if (!self.sectionPreviousIndexes) {
-        NSUInteger lastDeleted = [self.deletedSections count] > 0 ? [self.deletedSections lastIndex] + 1 : 0;
-        NSUInteger lastInserted = [self.insertedSections count] > 0 ? [self.insertedSections lastIndex] + 1 : 0;
-        
-        NSMutableArray *indexesAfterDeleting = [NSMutableArray arrayWithCapacity:lastDeleted + 1];
-        for (NSUInteger i = 0; i <= lastDeleted; ++i) {
-            [indexesAfterDeleting addObject:@(i)];
-        }
-        [indexesAfterDeleting removeObjectsAtIndexes:self.deletedSections];
-        
-        NSMutableArray *sectionPreviousIndexes = [NSMutableArray array];
-        NSUInteger d = 0, i = 0;
-        NSUInteger current = [indexesAfterDeleting[d] unsignedIntegerValue];
-        
-        while (d < [indexesAfterDeleting count] || i <= lastInserted) {
-            if ([self.insertedSections containsIndex:i]) {
-                [sectionPreviousIndexes addObject:@(NSNotFound)];
-            } else {
-                [sectionPreviousIndexes addObject:@(current)];
-                
-                ++d;
-                if (d < [indexesAfterDeleting count]) {
-                    current = [indexesAfterDeleting[d] unsignedIntegerValue];
-                } else {
-                    ++current;
-                }
-            }
-            ++i;
-        }
-        
-        self.sectionPreviousIndexes = [sectionPreviousIndexes copy];
-    }
-    
-    if (section < [self.sectionPreviousIndexes count]) {
-        return [self.sectionPreviousIndexes[section] unsignedIntegerValue];
-    } else {
-        return [[self.sectionPreviousIndexes lastObject] unsignedIntegerValue] + section + 1 - [self.sectionPreviousIndexes count];
-    }
-}
-
 #pragma mark - Private
 
 - (NSMutableArray *)flattenSections:(NSArray *)sections {
@@ -278,34 +230,7 @@
     return [NSIndexPath indexPathWithIndexes:indexes length:2];
 }
 
-- (void)sanitizeRowDiffs {
-    NSMutableArray *additionalDeleted = [NSMutableArray array];
-    NSMutableArray *additionalInserted = [NSMutableArray array];
-    
-    _changed = [_changed objectsAtIndexes:[_changed indexesOfObjectsPassingTest:^BOOL(NNSectionsDiffChange *obj, NSUInteger idx, BOOL *stop) {
-        if ((obj.type & NNDiffChangeMove) == 0) return YES;
-        
-        if ([_deletedSections containsIndex:[obj.before indexAtPosition:0]]) {
-            [additionalInserted addObject:obj.after];
-            return NO;
-        }
-        
-        if ([_insertedSections containsIndex:[obj.after indexAtPosition:0]]) {
-            [additionalDeleted addObject:obj.before];
-            return NO;
-        }
-        
-        return YES;
-	}]];
-    
-    if ([additionalDeleted count] > 0) {
-        _deleted = [_deleted arrayByAddingObjectsFromArray:additionalDeleted];
-    }
-    
-    if ([additionalInserted count] > 0) {
-        _inserted = [_inserted arrayByAddingObjectsFromArray:additionalInserted];
-    }
-    
+- (void)cleanupForDeletedAndInsertedSections {
     _deleted = [_deleted objectsAtIndexes:[_deleted indexesOfObjectsPassingTest:^BOOL(NSIndexPath *obj, NSUInteger idx, BOOL *stop) {
 		return ![_deletedSections containsIndex:[obj indexAtPosition:0]];
 	}]];

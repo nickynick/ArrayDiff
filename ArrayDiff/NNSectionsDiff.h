@@ -37,7 +37,4 @@
 
 - (instancetype)diffByOffsetting:(NSUInteger)offset;
 
-
-- (NSUInteger)previousIndexForSection:(NSUInteger)section;
-
 @end
