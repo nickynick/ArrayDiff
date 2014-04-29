@@ -16,6 +16,7 @@
 + (void)reloadCocoaTouchCollection:(id<NNCocoaTouchCollection>)collection
                           withDiff:(NNSectionsDiff *)diff
                            options:(NNDiffReloadOptions)options
-                    cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock;
+                    cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                        completion:(void (^)())completion;
 
 @end

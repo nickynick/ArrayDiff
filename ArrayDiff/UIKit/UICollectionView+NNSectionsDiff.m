@@ -22,12 +22,21 @@
                        options:(NNDiffReloadOptions)options
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
 {
+    [self reloadWithSectionsDiff:sectionsDiff options:options cellSetupBlock:cellSetupBlock completion:nil];
+}
+
+- (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
+                       options:(NNDiffReloadOptions)options
+                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                    completion:(void (^)())completion
+{
     NNCollectionViewCocoaTouchCollection *collection = [[NNCollectionViewCocoaTouchCollection alloc] initWithCollectionView:self];
-    
+
     [NNCocoaTouchCollectionReloader reloadCocoaTouchCollection:collection
                                                       withDiff:sectionsDiff
                                                        options:options
-                                                cellSetupBlock:cellSetupBlock];
+                                                cellSetupBlock:cellSetupBlock
+                                                    completion:completion];
 }
 
 @end

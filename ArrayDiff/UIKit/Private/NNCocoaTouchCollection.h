@@ -8,7 +8,7 @@
 
 @protocol NNCocoaTouchCollection <NSObject>
 
-- (void)performUpdates:(void (^)())updates;
+- (void)performUpdates:(void (^)())updates completion:(void (^)())completion;
 
 - (void)insertSections:(NSIndexSet *)sections;
 - (void)deleteSections:(NSIndexSet *)sections;
