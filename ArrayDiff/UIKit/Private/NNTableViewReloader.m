@@ -1,14 +1,14 @@
 //
-//  NNTableViewCocoaTouchCollection.m
+//  NNTableViewReloader.m
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 20/04/14.
 //  Copyright (c) 2014 Nick Tymchenko. All rights reserved.
 //
 
-#import "NNTableViewCocoaTouchCollection.h"
+#import "NNTableViewReloader.h"
 
-@interface NNTableViewCocoaTouchCollection ()
+@interface NNTableViewReloader ()
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) UITableViewRowAnimation rowAnimation;
@@ -16,7 +16,7 @@
 @end
 
 
-@implementation NNTableViewCocoaTouchCollection
+@implementation NNTableViewReloader
 
 #pragma mark - Init
 
@@ -30,19 +30,21 @@
     return self;
 }
 
-#pragma mark - NNCocoaTouchCollection
+#pragma mark - NNCocoaTouchCollectionReloader
 
 - (void)performUpdates:(void (^)())updates completion:(void (^)())completion {
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion != nil) {
-            completion();
-        }
-    }];
+    if (completion) {
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:completion];
+    }
+    
     [self.tableView beginUpdates];
     updates();
     [self.tableView endUpdates];
-    [CATransaction commit];
+    
+    if (completion) {
+        [CATransaction commit];
+    }
 }
 
 - (void)insertSections:(NSIndexSet *)sections {

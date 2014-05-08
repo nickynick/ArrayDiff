@@ -1,5 +1,5 @@
 //
-//  NNCollectionViewCocoaTouchCollection.h
+//  NNCollectionViewReloader.h 
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 20/04/14.
@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNCocoaTouchCollection.h"
+#import "NNCocoaTouchCollectionReloader.h"
 
 @import UIKit;
 
-@interface NNCollectionViewCocoaTouchCollection : NSObject <NNCocoaTouchCollection>
+@interface NNCollectionViewReloader : NNCocoaTouchCollectionReloader
 
 - (id)initWithCollectionView:(UICollectionView *)collectionView;
 

@@ -15,6 +15,6 @@
 
 - (id)initWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;
 
- - (NSUInteger)previousIndexForSection:(NSUInteger)section;
+- (NSUInteger)oldIndexForSection:(NSUInteger)section;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "NNSectionsDiff.h"
-#import "UITableView+NNSectionsDiff.h"
+#import "NNDiffReloadOptions.h"
 
 @import UIKit;
 

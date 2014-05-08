@@ -1,21 +1,21 @@
 //
-//  NNCollectionViewCocoaTouchCollection.m
+//  NNCollectionViewReloader.m
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 20/04/14.
 //  Copyright (c) 2014 Nick Tymchenko. All rights reserved.
 //
 
-#import "NNCollectionViewCocoaTouchCollection.h"
+#import "NNCollectionViewReloader.h"
 
-@interface NNCollectionViewCocoaTouchCollection ()
+@interface NNCollectionViewReloader ()
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
 @end
 
 
-@implementation NNCollectionViewCocoaTouchCollection
+@implementation NNCollectionViewReloader
 
 #pragma mark - Init
 
@@ -28,11 +28,11 @@
     return self;
 }
 
-#pragma mark - NNCocoaTouchCollection
+#pragma mark - NNCocoaTouchCollectionReloader
 
 - (void)performUpdates:(void (^)())updates completion:(void (^)())completion {
     [self.collectionView performBatchUpdates:updates completion:^(__unused BOOL finished) {
-        if (completion != nil) {
+        if (completion) {
             completion();
         }
     }];

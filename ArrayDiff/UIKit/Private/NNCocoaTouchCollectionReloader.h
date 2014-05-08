@@ -9,14 +9,29 @@
 #import <Foundation/Foundation.h>
 #import "NNSectionsDiff.h"
 #import "NNDiffReloadOptions.h"
-#import "NNCocoaTouchCollection.h"
 
 @interface NNCocoaTouchCollectionReloader : NSObject
 
-+ (void)reloadCocoaTouchCollection:(id<NNCocoaTouchCollection>)collection
-                          withDiff:(NNSectionsDiff *)diff
-                           options:(NNDiffReloadOptions)options
-                    cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
-                        completion:(void (^)())completion;
+- (void)reloadWithSectionsDiff:(NNSectionsDiff *)diff
+                       options:(NNDiffReloadOptions)options
+                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                    completion:(void (^)())completion;
+
+@end
+
+
+@interface NNCocoaTouchCollectionReloader (Abstract)
+
+- (void)performUpdates:(void (^)())updates completion:(void (^)())completion;
+
+- (void)insertSections:(NSIndexSet *)sections;
+- (void)deleteSections:(NSIndexSet *)sections;
+
+- (void)insertItemsAtIndexPaths:(NSArray *)indexPaths;
+- (void)deleteItemsAtIndexPaths:(NSArray *)indexPaths;
+- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths;
+- (void)moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
+
+- (id)cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

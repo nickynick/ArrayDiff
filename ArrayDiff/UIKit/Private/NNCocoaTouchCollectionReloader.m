@@ -13,10 +13,9 @@
 
 #pragma mark - Public
 
-+ (void)reloadCocoaTouchCollection:(id<NNCocoaTouchCollection>)collection
-                          withDiff:(NNSectionsDiff *)diff
-                           options:(NNDiffReloadOptions)options
-                    cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+- (void)reloadWithSectionsDiff:(NNSectionsDiff *)diff
+                       options:(NNDiffReloadOptions)options
+                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
                     completion:(void (^)())completion
 {
     options = [self ensureDefaultOptions:options];
@@ -34,22 +33,22 @@
     
     NSMutableArray *indexPathsToSetup = [NSMutableArray array];
     
-    [collection performUpdates:^{
-        [collection deleteSections:diff.deletedSections];
-        [collection insertSections:diff.insertedSections];
+    [self performUpdates:^{
+        [self deleteSections:diff.deletedSections];
+        [self insertSections:diff.insertedSections];
         
-        [collection deleteItemsAtIndexPaths:diff.deleted];
-        [collection insertItemsAtIndexPaths:diff.inserted];
+        [self deleteItemsAtIndexPaths:diff.deleted];
+        [self insertItemsAtIndexPaths:diff.inserted];
         
         for (NNSectionsDiffChange *change in diff.changed) {
             if (change.type == NNDiffChangeUpdate) {
                 if (options & NNDiffReloadUpdatedWithReload) {
                     if (options & NNDiffReloadMovedWithMove) {
                         // Have to use delete+insert for reloading purpose to co-exist with moves (thanks UIKit!)
-                        [collection deleteItemsAtIndexPaths:@[ change.before ]];
-                        [collection insertItemsAtIndexPaths:@[ change.after ]];
+                        [self deleteItemsAtIndexPaths:@[ change.before ]];
+                        [self insertItemsAtIndexPaths:@[ change.after ]];
                     } else {
-                        [collection reloadItemsAtIndexPaths:@[ change.before ]];
+                        [self reloadItemsAtIndexPaths:@[ change.before ]];
                     }
                 } else {
                     [indexPathsToSetup addObject:change.after];
@@ -65,30 +64,29 @@
                     // Move animations between different sections will crash if the destination section index doesn't match its initial one (thanks UIKit!)
                     NSUInteger sourceSectionIndex = [change.before indexAtPosition:0];
                     NSUInteger destinationSectionIndex = [change.after indexAtPosition:0];
-                    NSUInteger previousDestinationSectionIndex = [tracker previousIndexForSection:destinationSectionIndex];
+                    NSUInteger oldDestinationSectionIndex = [tracker oldIndexForSection:destinationSectionIndex];
                     
-                    if (sourceSectionIndex != previousDestinationSectionIndex &&
-                        destinationSectionIndex != previousDestinationSectionIndex) {
+                    if (sourceSectionIndex != oldDestinationSectionIndex &&
+                        destinationSectionIndex != oldDestinationSectionIndex) {
                         shouldMove = NO;
                     }
                 }
                 
                 if (shouldMove) {
-                    [collection moveItemAtIndexPath:change.before toIndexPath:change.after];
+                    [self moveItemAtIndexPath:change.before toIndexPath:change.after];
                     if (change.type & NNDiffChangeUpdate) {
                         [indexPathsToSetup addObject:change.after];
                     }
                 } else {
-                    [collection deleteItemsAtIndexPaths:@[ change.before ]];
-                    [collection insertItemsAtIndexPaths:@[ change.after ]];
+                    [self deleteItemsAtIndexPaths:@[ change.before ]];
+                    [self insertItemsAtIndexPaths:@[ change.after ]];
                 }
             }
         }
-    }
-                    completion:completion];
+    } completion:completion];
     
     for (NSIndexPath *indexPath in indexPathsToSetup) {
-        id cell = [collection cellForItemAtIndexPath:indexPath];
+        id cell = [self cellForItemAtIndexPath:indexPath];
         if (cell) {
             cellSetupBlock(cell, indexPath);
         }
@@ -97,7 +95,7 @@
 
 #pragma mark - Private
 
-+ (NNDiffReloadOptions)ensureDefaultOptions:(NNDiffReloadOptions)options {
+- (NNDiffReloadOptions)ensureDefaultOptions:(NNDiffReloadOptions)options {
     if (!(options & (NNDiffReloadUpdatedWithReload | NNDiffReloadUpdatedWithSetup))) {
         options |= NNDiffReloadUpdatedWithReload;
     }
@@ -107,7 +105,7 @@
     return options;
 }
 
-+ (NNSectionsDiff *)sanitizeDiff:(NNSectionsDiff *)diff {
+- (NNSectionsDiff *)sanitizeDiff:(NNSectionsDiff *)diff {
     // UIKit would get upset if we attempted to move an item from a section being deleted / into a section being inserted.
     // Therefore, we should break such moves into deletions+insertions.
     
@@ -150,5 +148,24 @@
                                                   inserted:inserted
                                                    changed:changed];
 }
+
+#pragma mark - Abstract
+
+#define methodNotImplemented() \
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException \
+                                   reason:[NSString stringWithFormat:@"You must override %@ in a subclass.", NSStringFromSelector(_cmd)] \
+                                 userInfo:nil]
+
+- (void)performUpdates:(void (^)())updates completion:(void (^)())completion { methodNotImplemented(); }
+
+- (void)insertSections:(NSIndexSet *)sections { methodNotImplemented(); }
+- (void)deleteSections:(NSIndexSet *)sections { methodNotImplemented(); }
+
+- (void)insertItemsAtIndexPaths:(NSArray *)indexPaths { methodNotImplemented(); }
+- (void)deleteItemsAtIndexPaths:(NSArray *)indexPaths { methodNotImplemented(); }
+- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths { methodNotImplemented(); }
+- (void)moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath { methodNotImplemented(); }
+
+- (id)cellForItemAtIndexPath:(NSIndexPath *)indexPath { methodNotImplemented(); }
 
 @end

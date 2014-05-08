@@ -1,5 +1,5 @@
 //
-//  NNTableViewCocoaTouchCollection.h
+//  NNTableViewReloader.h
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 20/04/14.
@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNCocoaTouchCollection.h"
+#import "NNCocoaTouchCollectionReloader.h"
 
 @import UIKit;
 
-@interface NNTableViewCocoaTouchCollection : NSObject <NNCocoaTouchCollection>
+@interface NNTableViewReloader : NNCocoaTouchCollectionReloader
 
 - (id)initWithTableView:(UITableView *)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation;
 

@@ -7,8 +7,7 @@
 //
 
 #import "UICollectionView+NNSectionsDiff.h"
-#import "NNCocoaTouchCollectionReloader.h"
-#import "NNCollectionViewCocoaTouchCollection.h"
+#import "NNCollectionViewReloader.h"
 
 @implementation UICollectionView (NNSectionsDiff)
 
@@ -22,7 +21,10 @@
                        options:(NNDiffReloadOptions)options
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
 {
-    [self reloadWithSectionsDiff:sectionsDiff options:options cellSetupBlock:cellSetupBlock completion:nil];
+    [self reloadWithSectionsDiff:sectionsDiff
+                         options:options
+                  cellSetupBlock:cellSetupBlock
+                      completion:nil];
 }
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
@@ -30,13 +32,12 @@
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
                     completion:(void (^)())completion
 {
-    NNCollectionViewCocoaTouchCollection *collection = [[NNCollectionViewCocoaTouchCollection alloc] initWithCollectionView:self];
-
-    [NNCocoaTouchCollectionReloader reloadCocoaTouchCollection:collection
-                                                      withDiff:sectionsDiff
-                                                       options:options
-                                                cellSetupBlock:cellSetupBlock
-                                                    completion:completion];
+    NNCollectionViewReloader *reloader = [[NNCollectionViewReloader alloc] initWithCollectionView:self];
+    
+    [reloader reloadWithSectionsDiff:sectionsDiff
+                             options:options
+                      cellSetupBlock:cellSetupBlock
+                          completion:completion];
 }
 
 @end

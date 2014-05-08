@@ -10,7 +10,7 @@
 
 @interface NNSectionsDiffTracker ()
 
-@property (nonatomic, strong) NSArray *sectionPreviousIndexes;
+@property (nonatomic, strong) NSArray *oldSectionIndexes;
 
 @end
 
@@ -36,8 +36,8 @@
 
 #pragma mark - Public
 
-- (NSUInteger)previousIndexForSection:(NSUInteger)section {
-    if (!self.sectionPreviousIndexes) {
+- (NSUInteger)oldIndexForSection:(NSUInteger)section {
+    if (!self.oldSectionIndexes) {
         NNSectionsDiff *diff = self.sectionsDiff;
         
         NSUInteger lastDeleted = [diff.deletedSections count] > 0 ? [diff.deletedSections lastIndex] + 1 : 0;
@@ -49,15 +49,15 @@
         }
         [indexesAfterDeleting removeObjectsAtIndexes:diff.deletedSections];
         
-        NSMutableArray *sectionPreviousIndexes = [NSMutableArray array];
+        NSMutableArray *oldSectionIndexes = [NSMutableArray array];
         NSUInteger d = 0, i = 0;
         NSUInteger current = [indexesAfterDeleting[d] unsignedIntegerValue];
         
         while (d < [indexesAfterDeleting count] || i <= lastInserted) {
             if ([diff.insertedSections containsIndex:i]) {
-                [sectionPreviousIndexes addObject:@(NSNotFound)];
+                [oldSectionIndexes addObject:@(NSNotFound)];
             } else {
-                [sectionPreviousIndexes addObject:@(current)];
+                [oldSectionIndexes addObject:@(current)];
                 
                 ++d;
                 if (d < [indexesAfterDeleting count]) {
@@ -69,13 +69,13 @@
             ++i;
         }
         
-        self.sectionPreviousIndexes = [sectionPreviousIndexes copy];
+        self.oldSectionIndexes = [oldSectionIndexes copy];
     }
     
-    if (section < [self.sectionPreviousIndexes count]) {
-        return [self.sectionPreviousIndexes[section] unsignedIntegerValue];
+    if (section < [self.oldSectionIndexes count]) {
+        return [self.oldSectionIndexes[section] unsignedIntegerValue];
     } else {
-        return [[self.sectionPreviousIndexes lastObject] unsignedIntegerValue] + section + 1 - [self.sectionPreviousIndexes count];
+        return [[self.oldSectionIndexes lastObject] unsignedIntegerValue] + section + 1 - [self.oldSectionIndexes count];
     }
 }
 
