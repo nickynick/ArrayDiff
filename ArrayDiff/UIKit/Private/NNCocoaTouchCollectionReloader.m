@@ -17,6 +17,7 @@
                           withDiff:(NNSectionsDiff *)diff
                            options:(NNDiffReloadOptions)options
                     cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                    completion:(void (^)())completion
 {
     options = [self ensureDefaultOptions:options];
     
@@ -83,7 +84,8 @@
                 }
             }
         }
-    }];
+    }
+                    completion:completion];
     
     for (NSIndexPath *indexPath in indexPathsToSetup) {
         id cell = [collection cellForItemAtIndexPath:indexPath];

@@ -30,8 +30,12 @@
 
 #pragma mark - NNCocoaTouchCollection
 
-- (void)performUpdates:(void (^)())updates {
-    [self.collectionView performBatchUpdates:updates completion:nil];
+- (void)performUpdates:(void (^)())updates completion:(void (^)())completion {
+    [self.collectionView performBatchUpdates:updates completion:^(__unused BOOL finished) {
+        if (completion != nil) {
+            completion();
+        }
+    }];
 }
 
 - (void)insertSections:(NSIndexSet *)sections {

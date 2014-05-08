@@ -19,4 +19,9 @@
                        options:(NNDiffReloadOptions)options
                 cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock;
 
+- (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
+                       options:(NNDiffReloadOptions)options
+                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                    completion:(void (^)())completion;
+
 @end

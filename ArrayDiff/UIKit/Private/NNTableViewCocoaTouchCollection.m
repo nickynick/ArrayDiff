@@ -32,10 +32,17 @@
 
 #pragma mark - NNCocoaTouchCollection
 
-- (void)performUpdates:(void (^)())updates {
+- (void)performUpdates:(void (^)())updates completion:(void (^)())completion {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        if (completion != nil) {
+            completion();
+        }
+    }];
     [self.tableView beginUpdates];
     updates();
     [self.tableView endUpdates];
+    [CATransaction commit];
 }
 
 - (void)insertSections:(NSIndexSet *)sections {
