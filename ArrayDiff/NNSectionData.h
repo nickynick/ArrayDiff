@@ -15,6 +15,8 @@
 
 - (id)initWithKey:(id)key objects:(NSArray *)objects;
 
+- (id)objectAtIndexedSubscript:(NSUInteger)idx;
+
 @end
 
 

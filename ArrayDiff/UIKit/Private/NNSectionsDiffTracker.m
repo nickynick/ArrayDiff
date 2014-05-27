@@ -2,7 +2,7 @@
 //  NNSectionsDiffTracker.m
 //  ArrayDiff
 //
-//  Created by Nikolay Timchenko on 27/04/14.
+//  Created by Nick Tymchenko on 27/04/14.
 //  Copyright (c) 2014 Nick Tymchenko. All rights reserved.
 //
 

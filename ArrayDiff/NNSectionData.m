@@ -36,6 +36,10 @@
     return _objects;
 }
 
+- (id)objectAtIndexedSubscript:(NSUInteger)idx {
+    return self.objects[idx];
+}
+
 #pragma mark - NSObject
 
 - (BOOL)isEqual:(id)other {

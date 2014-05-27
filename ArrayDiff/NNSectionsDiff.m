@@ -104,6 +104,28 @@
 
 #pragma mark - Private
 
+- (void)calculateSectionChangesFromSections:(NSArray *)sectionsBefore toSections:(NSArray *)sectionsAfter {
+    // We use section keys to identify sections, so we can calculate a diff.
+    NSArray *sectionKeysBefore = [sectionsBefore valueForKey:@"key"];
+    NSArray *sectionKeysAfter = [sectionsAfter valueForKey:@"key"];
+    
+    NNArrayDiff *sectionKeysDiff = [[NNArrayDiff alloc] initWithBefore:sectionKeysBefore
+                                                                 after:sectionKeysAfter
+                                                               idBlock:nil updatedBlock:nil];
+    
+    NSMutableIndexSet *deletedSections = [sectionKeysDiff.deleted mutableCopy];
+    NSMutableIndexSet *insertedSections = [sectionKeysDiff.inserted mutableCopy];
+    
+    // For now, let's just treat section moves as insert/delete pairs.
+    for (NNArrayDiffChange *change in sectionKeysDiff.changed) {
+        [deletedSections addIndex:change.before];
+        [insertedSections addIndex:change.after];
+    };
+    
+    _deletedSections = [deletedSections copy];
+    _insertedSections = [insertedSections copy];
+}
+
 - (void)calculateChangesFromSections:(NSArray *)sectionsBefore
                           toSections:(NSArray *)sectionsAfter
                              idBlock:(NNDiffObjectIdBlock)idBlock
@@ -187,30 +209,6 @@
     _changed = [changed copy];
     
     [self sanitizeDeletedAndInsertedSections];
-}
-
-- (void)calculateSectionChangesFromSections:(NSArray *)sectionsBefore
-                                 toSections:(NSArray *)sectionsAfter
-{
-    // We use section keys to identify sections, so we can calculate a diff.
-    NSArray *sectionKeysBefore = [sectionsBefore valueForKey:@"key"];
-    NSArray *sectionKeysAfter = [sectionsAfter valueForKey:@"key"];
-    
-    NNArrayDiff *sectionKeysDiff = [[NNArrayDiff alloc] initWithBefore:sectionKeysBefore
-                                                                 after:sectionKeysAfter
-                                                               idBlock:nil updatedBlock:nil];
- 
-    NSMutableIndexSet *deletedSections = [sectionKeysDiff.deleted mutableCopy];
-    NSMutableIndexSet *insertedSections = [sectionKeysDiff.inserted mutableCopy];
-    
-    // For now, let's just treat section moves as insert/delete pairs.
-    for (NNArrayDiffChange *change in sectionKeysDiff.changed) {
-        [deletedSections addIndex:change.before];
-        [insertedSections addIndex:change.after];
-    };
-    
-    _deletedSections = [deletedSections copy];
-    _insertedSections = [insertedSections copy];
 }
 
 - (NSMutableArray *)flattenSections:(NSArray *)sections {
