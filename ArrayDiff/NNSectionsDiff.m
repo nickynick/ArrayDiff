@@ -39,104 +39,8 @@
     idBlock = idBlock ?: [NNArrayDiff defaultIdBlock];
     updatedBlock = updatedBlock ?: [NNArrayDiff defaultUpdatedBlock];
     
-    
-    // TODO: docs!
-    
-    NSMutableIndexSet *deletedSections = [NSMutableIndexSet indexSet];
-    NSMutableIndexSet *insertedSections = [NSMutableIndexSet indexSet];
-    NSMutableArray *deleted = [NSMutableArray array];
-    NSMutableArray *inserted = [NSMutableArray array];
-    NSMutableArray *changed = [NSMutableArray array];
-    
-    
-    NSArray *sectionKeysBefore = [sectionsBefore valueForKey:@"key"];
-    NSArray *sectionKeysAfter = [sectionsAfter valueForKey:@"key"];
-    
-    NNArrayDiff *sectionKeysDiff = [[NNArrayDiff alloc] initWithBefore:sectionKeysBefore
-                                                                 after:sectionKeysAfter
-                                                               idBlock:nil updatedBlock:nil];
-    
-    [deletedSections addIndexes:sectionKeysDiff.deleted];
-    [insertedSections addIndexes:sectionKeysDiff.inserted];
-    
-    for (NNArrayDiffChange *change in sectionKeysDiff.changed) {
-        [deletedSections addIndex:change.before];
-        [insertedSections addIndex:change.after];
-    };
-    
-    
-    NSMutableArray *flatBefore = [self flattenSections:sectionsBefore];
-    NSMutableArray *flatAfter = [self flattenSections:sectionsAfter];
-    NSMutableArray *flatBeforeIndexPaths = [self flatIndexPathsForSections:sectionsBefore];
-    NSMutableArray *flatAfterIndexPaths = [self flatIndexPathsForSections:sectionsAfter];
-    
-    if ([sectionsBefore count] > 1 || [sectionsAfter count] > 1) {
-        NSMutableOrderedSet *flatBeforeIds = [NSMutableOrderedSet orderedSetWithCapacity:[flatBefore count]];
-        for (id object in flatBefore) {
-            [flatBeforeIds addObject:idBlock(object)];
-        }
-        NSMutableOrderedSet *flatAfterIds = [NSMutableOrderedSet orderedSetWithCapacity:[flatAfter count]];
-        for (id object in flatAfter) {
-            [flatAfterIds addObject:idBlock(object)];
-        }
-        
-        NSMutableIndexSet *flatBeforeIndexesToRemove = [NSMutableIndexSet indexSet];
-        NSMutableIndexSet *flatAfterIndexesToRemove = [NSMutableIndexSet indexSet];
-        
-        [flatBeforeIds enumerateObjectsUsingBlock:^(id obj, NSUInteger flatBeforeIndex, BOOL *stop) {
-            NSUInteger flatAfterIndex = [flatAfterIds indexOfObject:obj];
-            if (flatAfterIndex == NSNotFound) return;
-            
-            NSIndexPath *indexPathBefore = flatBeforeIndexPaths[flatBeforeIndex];
-            NSIndexPath *indexPathAfter = flatAfterIndexPaths[flatAfterIndex];
-            
-            id sectionKeyBefore = sectionKeysBefore[[indexPathBefore indexAtPosition:0]];
-            id sectionKeyAfter = sectionKeysAfter[[indexPathAfter indexAtPosition:0]];
-            
-            if (![sectionKeyBefore isEqual:sectionKeyAfter]) {
-                NNDiffChangeType changeType = NNDiffChangeMove;
-                if (updatedBlock(flatBefore[flatBeforeIndex], flatAfter[flatAfterIndex])) {
-                    changeType |= NNDiffChangeUpdate;
-                }
-                
-                [changed addObject:[[NNSectionsDiffChange alloc] initWithBefore:indexPathBefore after:indexPathAfter type:changeType]];
-                
-                [flatBeforeIndexesToRemove addIndex:flatBeforeIndex];
-                [flatAfterIndexesToRemove addIndex:flatAfterIndex];
-            }
-        }];
-        
-        [flatBefore removeObjectsAtIndexes:flatBeforeIndexesToRemove];
-        [flatBeforeIndexPaths removeObjectsAtIndexes:flatBeforeIndexesToRemove];
-        [flatAfter removeObjectsAtIndexes:flatAfterIndexesToRemove];
-        [flatAfterIndexPaths removeObjectsAtIndexes:flatAfterIndexesToRemove];
-    }
-    
-    NNArrayDiff *flatDiff = [[NNArrayDiff alloc] initWithBefore:flatBefore after:flatAfter idBlock:idBlock updatedBlock:updatedBlock];
-    
-    
-    [flatDiff.deleted enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [deleted addObject:flatBeforeIndexPaths[idx]];
-    }];
-    
-    [flatDiff.inserted enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [inserted addObject:flatAfterIndexPaths[idx]];
-    }];
-    
-    for (NNArrayDiffChange *change in flatDiff.changed) {
-        NSIndexPath *before = flatBeforeIndexPaths[change.before];
-        NSIndexPath *after = flatAfterIndexPaths[change.after];
-        [changed addObject:[[NNSectionsDiffChange alloc] initWithBefore:before after:after type:change.type]];
-    };
-    
-
-    _deletedSections = [deletedSections copy];
-    _insertedSections = [insertedSections copy];
-    _deleted = [deleted copy];
-    _inserted = [inserted copy];
-    _changed = [changed copy];
-    
-    [self cleanupForDeletedAndInsertedSections];
+    [self calculateSectionChangesFromSections:sectionsBefore toSections:sectionsAfter];
+    [self calculateChangesFromSections:sectionsBefore toSections:sectionsAfter idBlock:idBlock updatedBlock:updatedBlock];
     
     return self;
 }
@@ -156,7 +60,7 @@
     _inserted = [inserted copy] ?: @[];
     _changed = [changed copy] ?: @[];
     
-    [self cleanupForDeletedAndInsertedSections];
+    [self sanitizeDeletedAndInsertedSections];
     
     return self;
 }
@@ -200,6 +104,115 @@
 
 #pragma mark - Private
 
+- (void)calculateChangesFromSections:(NSArray *)sectionsBefore
+                          toSections:(NSArray *)sectionsAfter
+                             idBlock:(NNDiffObjectIdBlock)idBlock
+                        updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock
+{
+    NSMutableArray *deleted = [NSMutableArray array];
+    NSMutableArray *inserted = [NSMutableArray array];
+    NSMutableArray *changed = [NSMutableArray array];
+    
+    NSMutableArray *flatBefore = [self flattenSections:sectionsBefore];
+    NSMutableArray *flatAfter = [self flattenSections:sectionsAfter];
+    NSMutableArray *flatBeforeIndexPaths = [self flatIndexPathsForSections:sectionsBefore];
+    NSMutableArray *flatAfterIndexPaths = [self flatIndexPathsForSections:sectionsAfter];
+    
+    if ([sectionsBefore count] > 1 || [sectionsAfter count] > 1) {
+        // Here we need find all objects whose section key has changed.
+        // Given this fact for an object, we know for sure that this object has moved.
+        
+        // We have to do this preprocessing because a pure diff between flat arrays may not return such changes as moves.
+        
+        NSMutableOrderedSet *flatBeforeIds = [NSMutableOrderedSet orderedSetWithCapacity:[flatBefore count]];
+        for (id object in flatBefore) {
+            [flatBeforeIds addObject:idBlock(object)];
+        }
+        NSMutableOrderedSet *flatAfterIds = [NSMutableOrderedSet orderedSetWithCapacity:[flatAfter count]];
+        for (id object in flatAfter) {
+            [flatAfterIds addObject:idBlock(object)];
+        }
+        
+        NSMutableIndexSet *flatBeforeIndexesToRemove = [NSMutableIndexSet indexSet];
+        NSMutableIndexSet *flatAfterIndexesToRemove = [NSMutableIndexSet indexSet];
+        
+        [flatBeforeIds enumerateObjectsUsingBlock:^(id obj, NSUInteger flatBeforeIndex, BOOL *stop) {
+            NSUInteger flatAfterIndex = [flatAfterIds indexOfObject:obj];
+            if (flatAfterIndex == NSNotFound) return;
+            
+            NSIndexPath *indexPathBefore = flatBeforeIndexPaths[flatBeforeIndex];
+            NSIndexPath *indexPathAfter = flatAfterIndexPaths[flatAfterIndex];
+            
+            id sectionKeyBefore = ((NNSectionData *)sectionsBefore[[indexPathBefore indexAtPosition:0]]).key;
+            id sectionKeyAfter = ((NNSectionData *)sectionsAfter[[indexPathAfter indexAtPosition:0]]).key;
+            
+            if (![sectionKeyBefore isEqual:sectionKeyAfter]) {
+                NNDiffChangeType changeType = NNDiffChangeMove;
+                if (updatedBlock(flatBefore[flatBeforeIndex], flatAfter[flatAfterIndex])) {
+                    changeType |= NNDiffChangeUpdate;
+                }
+                
+                [changed addObject:[[NNSectionsDiffChange alloc] initWithBefore:indexPathBefore after:indexPathAfter type:changeType]];
+                
+                [flatBeforeIndexesToRemove addIndex:flatBeforeIndex];
+                [flatAfterIndexesToRemove addIndex:flatAfterIndex];
+            }
+        }];
+        
+        [flatBefore removeObjectsAtIndexes:flatBeforeIndexesToRemove];
+        [flatBeforeIndexPaths removeObjectsAtIndexes:flatBeforeIndexesToRemove];
+        [flatAfter removeObjectsAtIndexes:flatAfterIndexesToRemove];
+        [flatAfterIndexPaths removeObjectsAtIndexes:flatAfterIndexesToRemove];
+    }
+    
+    
+    NNArrayDiff *flatDiff = [[NNArrayDiff alloc] initWithBefore:flatBefore after:flatAfter idBlock:idBlock updatedBlock:updatedBlock];
+    
+    [flatDiff.deleted enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [deleted addObject:flatBeforeIndexPaths[idx]];
+    }];
+    
+    [flatDiff.inserted enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [inserted addObject:flatAfterIndexPaths[idx]];
+    }];
+    
+    for (NNArrayDiffChange *change in flatDiff.changed) {
+        NSIndexPath *before = flatBeforeIndexPaths[change.before];
+        NSIndexPath *after = flatAfterIndexPaths[change.after];
+        [changed addObject:[[NNSectionsDiffChange alloc] initWithBefore:before after:after type:change.type]];
+    };
+    
+    _deleted = [deleted copy];
+    _inserted = [inserted copy];
+    _changed = [changed copy];
+    
+    [self sanitizeDeletedAndInsertedSections];
+}
+
+- (void)calculateSectionChangesFromSections:(NSArray *)sectionsBefore
+                                 toSections:(NSArray *)sectionsAfter
+{
+    // We use section keys to identify sections, so we can calculate a diff.
+    NSArray *sectionKeysBefore = [sectionsBefore valueForKey:@"key"];
+    NSArray *sectionKeysAfter = [sectionsAfter valueForKey:@"key"];
+    
+    NNArrayDiff *sectionKeysDiff = [[NNArrayDiff alloc] initWithBefore:sectionKeysBefore
+                                                                 after:sectionKeysAfter
+                                                               idBlock:nil updatedBlock:nil];
+ 
+    NSMutableIndexSet *deletedSections = [sectionKeysDiff.deleted mutableCopy];
+    NSMutableIndexSet *insertedSections = [sectionKeysDiff.inserted mutableCopy];
+    
+    // For now, let's just treat section moves as insert/delete pairs.
+    for (NNArrayDiffChange *change in sectionKeysDiff.changed) {
+        [deletedSections addIndex:change.before];
+        [insertedSections addIndex:change.after];
+    };
+    
+    _deletedSections = [deletedSections copy];
+    _insertedSections = [insertedSections copy];
+}
+
 - (NSMutableArray *)flattenSections:(NSArray *)sections {
     NSMutableArray *objects = [NSMutableArray array];
     for (NNSectionData *section in sections) {
@@ -226,7 +239,10 @@
     return [NSIndexPath indexPathWithIndexes:indexes length:2];
 }
 
-- (void)cleanupForDeletedAndInsertedSections {
+- (void)sanitizeDeletedAndInsertedSections {
+    // If a section has been deleted, it makes no sense to have separate deletions for its rows.
+    // The same thing about inserts.
+    
     _deleted = [_deleted objectsAtIndexes:[_deleted indexesOfObjectsPassingTest:^BOOL(NSIndexPath *obj, NSUInteger idx, BOOL *stop) {
 		return ![_deletedSections containsIndex:[obj indexAtPosition:0]];
 	}]];
