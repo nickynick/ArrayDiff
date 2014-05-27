@@ -7,6 +7,7 @@
 //
 
 #import "NNSectionsDiff.h"
+#import "NNArrayDiff+DefaultBlocks.h"
 
 @implementation NNSectionsDiff
 
@@ -35,13 +36,8 @@
     self = [super init];
     if (!self) return nil;
     
-    // TODO: don't copy defaults from NNArrayDiff, do something smart
-    idBlock = idBlock ?: ^(id object) {
-        return object;
-    };
-    updatedBlock = updatedBlock ?: ^BOOL (id objectBefore, id objectAfter) {
-        return ![objectBefore isEqual:objectAfter];
-    };
+    idBlock = idBlock ?: [NNArrayDiff defaultIdBlock];
+    updatedBlock = updatedBlock ?: [NNArrayDiff defaultUpdatedBlock];
     
     
     // TODO: docs!

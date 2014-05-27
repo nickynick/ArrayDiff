@@ -24,6 +24,7 @@
 		A792C75718F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75118F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m */; };
 		A792C75818F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */; };
 		A792C75918F9EBA90095EA22 /* UITableView+NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75618F9EBA90095EA22 /* UITableView+NNSectionsDiff.m */; };
+		A7ABEDA31935271F00937214 /* NNArrayDiff+DefaultBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = A7ABEDA21935271F00937214 /* NNArrayDiff+DefaultBlocks.m */; };
 		A7C5F5AA1903CC4B0087C063 /* NNTableViewReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5A91903CC4B0087C063 /* NNTableViewReloader.m */; };
 		A7C5F5AD1903CD770087C063 /* NNCollectionViewReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5AC1903CD770087C063 /* NNCollectionViewReloader.m */; };
 		A7C5F5B619042DE10087C063 /* NNArrayDiffSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5B519042DE10087C063 /* NNArrayDiffSpec.m */; };
@@ -86,6 +87,8 @@
 		A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+NNSectionsDiff.m"; sourceTree = "<group>"; };
 		A792C75518F9EBA90095EA22 /* UITableView+NNSectionsDiff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+NNSectionsDiff.h"; sourceTree = "<group>"; };
 		A792C75618F9EBA90095EA22 /* UITableView+NNSectionsDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+NNSectionsDiff.m"; sourceTree = "<group>"; };
+		A7ABEDA11935271F00937214 /* NNArrayDiff+DefaultBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NNArrayDiff+DefaultBlocks.h"; sourceTree = "<group>"; };
+		A7ABEDA21935271F00937214 /* NNArrayDiff+DefaultBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NNArrayDiff+DefaultBlocks.m"; sourceTree = "<group>"; };
 		A7C5F5A21903CAA00087C063 /* NNDiffReloadOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNDiffReloadOptions.h; sourceTree = "<group>"; };
 		A7C5F5A81903CC4B0087C063 /* NNTableViewReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNTableViewReloader.h; sourceTree = "<group>"; };
 		A7C5F5A91903CC4B0087C063 /* NNTableViewReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNTableViewReloader.m; sourceTree = "<group>"; };
@@ -169,6 +172,8 @@
 				A7FFB45218FB184600510BF2 /* ArrayDiff.h */,
 				A792C71518F98A780095EA22 /* NNArrayDiff.h */,
 				A792C71718F98A780095EA22 /* NNArrayDiff.m */,
+				A7ABEDA11935271F00937214 /* NNArrayDiff+DefaultBlocks.h */,
+				A7ABEDA21935271F00937214 /* NNArrayDiff+DefaultBlocks.m */,
 				A718306018FB431F00245806 /* NNArrayDiffChange.h */,
 				A718306118FB431F00245806 /* NNArrayDiffChange.m */,
 				A792C73618F99B420095EA22 /* NNSectionsDiff.h */,
@@ -380,6 +385,7 @@
 			files = (
 				A792C73C18F99B420095EA22 /* NNSectionsDiff.m in Sources */,
 				A792C75918F9EBA90095EA22 /* UITableView+NNSectionsDiff.m in Sources */,
+				A7ABEDA31935271F00937214 /* NNArrayDiff+DefaultBlocks.m in Sources */,
 				A792C75818F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m in Sources */,
 				A718306518FB49FA00245806 /* NNSectionsDiffChange.m in Sources */,
 				A792C71818F98A780095EA22 /* NNArrayDiff.m in Sources */,

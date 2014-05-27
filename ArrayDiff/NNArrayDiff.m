@@ -7,6 +7,7 @@
 //
 
 #import "NNArrayDiff.h"
+#import "NNArrayDiff+DefaultBlocks.h"
 
 @interface NNArrayDiff ()
 
@@ -31,12 +32,8 @@
     
     before = before ?: @[];
     after = after ?: @[];
-    idBlock = idBlock ?: ^(id object) {
-        return object;
-    };
-    updatedBlock = updatedBlock ?: ^BOOL (id objectBefore, id objectAfter) {
-        return ![objectBefore isEqual:objectAfter];
-    };
+    idBlock = idBlock ?: [NNArrayDiff defaultIdBlock];
+    updatedBlock = updatedBlock ?: [NNArrayDiff defaultUpdatedBlock];
     
     [self calculateChangesFromObjects:before toObjects:after idBlock:idBlock updatedBlock:updatedBlock];
     
