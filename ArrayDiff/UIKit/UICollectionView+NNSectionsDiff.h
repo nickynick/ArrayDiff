@@ -16,12 +16,7 @@
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
-                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock;
-
-- (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
-                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                       options:(NNDiffReloadOptions *)options
                     completion:(void (^)())completion;
 
 @end

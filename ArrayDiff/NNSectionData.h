@@ -13,7 +13,7 @@
 @property (nonatomic, strong, readonly) id key;
 @property (nonatomic, copy, readonly) NSArray *objects;
 
-- (id)initWithKey:(id)key objects:(NSArray *)objects;
+- (instancetype)initWithKey:(id)key objects:(NSArray *)objects;
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx;
 

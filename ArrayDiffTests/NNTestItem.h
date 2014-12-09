@@ -8,17 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NNTestItem : NSObject <NSCopying>
+@interface NNTestItem : NSObject
 
 @property (nonatomic, readonly) NSUInteger itemId;
 @property (nonatomic, strong) NSString *name;
 
-- (id)initWithId:(NSUInteger)itemId;
+- (instancetype)initWithId:(NSUInteger)itemId;
 + (instancetype)itemWithId:(NSUInteger)itemId name:(NSString *)name;
-
-- (BOOL)testItemUpdated:(NNTestItem *)other;
-
-+ (NNDiffObjectIdBlock)idBlock;
-+ (NNDiffObjectUpdatedBlock)updatedBlock;
 
 @end

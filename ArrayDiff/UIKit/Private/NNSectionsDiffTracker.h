@@ -13,7 +13,7 @@
 
 @property (nonatomic, readonly) NNSectionsDiff *sectionsDiff;
 
-- (id)initWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;
+- (instancetype)initWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;
 
 - (NSUInteger)oldIndexForSection:(NSUInteger)section;
 

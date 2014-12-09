@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Nick Tymchenko. All rights reserved.
 //
 
-#import "PeopleTableViewController.h"
+#import "ItemsTableViewController.h"
 
-@interface MoveAndInsertSectionCrashViewController : PeopleTableViewController
+@interface MoveAndInsertSectionCrashViewController : ItemsTableViewController
 
 @end

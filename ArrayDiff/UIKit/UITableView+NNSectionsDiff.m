@@ -12,36 +12,33 @@
 @implementation UITableView (NNSectionsDiff)
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff {
-    [self reloadWithSectionsDiff:sectionsDiff
-                         options:0
-                       animation:UITableViewRowAnimationFade
-                  cellSetupBlock:nil];
+    [self reloadWithSectionsDiff:sectionsDiff options:nil animations:nil completion:nil];
 }
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
+                       options:(NNDiffReloadOptions *)options
                      animation:(UITableViewRowAnimation)animation
-                cellSetupBlock:(void (^)(id, NSIndexPath *))cellSetupBlock
-{
-    [self reloadWithSectionsDiff:sectionsDiff
-                         options:options
-                       animation:animation
-                  cellSetupBlock:cellSetupBlock
-                      completion:nil];
-}
-
-- (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
-                     animation:(UITableViewRowAnimation)animation
-                cellSetupBlock:(void (^)(id, NSIndexPath *))cellSetupBlock
                     completion:(void (^)())completion
 {
-    NNTableViewReloader *reloader = [[NNTableViewReloader alloc] initWithTableView:self
-                                                                      rowAnimation:animation];
-    [reloader reloadWithSectionsDiff:sectionsDiff
-                             options:options
-                      cellSetupBlock:cellSetupBlock
-                          completion:completion];
+    NNTableViewDiffReloadAnimations *animations = [NNTableViewDiffReloadAnimations withAnimation:animation];
+    [self reloadWithSectionsDiff:sectionsDiff options:options animations:animations completion:completion];
+}
+
+- (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
+                       options:(NNDiffReloadOptions *)options
+                    animations:(NNTableViewDiffReloadAnimations *)animations
+                    completion:(void (^)())completion
+{
+    if (!options) {
+        options = [[NNDiffReloadOptions alloc] init];
+    }
+    
+    if (!animations) {
+        animations = [[NNTableViewDiffReloadAnimations alloc] init];
+    }
+    
+    NNTableViewReloader *reloader = [[NNTableViewReloader alloc] initWithTableView:self animations:animations];
+    [reloader reloadWithSectionsDiff:sectionsDiff options:options completion:completion];
 }
 
 @end

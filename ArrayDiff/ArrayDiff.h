@@ -7,8 +7,13 @@
 //
 
 #import "NNArrayDiff.h"
+#import "NNArrayDiffChange.h"
 #import "NNSectionsDiff.h"
+#import "NNSectionsDiffChange.h"
 #import "NNSectionData.h"
+
+#import "NNArrayDiffCalculator.h"
+#import "NNSectionsDiffCalculator.h"
 
 #import "NNFetchedResultsControllerDiffAdapter.h"
 

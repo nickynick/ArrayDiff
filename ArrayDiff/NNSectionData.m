@@ -14,11 +14,11 @@
     NSArray *_objects;
 }
 
-- (id)init {
+- (instancetype)init {
     return [self initWithKey:nil objects:nil];
 }
 
-- (id)initWithKey:(id)key objects:(NSArray *)objects {
+- (instancetype)initWithKey:(id)key objects:(NSArray *)objects {
     self = [super init];
     if (!self) return nil;
     
@@ -26,14 +26,6 @@
     _objects = [objects copy] ?: @[];
     
     return self;
-}
-
-- (id)key {
-    return _key;
-}
-
-- (NSArray *)objects {
-    return _objects;
 }
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx {
@@ -81,7 +73,7 @@
 
 @implementation NNMutableSectionData
 
-- (id)initWithKey:(id)key objects:(NSArray *)objects {
+- (instancetype)initWithKey:(id)key objects:(NSArray *)objects {
     self = [super initWithKey:key objects:objects];
     if (!self) return nil;
     

@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNCocoaTouchCollectionReloader.h"
+#import "NNDiffReloader.h"
 
 @import UIKit;
 
-@interface NNCollectionViewReloader : NNCocoaTouchCollectionReloader
+@interface NNCollectionViewReloader : NNDiffReloader
 
-- (id)initWithCollectionView:(UICollectionView *)collectionView;
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView;
 
 @end

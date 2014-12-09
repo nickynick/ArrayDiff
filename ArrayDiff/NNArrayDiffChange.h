@@ -7,12 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef NS_OPTIONS(NSInteger, NNDiffChangeType) {
-    NNDiffChangeUpdate = 1 << 0,
-    NNDiffChangeMove   = 1 << 1
-};
-
+#import "NNDiffChangeType.h"
 
 @interface NNArrayDiffChange : NSObject <NSCopying>
 
@@ -20,6 +15,6 @@ typedef NS_OPTIONS(NSInteger, NNDiffChangeType) {
 @property (nonatomic, readonly) NSUInteger after;
 @property (nonatomic, readonly) NNDiffChangeType type;
 
-- (id)initWithBefore:(NSUInteger)before after:(NSUInteger)after type:(NNDiffChangeType)type;
+- (instancetype)initWithBefore:(NSUInteger)before after:(NSUInteger)after type:(NNDiffChangeType)type;
 
 @end

@@ -21,15 +21,6 @@ static NSString * const kCellReuseIdentifier = @"StringCell";
 
 @implementation StringsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -66,13 +57,14 @@ static NSString * const kCellReuseIdentifier = @"StringCell";
 //    }];
 //    [self.tableView endUpdates];
     
-    NNSectionsDiff *diff = [[NNSectionsDiff alloc] initWithObjectsBefore:strings
-                                                            objectsAfter:self.strings
-                                                                 idBlock:nil updatedBlock:nil];
-    [self.tableView reloadWithSectionsDiff:diff
-                                   options:NNDiffReloadMovedWithMove
-                                 animation:UITableViewRowAnimationFade
-                            cellSetupBlock:^(id cell, NSIndexPath *indexPath) {}];
+    NNSectionsDiffCalculator *diffCalculator = [[NNSectionsDiffCalculator alloc] init];
+
+    NNSectionsDiff *diff = [diffCalculator calculateDiffForSingleSectionObjectsBefore:strings andAfter:self.strings];
+    
+    NNDiffReloadOptions *options = [[NNDiffReloadOptions alloc] init];
+    options.useMoveIfPossible = YES;
+    
+    [self.tableView reloadWithSectionsDiff:diff options:options animation:UITableViewRowAnimationFade completion:nil];
 }
 
 #pragma mark - Table view data source

@@ -12,13 +12,11 @@
 
 #pragma mark - Init
 
-- (id)init {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"-init is not available, use -initWithBefore:after:type: instead."
-                                 userInfo:nil];
+- (instancetype)init {
+    return [self initWithBefore:nil after:nil type:0];
 }
 
-- (id)initWithBefore:(NSIndexPath *)before after:(NSIndexPath *)after type:(NNDiffChangeType)type {
+- (instancetype)initWithBefore:(NSIndexPath *)before after:(NSIndexPath *)after type:(NNDiffChangeType)type {
     NSParameterAssert(before != nil);
     NSParameterAssert(after != nil);
     NSParameterAssert(type != 0);

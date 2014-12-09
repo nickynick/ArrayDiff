@@ -26,14 +26,14 @@
 		A7C5F53E18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F53D18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m */; };
 		A7C5F54118FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F54018FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m */; };
 		A7C5F5B01903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5AF1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m */; };
-		A7FFB43C18FA8BAD00510BF2 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB43B18FA8BAD00510BF2 /* Person.m */; };
-		A7FFB43F18FAA3A500510BF2 /* PeopleCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB43E18FAA3A500510BF2 /* PeopleCollectionViewController.m */; };
-		A7FFB44218FAA9D500510BF2 /* PersonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44118FAA9D500510BF2 /* PersonCollectionViewCell.m */; };
-		A7FFB44518FAAC2F00510BF2 /* PeopleCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44418FAAC2F00510BF2 /* PeopleCollectionViewHeader.m */; };
+		A7FFB43C18FA8BAD00510BF2 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB43B18FA8BAD00510BF2 /* Item.m */; };
+		A7FFB43F18FAA3A500510BF2 /* ItemsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB43E18FAA3A500510BF2 /* ItemsCollectionViewController.m */; };
+		A7FFB44218FAA9D500510BF2 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44118FAA9D500510BF2 /* ItemCollectionViewCell.m */; };
+		A7FFB44518FAAC2F00510BF2 /* ItemCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44418FAAC2F00510BF2 /* ItemCollectionViewHeader.m */; };
 		A7FFB44718FAAEEA00510BF2 /* libArrayDiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7FFB44618FAAEEA00510BF2 /* libArrayDiff.a */; };
-		A7FFB44A18FAB8A500510BF2 /* PeopleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44918FAB8A500510BF2 /* PeopleTableViewController.m */; };
+		A7FFB44A18FAB8A500510BF2 /* ItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44918FAB8A500510BF2 /* ItemsTableViewController.m */; };
 		A7FFB44D18FADC9F00510BF2 /* ExamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44C18FADC9F00510BF2 /* ExamplesViewController.m */; };
-		A7FFB45018FB0D2600510BF2 /* PeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44F18FB0D2600510BF2 /* PeopleViewController.m */; };
+		A7FFB45018FB0D2600510BF2 /* ItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FFB44F18FB0D2600510BF2 /* ItemsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,21 +73,21 @@
 		A7C5F54018FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveAndInsertSectionCrashViewController.m; sourceTree = "<group>"; };
 		A7C5F5AE1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveAndDeleteSectionCrashViewController.h; sourceTree = "<group>"; };
 		A7C5F5AF1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveAndDeleteSectionCrashViewController.m; sourceTree = "<group>"; };
-		A7FFB43A18FA8BAD00510BF2 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		A7FFB43B18FA8BAD00510BF2 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
-		A7FFB43D18FAA3A500510BF2 /* PeopleCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleCollectionViewController.h; sourceTree = "<group>"; };
-		A7FFB43E18FAA3A500510BF2 /* PeopleCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleCollectionViewController.m; sourceTree = "<group>"; };
-		A7FFB44018FAA9D500510BF2 /* PersonCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonCollectionViewCell.h; sourceTree = "<group>"; };
-		A7FFB44118FAA9D500510BF2 /* PersonCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonCollectionViewCell.m; sourceTree = "<group>"; };
-		A7FFB44318FAAC2F00510BF2 /* PeopleCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleCollectionViewHeader.h; sourceTree = "<group>"; };
-		A7FFB44418FAAC2F00510BF2 /* PeopleCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleCollectionViewHeader.m; sourceTree = "<group>"; };
+		A7FFB43A18FA8BAD00510BF2 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		A7FFB43B18FA8BAD00510BF2 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		A7FFB43D18FAA3A500510BF2 /* ItemsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemsCollectionViewController.h; sourceTree = "<group>"; };
+		A7FFB43E18FAA3A500510BF2 /* ItemsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemsCollectionViewController.m; sourceTree = "<group>"; };
+		A7FFB44018FAA9D500510BF2 /* ItemCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCollectionViewCell.h; sourceTree = "<group>"; };
+		A7FFB44118FAA9D500510BF2 /* ItemCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCollectionViewCell.m; sourceTree = "<group>"; };
+		A7FFB44318FAAC2F00510BF2 /* ItemCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCollectionViewHeader.h; sourceTree = "<group>"; };
+		A7FFB44418FAAC2F00510BF2 /* ItemCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCollectionViewHeader.m; sourceTree = "<group>"; };
 		A7FFB44618FAAEEA00510BF2 /* libArrayDiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libArrayDiff.a; path = "../../../../Library/Developer/Xcode/DerivedData/ArrayDiff-gibakdnrkaivsxadcrmflvsgvzlt/Build/Products/Debug-iphoneos/libArrayDiff.a"; sourceTree = "<group>"; };
-		A7FFB44818FAB8A500510BF2 /* PeopleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleTableViewController.h; sourceTree = "<group>"; };
-		A7FFB44918FAB8A500510BF2 /* PeopleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleTableViewController.m; sourceTree = "<group>"; };
+		A7FFB44818FAB8A500510BF2 /* ItemsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemsTableViewController.h; sourceTree = "<group>"; };
+		A7FFB44918FAB8A500510BF2 /* ItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemsTableViewController.m; sourceTree = "<group>"; };
 		A7FFB44B18FADC9F00510BF2 /* ExamplesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExamplesViewController.h; sourceTree = "<group>"; };
 		A7FFB44C18FADC9F00510BF2 /* ExamplesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExamplesViewController.m; sourceTree = "<group>"; };
-		A7FFB44E18FB0D2600510BF2 /* PeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleViewController.h; sourceTree = "<group>"; };
-		A7FFB44F18FB0D2600510BF2 /* PeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleViewController.m; sourceTree = "<group>"; };
+		A7FFB44E18FB0D2600510BF2 /* ItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemsViewController.h; sourceTree = "<group>"; };
+		A7FFB44F18FB0D2600510BF2 /* ItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,22 +154,22 @@
 			children = (
 				A792C77718F9ECD30095EA22 /* AppDelegate.h */,
 				A792C77818F9ECD30095EA22 /* AppDelegate.m */,
-				A7FFB43A18FA8BAD00510BF2 /* Person.h */,
-				A7FFB43B18FA8BAD00510BF2 /* Person.m */,
+				A7FFB43A18FA8BAD00510BF2 /* Item.h */,
+				A7FFB43B18FA8BAD00510BF2 /* Item.m */,
 				A7FFB44B18FADC9F00510BF2 /* ExamplesViewController.h */,
 				A7FFB44C18FADC9F00510BF2 /* ExamplesViewController.m */,
 				A718306618FB5F2300245806 /* StringsViewController.h */,
 				A718306718FB5F2300245806 /* StringsViewController.m */,
-				A7FFB44E18FB0D2600510BF2 /* PeopleViewController.h */,
-				A7FFB44F18FB0D2600510BF2 /* PeopleViewController.m */,
-				A7FFB44818FAB8A500510BF2 /* PeopleTableViewController.h */,
-				A7FFB44918FAB8A500510BF2 /* PeopleTableViewController.m */,
-				A7FFB43D18FAA3A500510BF2 /* PeopleCollectionViewController.h */,
-				A7FFB43E18FAA3A500510BF2 /* PeopleCollectionViewController.m */,
-				A7FFB44018FAA9D500510BF2 /* PersonCollectionViewCell.h */,
-				A7FFB44118FAA9D500510BF2 /* PersonCollectionViewCell.m */,
-				A7FFB44318FAAC2F00510BF2 /* PeopleCollectionViewHeader.h */,
-				A7FFB44418FAAC2F00510BF2 /* PeopleCollectionViewHeader.m */,
+				A7FFB44E18FB0D2600510BF2 /* ItemsViewController.h */,
+				A7FFB44F18FB0D2600510BF2 /* ItemsViewController.m */,
+				A7FFB44818FAB8A500510BF2 /* ItemsTableViewController.h */,
+				A7FFB44918FAB8A500510BF2 /* ItemsTableViewController.m */,
+				A7FFB43D18FAA3A500510BF2 /* ItemsCollectionViewController.h */,
+				A7FFB43E18FAA3A500510BF2 /* ItemsCollectionViewController.m */,
+				A7FFB44018FAA9D500510BF2 /* ItemCollectionViewCell.h */,
+				A7FFB44118FAA9D500510BF2 /* ItemCollectionViewCell.m */,
+				A7FFB44318FAAC2F00510BF2 /* ItemCollectionViewHeader.h */,
+				A7FFB44418FAAC2F00510BF2 /* ItemCollectionViewHeader.m */,
 				A7C5F53C18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.h */,
 				A7C5F53D18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m */,
 				A7C5F53F18FFAC080087C063 /* MoveAndInsertSectionCrashViewController.h */,
@@ -310,17 +310,17 @@
 				A7C5F5B01903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m in Sources */,
 				A792C77918F9ECD30095EA22 /* AppDelegate.m in Sources */,
 				A7C5F53E18FF01D40087C063 /* MoveAndUpdateRowCrashViewController.m in Sources */,
-				A7FFB44218FAA9D500510BF2 /* PersonCollectionViewCell.m in Sources */,
+				A7FFB44218FAA9D500510BF2 /* ItemCollectionViewCell.m in Sources */,
 				A7FFB44D18FADC9F00510BF2 /* ExamplesViewController.m in Sources */,
-				A7FFB45018FB0D2600510BF2 /* PeopleViewController.m in Sources */,
-				A7FFB44A18FAB8A500510BF2 /* PeopleTableViewController.m in Sources */,
+				A7FFB45018FB0D2600510BF2 /* ItemsViewController.m in Sources */,
+				A7FFB44A18FAB8A500510BF2 /* ItemsTableViewController.m in Sources */,
 				A718306818FB5F2300245806 /* StringsViewController.m in Sources */,
 				A792C77C18F9ECD30095EA22 /* ArrayDiffExample.xcdatamodeld in Sources */,
 				A7C5F54118FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m in Sources */,
-				A7FFB43C18FA8BAD00510BF2 /* Person.m in Sources */,
+				A7FFB43C18FA8BAD00510BF2 /* Item.m in Sources */,
 				A792C77518F9ECD30095EA22 /* main.m in Sources */,
-				A7FFB44518FAAC2F00510BF2 /* PeopleCollectionViewHeader.m in Sources */,
-				A7FFB43F18FAA3A500510BF2 /* PeopleCollectionViewController.m in Sources */,
+				A7FFB44518FAAC2F00510BF2 /* ItemCollectionViewHeader.m in Sources */,
+				A7FFB43F18FAA3A500510BF2 /* ItemsCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

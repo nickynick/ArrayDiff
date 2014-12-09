@@ -7,30 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNArrayDiffChange.h"
 
-typedef id (^NNDiffObjectIdBlock)(id object);
-typedef BOOL (^NNDiffObjectUpdatedBlock)(id objectBefore, id objectAfter);
+@interface NNArrayDiff : NSObject <NSCopying, NSMutableCopying>
 
+@property (nonatomic, copy, readonly) NSIndexSet *deleted;
+@property (nonatomic, copy, readonly) NSIndexSet *inserted;
+@property (nonatomic, copy, readonly) NSSet *changed;
 
-@interface NNArrayDiff : NSObject
-
-@property (nonatomic, readonly) NSIndexSet *deleted;
-@property (nonatomic, readonly) NSIndexSet *inserted;
-@property (nonatomic, readonly) NSArray *changed;
-
-- (id)initWithBefore:(NSArray *)before
-               after:(NSArray *)after
-             idBlock:(NNDiffObjectIdBlock)idBlock
-        updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
+- (instancetype)initWithDeleted:(NSIndexSet *)deleted
+                       inserted:(NSIndexSet *)inserted
+                        changed:(NSSet *)changed;
 
 @end
 
 
-@interface NNArrayDiff (Handmade)
+@interface NNMutableArrayDiff : NNArrayDiff
 
-- (id)initWithDeleted:(NSIndexSet *)deleted
-             inserted:(NSIndexSet *)inserted
-              changed:(NSArray *)changed;
+@property (nonatomic, copy, readonly) NSMutableIndexSet *deleted;
+@property (nonatomic, copy, readonly) NSMutableIndexSet *inserted;
+@property (nonatomic, copy, readonly) NSMutableSet *changed;
 
 @end

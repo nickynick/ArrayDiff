@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNArrayDiffChange.h"
+#import "NNDiffChangeType.h"
 
 @interface NNSectionsDiffChange : NSObject <NSCopying>
 
@@ -15,6 +15,6 @@
 @property (nonatomic, readonly) NSIndexPath *after;
 @property (nonatomic, readonly) NNDiffChangeType type;
 
-- (id)initWithBefore:(NSIndexPath *)before after:(NSIndexPath *)after type:(NNDiffChangeType)type;
+- (instancetype)initWithBefore:(NSIndexPath *)before after:(NSIndexPath *)after type:(NNDiffChangeType)type;
 
 @end

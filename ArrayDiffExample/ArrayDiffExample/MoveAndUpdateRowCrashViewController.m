@@ -10,8 +10,8 @@
 
 @implementation MoveAndUpdateRowCrashViewController
 
-- (void)setupPeople {
-    [Person setupPeopleWithNames:@[ @"A1", @"A2", @"A3" ]];
+- (void)setupItems {
+    [Item setupItemsWithNames:@[ @"A1", @"A2", @"A3" ]];
 }
 
 - (NSArray *)barButtonItems {
@@ -19,8 +19,8 @@
 }
 
 - (void)kaboomBarButtonPressed {
-    [Person existingPersonWithName:@"A2"].name = @"A0";
-    [[Person managedObjectContext] save:NULL];
+    [Item existingItemWithName:@"A2"].name = @"A0";
+    [[Item managedObjectContext] save:NULL];
 }
 
 - (void)reloadWithDiff:(NNSectionsDiff *)diff {

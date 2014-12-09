@@ -19,7 +19,7 @@
 
 #pragma mark - Init
 
-- (id)initWithCollectionView:(UICollectionView *)collectionView {
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView {
     self = [super init];
     if (!self) return nil;
     
@@ -28,7 +28,7 @@
     return self;
 }
 
-#pragma mark - NNCocoaTouchCollectionReloader
+#pragma mark - NNDiffReloader
 
 - (void)performUpdates:(void (^)())updates completion:(void (^)())completion {
     [self.collectionView performBatchUpdates:updates completion:^(__unused BOOL finished) {
@@ -50,12 +50,17 @@
     [self.collectionView insertItemsAtIndexPaths:indexPaths];
 }
 
-- (void)deleteItemsAtIndexPaths:(NSArray *)indexPaths; {
+- (void)deleteItemsAtIndexPaths:(NSArray *)indexPaths {
     [self.collectionView deleteItemsAtIndexPaths:indexPaths];
 }
 
-- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths {
-    [self.collectionView reloadItemsAtIndexPaths:indexPaths];
+- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths asDeleteAndInsertAtIndexPaths:(NSArray *)insertIndexPaths {
+    if (insertIndexPaths) {
+        [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+        [self.collectionView insertItemsAtIndexPaths:insertIndexPaths];
+    } else {
+        [self.collectionView reloadItemsAtIndexPaths:indexPaths];
+    }
 }
 
 - (void)moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {

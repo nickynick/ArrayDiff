@@ -10,8 +10,8 @@
 
 @implementation MoveAndInsertSectionCrashViewController
 
-- (void)setupPeople {
-    [Person setupPeopleWithNames:@[ @"B1", @"B2", @"C1", @"C2" ]];
+- (void)setupItems {
+    [Item setupItemsWithNames:@[ @"B1", @"B2", @"C1", @"C2" ]];
 }
 
 - (NSArray *)barButtonItems {
@@ -19,9 +19,9 @@
 }
 
 - (void)kaboomBarButtonPressed {
-    [Person existingPersonWithName:@"B1"].name = @"A1";
-    [Person existingPersonWithName:@"C2"].name = @"B3";
-    [[Person managedObjectContext] save:NULL];
+    [Item existingItemWithName:@"B1"].name = @"A1";
+    [Item existingItemWithName:@"C2"].name = @"B3";
+    [[Item managedObjectContext] save:NULL];
 }
 
 - (void)reloadWithDiff:(NNSectionsDiff *)diff {

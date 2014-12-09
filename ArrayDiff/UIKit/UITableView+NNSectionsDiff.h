@@ -8,6 +8,7 @@
 
 #import "NNSectionsDiff.h"
 #import "NNDiffReloadOptions.h"
+#import "NNTableViewDiffReloadAnimations.h"
 
 @import UIKit;
 
@@ -16,14 +17,13 @@
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff;
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
+                       options:(NNDiffReloadOptions *)options
                      animation:(UITableViewRowAnimation)animation
-                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock;
+                    completion:(void (^)())completion;
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
-                     animation:(UITableViewRowAnimation)animation
-                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                       options:(NNDiffReloadOptions *)options
+                    animations:(NNTableViewDiffReloadAnimations *)animations
                     completion:(void (^)())completion;
 
 @end

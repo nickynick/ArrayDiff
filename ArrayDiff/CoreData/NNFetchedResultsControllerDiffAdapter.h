@@ -17,8 +17,6 @@
 
 @property (nonatomic, weak) id<NNFetchedResultsControllerDiffAdapterDelegate> delegate;
 
-- (id)initWithDelegate:(id<NNFetchedResultsControllerDiffAdapterDelegate>)delegate;
-
 @end
 
 

@@ -11,7 +11,7 @@
 @interface NNTableViewReloader ()
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, assign) UITableViewRowAnimation rowAnimation;
+@property (nonatomic, strong) NNTableViewDiffReloadAnimations *animations;
 
 @end
 
@@ -20,17 +20,19 @@
 
 #pragma mark - Init
 
-- (id)initWithTableView:(UITableView *)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation {
+- (instancetype)initWithTableView:(UITableView *)tableView animations:(NNTableViewDiffReloadAnimations *)animations {
+    NSParameterAssert(animations != nil);
+    
     self = [super init];
     if (!self) return nil;
     
     _tableView = tableView;
-    _rowAnimation = rowAnimation;
+    _animations = animations ?: [[NNTableViewDiffReloadAnimations alloc] init];
     
     return self;
 }
 
-#pragma mark - NNCocoaTouchCollectionReloader
+#pragma mark - NNDiffReloader
 
 - (void)performUpdates:(void (^)())updates completion:(void (^)())completion {
     if (completion) {
@@ -48,23 +50,28 @@
 }
 
 - (void)insertSections:(NSIndexSet *)sections {
-    [self.tableView insertSections:sections withRowAnimation:self.rowAnimation];
+    [self.tableView insertSections:sections withRowAnimation:self.animations.sectionInsertAnimation];
 }
 
 - (void)deleteSections:(NSIndexSet *)sections {
-    [self.tableView deleteSections:sections withRowAnimation:self.rowAnimation];
+    [self.tableView deleteSections:sections withRowAnimation:self.animations.sectionDeleteAnimation];
 }
 
 - (void)insertItemsAtIndexPaths:(NSArray *)indexPaths {
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:self.rowAnimation];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:self.animations.rowInsertAnimation];
 }
 
 - (void)deleteItemsAtIndexPaths:(NSArray *)indexPaths {
-    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:self.rowAnimation];
+    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:self.animations.rowDeleteAnimation];
 }
 
-- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths {
-    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:self.rowAnimation];
+- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths asDeleteAndInsertAtIndexPaths:(NSArray *)insertIndexPaths {
+    if (insertIndexPaths) {
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:self.animations.rowReloadAnimation];
+        [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:self.animations.rowReloadAnimation];
+    } else {
+        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:self.animations.rowReloadAnimation];
+    }    
 }
 
 - (void)moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath {

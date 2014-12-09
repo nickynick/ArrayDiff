@@ -7,39 +7,37 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNArrayDiff.h"
-#import "NNSectionsDiffChange.h"
-#import "NNSectionData.h"
 
-@interface NNSectionsDiff : NSObject
+@interface NNSectionsDiff : NSObject <NSCopying, NSMutableCopying>
 
-@property (nonatomic, readonly) NSIndexSet *deletedSections;
-@property (nonatomic, readonly) NSIndexSet *insertedSections;
-@property (nonatomic, readonly) NSArray *deleted;
-@property (nonatomic, readonly) NSArray *inserted;
-@property (nonatomic, readonly) NSArray *changed;
+@property (nonatomic, copy, readonly) NSIndexSet *deletedSections;
+@property (nonatomic, copy, readonly) NSIndexSet *insertedSections;
+@property (nonatomic, copy, readonly) NSSet *deleted;
+@property (nonatomic, copy, readonly) NSSet *inserted;
+@property (nonatomic, copy, readonly) NSSet *changed;
 
-- (id)initWithSectionsBefore:(NSArray *)sectionsBefore
-               sectionsAfter:(NSArray *)sectionsAfter
-                     idBlock:(NNDiffObjectIdBlock)idBlock
-                updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
-
-- (id)initWithObjectsBefore:(NSArray *)objectsBefore
-               objectsAfter:(NSArray *)objectsAfter
-                    idBlock:(NNDiffObjectIdBlock)idBlock
-               updatedBlock:(NNDiffObjectUpdatedBlock)updatedBlock;
-
-- (instancetype)diffByOffsetting:(NSUInteger)offset;
+- (instancetype)initWithDeletedSections:(NSIndexSet *)deletedSections
+                       insertedSections:(NSIndexSet *)insertedSections
+                                deleted:(NSSet *)deleted
+                               inserted:(NSSet *)inserted
+                                changed:(NSSet *)changed;
 
 @end
 
 
-@interface NNSectionsDiff (Handmade)
+@interface NNMutableSectionsDiff : NNSectionsDiff
 
-- (id)initWithDeletedSections:(NSIndexSet *)deletedSections
-             insertedSections:(NSIndexSet *)insertedSections
-                      deleted:(NSArray *)deleted
-                     inserted:(NSArray *)inserted
-                      changed:(NSArray *)changed;
+@property (nonatomic, copy, readonly) NSMutableIndexSet *deletedSections;
+@property (nonatomic, copy, readonly) NSMutableIndexSet *insertedSections;
+@property (nonatomic, copy, readonly) NSMutableSet *deleted;
+@property (nonatomic, copy, readonly) NSMutableSet *inserted;
+@property (nonatomic, copy, readonly) NSMutableSet *changed;
+
+@end
+
+
+@interface NNMutableSectionsDiff (Manipulation)
+
+- (void)shiftBySectionDelta:(NSInteger)sectionDelta rowDelta:(NSInteger)rowDelta;
 
 @end

@@ -12,32 +12,19 @@
 @implementation UICollectionView (NNSectionsDiff)
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff {
-    [self reloadWithSectionsDiff:sectionsDiff
-                         options:0
-                  cellSetupBlock:nil];
+    [self reloadWithSectionsDiff:sectionsDiff options:nil completion:nil];
 }
 
 - (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
-                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
-{
-    [self reloadWithSectionsDiff:sectionsDiff
-                         options:options
-                  cellSetupBlock:cellSetupBlock
-                      completion:nil];
-}
-
-- (void)reloadWithSectionsDiff:(NNSectionsDiff *)sectionsDiff
-                       options:(NNDiffReloadOptions)options
-                cellSetupBlock:(void (^)(id cell, NSIndexPath *indexPath))cellSetupBlock
+                       options:(NNDiffReloadOptions *)options
                     completion:(void (^)())completion
 {
-    NNCollectionViewReloader *reloader = [[NNCollectionViewReloader alloc] initWithCollectionView:self];
+    if (!options) {
+        options = [[NNDiffReloadOptions alloc] init];
+    }
     
-    [reloader reloadWithSectionsDiff:sectionsDiff
-                             options:options
-                      cellSetupBlock:cellSetupBlock
-                          completion:completion];
+    NNCollectionViewReloader *reloader = [[NNCollectionViewReloader alloc] initWithCollectionView:self];
+    [reloader reloadWithSectionsDiff:sectionsDiff options:options completion:completion];
 }
 
 @end

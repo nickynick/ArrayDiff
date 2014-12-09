@@ -9,8 +9,8 @@
 #import "ExamplesViewController.h"
 
 #import "StringsViewController.h"
-#import "PeopleTableViewController.h"
-#import "PeopleCollectionViewController.h"
+#import "ItemsTableViewController.h"
+#import "ItemsCollectionViewController.h"
 
 #import "MoveAndUpdateRowCrashViewController.h"
 #import "MoveAndInsertSectionCrashViewController.h"
@@ -75,19 +75,19 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
     }]];
     
     [examplesSection.objects addObject:[Example exampleWithTitle:@"UITableView + manual sections" viewControllerBlock:^{
-        return [[PeopleTableViewController alloc] initWithFRC:NO];
+        return [[ItemsTableViewController alloc] initWithFRC:NO];
     }]];
     
     [examplesSection.objects addObject:[Example exampleWithTitle:@"UITableView + FRC" viewControllerBlock:^{
-        return [[PeopleTableViewController alloc] initWithFRC:YES];
+        return [[ItemsTableViewController alloc] initWithFRC:YES];
     }]];
     
     [examplesSection.objects addObject:[Example exampleWithTitle:@"UICollectionView + manual sections" viewControllerBlock:^{
-        return [[PeopleCollectionViewController alloc] initWithFRC:NO];
+        return [[ItemsCollectionViewController alloc] initWithFRC:NO];
     }]];
     
     [examplesSection.objects addObject:[Example exampleWithTitle:@"UICollectionView + FRC" viewControllerBlock:^{
-        return [[PeopleCollectionViewController alloc] initWithFRC:YES];
+        return [[ItemsCollectionViewController alloc] initWithFRC:YES];
     }]];
     
     

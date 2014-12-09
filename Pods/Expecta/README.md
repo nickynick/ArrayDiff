@@ -1,5 +1,10 @@
 #Expecta
 
+[![Build Status](http://img.shields.io/travis/specta/expecta/master.svg?style=flat)](https://travis-ci.org/specta/expecta)
+[![Pod Version](http://img.shields.io/cocoapods/v/Expecta.svg?style=flat)](http://cocoadocs.org/docsets/Expecta/)
+[![Pod Platform](http://img.shields.io/cocoapods/p/Expecta.svg?style=flat)](http://cocoadocs.org/docsets/Expecta/)
+[![Pod License](http://img.shields.io/cocoapods/l/Expecta.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 A Matcher Framework for Objective-C/Cocoa
 
 ## NOTICE
@@ -19,11 +24,12 @@ assertThat(@"foo", is(equalTo(@"foo")));
 assertThatUnsignedInteger(foo, isNot(equalToUnsignedInteger(1)));
 assertThatBool([bar isBar], is(equalToBool(YES)));
 assertThatDouble(baz, is(equalToDouble(3.14159)));
-``` vs. **Expecta **
+```
 
-```objective -
-    c expect(@"foo").to.equal(
-        @"foo"); // `to` is a syntatic sugar and can be safely omitted.
+vs. **Expecta**
+
+```objective-c
+expect(@"foo").to.equal(@"foo"); // `to` is a syntatic sugar and can be safely omitted.
 expect(foo).notTo.equal(1);
 expect([bar isBar]).to.equal(YES);
 expect(baz).to.equal(3.14159);
@@ -62,7 +68,7 @@ or
 
 If `EXP_SHORTHAND` is not defined, expectations must be written with `EXP_expect` instead of `expect`.
 
-Expecta is framework-agnostic. It works well with OCUnit (SenTestingKit) and OCUnit-compatible test frameworks such as [Specta](http://github.com/petejkim/specta/), [GHUnit](http://github.com/gabriel/gh-unit/) and [GTMUnit](http://code.google.com/p/google-toolbox-for-mac/). Expecta also supports [Cedar](http://pivotal.github.com/cedar/).
+Expecta is framework-agnostic. It works well with XCTest, OCUnit (SenTestingKit) and OCUnit-compatible test frameworks such as [Specta](http://github.com/petejkim/specta/), [GHUnit](http://github.com/gabriel/gh-unit/) and [GTMUnit](http://code.google.com/p/google-toolbox-for-mac/). Expecta also supports [Cedar](http://pivotal.github.com/cedar/).
 
 ## BUILT-IN MATCHERS
 
@@ -130,13 +136,37 @@ Every matcher's criteria can be inverted by prepending `.notTo` or `.toNot`:
 
 ## ASYNCHRONOUS TESTING
 
-Every matcher can be made to perform asynchronous testing by prepending `.will` or `.willNot`:
+Every matcher can be made to perform asynchronous testing by prepending `.will`, `.willNot` or `after(...)`:
 
->`expect(x).will.beNil();` passes if x becomes nil before the timeout.
+>`expect(x).will.beNil();` passes if x becomes nil before the default timeout.
 >
->`expect(x).willNot.beNil();` passes if x becomes non-nil before the timeout.
+>`expect(x).willNot.beNil();` passes if x becomes non-nil before the default timeout.
+>
+>`expect(x).after(3).to.beNil();` passes if x becoms nil after 3.0 seconds.
+>
+>`expect(x).after(2.5).notTo.equal(42);` passes if x doesn't equal 42 after 2.5 seconds.
 
-Default timeout is 1.0 second. This setting can be changed by calling `[Expecta setAsynchronousTestTimeout:x]`, where x is the desired timeout.
+Default timeout is 1.0 second and it's used for all matchers if not specified otherwise. This setting can be changed by calling `[Expecta setAsynchronousTestTimeout:x]`, where x is the desired timeout.
+
+```objective-c
+describe(@"Foo", ^{
+  beforeAll(^{
+    // All asynchronous matching using `will` and `willNot`
+    // will have a timeout of 2.0 seconds
+    [Expecta setAsynchronousTestTimeout:2];
+  });
+
+  it(@"will not be nil", ^{
+    // Test case where default timeout is used
+    expect(foo).willNot.beNil();
+  });
+
+  it(@"should equal 42 after 3 seconds", ^{
+    // Signle case where timeout differs from the default
+    expect(foo).after(3).to.equal(42);
+  });
+});
+```
 
 ## WRITING NEW MATCHERS
 

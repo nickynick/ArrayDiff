@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NNCocoaTouchCollectionReloader.h"
+#import "NNDiffReloader.h"
+#import "NNTableViewDiffReloadAnimations.h"
 
 @import UIKit;
 
-@interface NNTableViewReloader : NNCocoaTouchCollectionReloader
+@interface NNTableViewReloader : NNDiffReloader
 
-- (id)initWithTableView:(UITableView *)tableView rowAnimation:(UITableViewRowAnimation)rowAnimation;
+- (instancetype)initWithTableView:(UITableView *)tableView animations:(NNTableViewDiffReloadAnimations *)animations;
 
 @end
