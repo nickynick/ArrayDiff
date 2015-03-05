@@ -32,6 +32,8 @@
 		A7C5F5B619042DE10087C063 /* NNArrayDiffSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5B519042DE10087C063 /* NNArrayDiffSpec.m */; };
 		A7C5F5B919044D570087C063 /* NNTestItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5B819044D570087C063 /* NNTestItem.m */; };
 		A7C5F5C8190476FA0087C063 /* NNSectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5C7190476FA0087C063 /* NNSectionData.m */; };
+		A7C71FC81AA8A788000DB108 /* NNArrayDiffCalculatorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C71FC71AA8A788000DB108 /* NNArrayDiffCalculatorSpec.m */; };
+		A7C71FCA1AA8A830000DB108 /* NNSectionsDiffSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C71FC91AA8A830000DB108 /* NNSectionsDiffSpec.m */; };
 		A7CE14151A35EA3B009608C4 /* NNTableViewDiffReloadAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CE14141A35EA3B009608C4 /* NNTableViewDiffReloadAnimations.m */; };
 		A7CE14181A35EB6C009608C4 /* NNDiffReloadOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CE14171A35EB6C009608C4 /* NNDiffReloadOptions.m */; };
 /* End PBXBuildFile section */
@@ -104,6 +106,8 @@
 		A7C5F5B819044D570087C063 /* NNTestItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNTestItem.m; sourceTree = "<group>"; };
 		A7C5F5C6190476FA0087C063 /* NNSectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSectionData.h; sourceTree = "<group>"; };
 		A7C5F5C7190476FA0087C063 /* NNSectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSectionData.m; sourceTree = "<group>"; };
+		A7C71FC71AA8A788000DB108 /* NNArrayDiffCalculatorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNArrayDiffCalculatorSpec.m; sourceTree = "<group>"; };
+		A7C71FC91AA8A830000DB108 /* NNSectionsDiffSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSectionsDiffSpec.m; sourceTree = "<group>"; };
 		A7CE14131A35EA3B009608C4 /* NNTableViewDiffReloadAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNTableViewDiffReloadAnimations.h; sourceTree = "<group>"; };
 		A7CE14141A35EA3B009608C4 /* NNTableViewDiffReloadAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNTableViewDiffReloadAnimations.m; sourceTree = "<group>"; };
 		A7CE14161A35EB6C009608C4 /* NNDiffReloadOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDiffReloadOptions.h; sourceTree = "<group>"; };
@@ -269,6 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				A7C5F5B519042DE10087C063 /* NNArrayDiffSpec.m */,
+				A7C71FC91AA8A830000DB108 /* NNSectionsDiffSpec.m */,
+				A7C71FC71AA8A788000DB108 /* NNArrayDiffCalculatorSpec.m */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -423,7 +429,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7C5F5B919044D570087C063 /* NNTestItem.m in Sources */,
+				A7C71FC81AA8A788000DB108 /* NNArrayDiffCalculatorSpec.m in Sources */,
 				A7C5F5B619042DE10087C063 /* NNArrayDiffSpec.m in Sources */,
+				A7C71FCA1AA8A830000DB108 /* NNSectionsDiffSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
