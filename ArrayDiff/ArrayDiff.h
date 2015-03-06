@@ -10,7 +10,7 @@
 #import "NNArrayDiffChange.h"
 #import "NNSectionsDiff.h"
 #import "NNSectionsDiffChange.h"
-#import "NNSectionData.h"
+#import "NNSection.h"
 
 #import "NNArrayDiffCalculator.h"
 #import "NNSectionsDiffCalculator.h"

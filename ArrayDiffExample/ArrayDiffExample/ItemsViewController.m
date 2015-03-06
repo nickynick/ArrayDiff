@@ -140,7 +140,7 @@
         id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
         return sectionInfo.numberOfObjects;
     } else {
-        NNSectionData *sectionData = self.items[section];
+        NNSection *sectionData = self.items[section];
         return [sectionData.objects count];
     }
 }
@@ -150,7 +150,7 @@
         id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[section];
         return sectionInfo.name;
     } else {
-        NNSectionData *sectionData = self.items[section];
+        NNSection *sectionData = self.items[section];
         return sectionData.key;
     }
 }
@@ -160,7 +160,7 @@
         id<NSFetchedResultsSectionInfo> sectionInfo = self.frc.sections[indexPath.section];
         return sectionInfo.objects[indexPath.row];
     } else {
-        NNSectionData *sectionData = self.items[indexPath.section];
+        NNSection *sectionData = self.items[indexPath.section];
         return sectionData.objects[indexPath.row];
     }
 }

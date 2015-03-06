@@ -1,5 +1,5 @@
 //
-//  NNSectionData.h
+//  NNSection.h
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 21/04/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NNSectionData : NSObject <NSCopying, NSMutableCopying>
+@interface NNSection : NSObject <NSCopying, NSMutableCopying>
 
 @property (nonatomic, strong, readonly) id key;
 @property (nonatomic, copy, readonly) NSArray *objects;
@@ -20,7 +20,7 @@
 @end
 
 
-@interface NNMutableSectionData : NNSectionData
+@interface NNMutableSection : NNSection
 
 @property (nonatomic, strong) id key;
 @property (nonatomic, copy, readonly) NSMutableArray *objects;

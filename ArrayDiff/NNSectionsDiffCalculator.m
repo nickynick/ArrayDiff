@@ -9,7 +9,7 @@
 #import "NNSectionsDiffCalculator.h"
 #import "NNSectionsDiff.h"
 #import "NNSectionsDiffChange.h"
-#import "NNSectionData.h"
+#import "NNSection.h"
 #import "NNArrayDiff.h"
 #import "NNArrayDiffChange.h"
 #import "NNArrayDiffCalculator.h"
@@ -26,15 +26,15 @@
 }
 
 - (NNSectionsDiff *)calculateDiffForSingleSectionObjectsBefore:(NSArray *)objectsBefore andAfter:(NSArray *)objectsAfter {
-    return [self calculateDiffForSectionsBefore:@[ [[NNSectionData alloc] initWithKey:[NSNull null] objects:objectsBefore] ]
-                                       andAfter:@[ [[NNSectionData alloc] initWithKey:[NSNull null] objects:objectsAfter] ]];
+    return [self calculateDiffForSectionsBefore:@[ [[NNSection alloc] initWithKey:[NSNull null] objects:objectsBefore] ]
+                                       andAfter:@[ [[NNSection alloc] initWithKey:[NSNull null] objects:objectsAfter] ]];
 }
 
 #pragma mark - Private
 
 - (void)calculateSectionChangesForDiff:(NNMutableSectionsDiff *)diff withSectionsBefore:(NSArray *)sectionsBefore andAfter:(NSArray *)sectionsAfter {
     NNArrayDiffCalculator *sectionsDiffCalculator = [[NNArrayDiffCalculator alloc] init];
-    sectionsDiffCalculator.objectIdBlock = ^(NNSectionData *sectionData) {
+    sectionsDiffCalculator.objectIdBlock = ^(NNSection *sectionData) {
         return sectionData.key;
     };
     sectionsDiffCalculator.objectUpdatedBlock = ^(id objectBefore, id objectAfter) {
@@ -85,8 +85,8 @@
             NSIndexPath *indexPathBefore = flatBeforeIndexPaths[flatBeforeIndex];
             NSIndexPath *indexPathAfter = flatAfterIndexPaths[flatAfterIndex];
             
-            id sectionKeyBefore = ((NNSectionData *)sectionsBefore[[indexPathBefore indexAtPosition:0]]).key;
-            id sectionKeyAfter = ((NNSectionData *)sectionsAfter[[indexPathAfter indexAtPosition:0]]).key;
+            id sectionKeyBefore = ((NNSection *)sectionsBefore[[indexPathBefore indexAtPosition:0]]).key;
+            id sectionKeyAfter = ((NNSection *)sectionsAfter[[indexPathAfter indexAtPosition:0]]).key;
             
             if (![sectionKeyBefore isEqual:sectionKeyAfter]) {
                 NNDiffChangeType changeType = NNDiffChangeMove;
@@ -132,7 +132,7 @@
 - (NSMutableArray *)flattenSections:(NSArray *)sections {
     NSMutableArray *objects = [NSMutableArray array];
     
-    for (NNSectionData *section in sections) {
+    for (NNSection *section in sections) {
         [objects addObjectsFromArray:section.objects];
     }
     
@@ -142,7 +142,7 @@
 - (NSMutableArray *)flatIndexPathsForSections:(NSArray *)sections {
     NSMutableArray *indexPaths = [NSMutableArray array];
     
-    [sections enumerateObjectsUsingBlock:^(NNSectionData *section, NSUInteger idx, BOOL *stop) {
+    [sections enumerateObjectsUsingBlock:^(NNSection *section, NSUInteger idx, BOOL *stop) {
         for (NSUInteger row = 0; row < [section.objects count]; ++row) {
             NSUInteger indexes[] = { idx, row };
             [indexPaths addObject:[NSIndexPath indexPathWithIndexes:indexes length:2]];

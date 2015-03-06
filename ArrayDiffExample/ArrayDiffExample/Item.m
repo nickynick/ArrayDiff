@@ -100,9 +100,9 @@
     for (Item *item in sortedItems) {
         [sectionKeys addObject:item.sectionTitle];
         
-        NNMutableSectionData *section = sectionsByKeys[item.sectionTitle];
+        NNMutableSection *section = sectionsByKeys[item.sectionTitle];
         if (!section) {
-            section = [[NNMutableSectionData alloc] initWithKey:item.sectionTitle objects:nil];
+            section = [[NNMutableSection alloc] initWithKey:item.sectionTitle objects:nil];
             sectionsByKeys[item.sectionTitle] = section;
         }
         [section.objects addObject:item];

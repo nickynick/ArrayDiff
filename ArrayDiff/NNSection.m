@@ -1,14 +1,14 @@
 //
-//  NNSectionData.m
+//  NNSection.m
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 21/04/14.
 //  Copyright (c) 2014 Nick Tymchenko. All rights reserved.
 //
 
-#import "NNSectionData.h"
+#import "NNSection.h"
 
-@implementation NNSectionData {
+@implementation NNSection {
     @protected
     id _key;
     NSArray *_objects;
@@ -36,11 +36,11 @@
 
 - (BOOL)isEqual:(id)other {
     if (other == self) return YES;
-    if (!other || ![other isKindOfClass:[NNSectionData class]]) return NO;
+    if (!other || ![other isKindOfClass:[NNSection class]]) return NO;
     return [self isEqualToSectionData:other];
 }
 
-- (BOOL)isEqualToSectionData:(NNSectionData *)other {
+- (BOOL)isEqualToSectionData:(NNSection *)other {
     if (self.key != other.key && ![self.key isEqual:other.key]) return NO;
     if (![self.objects isEqual:other.objects]) return NO;
     return YES;
@@ -59,19 +59,19 @@
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-    return [[NNSectionData allocWithZone:zone] initWithKey:self.key objects:self.objects];
+    return [[NNSection allocWithZone:zone] initWithKey:self.key objects:self.objects];
 }
 
 #pragma mark - NSMutableCopying
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
-    return [[NNMutableSectionData allocWithZone:zone] initWithKey:self.key objects:self.objects];
+    return [[NNMutableSection allocWithZone:zone] initWithKey:self.key objects:self.objects];
 }
 
 @end
 
 
-@implementation NNMutableSectionData
+@implementation NNMutableSection
 
 - (instancetype)initWithKey:(id)key objects:(NSArray *)objects {
     self = [super initWithKey:key objects:objects];

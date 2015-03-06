@@ -68,7 +68,7 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellReuseIdentifier];
     
     
-    NNMutableSectionData *examplesSection = [[NNMutableSectionData alloc] initWithKey:@"Examples" objects:nil];
+    NNMutableSection *examplesSection = [[NNMutableSection alloc] initWithKey:@"Examples" objects:nil];
     
     [examplesSection.objects addObject:[Example exampleWithTitle:@"UITableView + huge array" viewControllerBlock:^{
         return [[StringsViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -91,7 +91,7 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
     }]];
     
     
-    NNMutableSectionData *crashesSection = [[NNMutableSectionData alloc] initWithKey:@"UIKit bugs (carefully fixed)" objects:nil];
+    NNMutableSection *crashesSection = [[NNMutableSection alloc] initWithKey:@"UIKit bugs (carefully fixed)" objects:nil];
     
     [crashesSection.objects addObject:[Example exampleWithTitle:@"Move row + update another row" viewControllerBlock:^{
         return [[MoveAndUpdateRowCrashViewController alloc] initWithFRC:NO];
@@ -116,12 +116,12 @@ static NSString * const kCellReuseIdentifier = @"ExampleCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NNSectionData *data = self.sections[section];
+    NNSection *data = self.sections[section];
     return [data.objects count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NNSectionData *sectionData = self.sections[section];
+    NNSection *sectionData = self.sections[section];
     return sectionData.key;
 }
 
