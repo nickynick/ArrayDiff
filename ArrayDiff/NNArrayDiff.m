@@ -136,4 +136,8 @@
     return self;
 }
 
+@dynamic deleted;
+@dynamic inserted;
+@dynamic changed;
+
 @end

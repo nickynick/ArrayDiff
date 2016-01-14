@@ -18,11 +18,6 @@
 @property (nonatomic, assign) UITableViewRowAnimation sectionInsertAnimation;
 @property (nonatomic, assign) UITableViewRowAnimation sectionDeleteAnimation;
 
-@end
-
-
-@interface NNTableViewDiffReloadAnimations (Convenience)
-
 - (instancetype)initWithAnimation:(UITableViewRowAnimation)animation;
 
 + (instancetype)withAnimation:(UITableViewRowAnimation)animation;

@@ -10,11 +10,6 @@
 
 @implementation NNTableViewDiffReloadAnimations
 
-@end
-
-
-@implementation NNTableViewDiffReloadAnimations (Convenience)
-
 - (instancetype)init {
     return [self initWithAnimation:UITableViewRowAnimationAutomatic];
 }

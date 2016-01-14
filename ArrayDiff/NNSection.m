@@ -86,4 +86,7 @@
     _key = key;
 }
 
+@dynamic key;
+@dynamic objects;
+
 @end

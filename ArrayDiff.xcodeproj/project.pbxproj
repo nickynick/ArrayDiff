@@ -576,11 +576,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EBB6810C58D201553E68FB6D /* Pods-ArrayDiffTests.debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArrayDiffTests/ArrayDiffTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -598,11 +593,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EA5D5D24CCF25FAA13E7E961 /* Pods-ArrayDiffTests.release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArrayDiffTests/ArrayDiffTests-Prefix.pch";
 				INFOPLIST_FILE = "ArrayDiffTests/ArrayDiffTests-Info.plist";

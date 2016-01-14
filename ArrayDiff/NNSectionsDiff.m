@@ -194,6 +194,12 @@
     return self;
 }
 
+@dynamic deletedSections;
+@dynamic insertedSections;
+@dynamic deleted;
+@dynamic inserted;
+@dynamic changed;
+
 @end
 
 
