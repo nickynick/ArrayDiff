@@ -320,6 +320,7 @@
 				A792C71A18F98A780095EA22 /* Frameworks */,
 				A792C71B18F98A780095EA22 /* Resources */,
 				547551E35DAE4AFEB1C482CB /* Copy Pods Resources */,
+				65034FD11718F444FC486B78 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -383,6 +384,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArrayDiffTests/Pods-ArrayDiffTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65034FD11718F444FC486B78 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArrayDiffTests/Pods-ArrayDiffTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8E9C55A56DBE4A57992F8818 /* Check Pods Manifest.lock */ = {
