@@ -7,7 +7,7 @@
 //
 
 #import "UITableView+NNSectionsDiff.h"
-#import "NNTableViewReloader.h"
+#import "NNDiffTableViewReloader.h"
 
 @implementation UITableView (NNSectionsDiff)
 
@@ -37,7 +37,7 @@
         animations = [[NNTableViewDiffReloadAnimations alloc] init];
     }
     
-    NNTableViewReloader *reloader = [[NNTableViewReloader alloc] initWithTableView:self animations:animations];
+    NNDiffTableViewReloader *reloader = [[NNDiffTableViewReloader alloc] initWithTableView:self animations:animations];
     [reloader reloadWithSectionsDiff:sectionsDiff options:options completion:completion];
 }
 

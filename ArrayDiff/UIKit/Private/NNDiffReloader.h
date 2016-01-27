@@ -21,16 +21,15 @@
 
 @interface NNDiffReloader (Abstract)
 
-- (void)performUpdates:(void (^)())updates completion:(void (^)())completion;
+- (void)performUpdates:(void (^)())updates withOptions:(NNDiffReloadOptions *)options completion:(void (^)())completion;
 
 - (void)insertSections:(NSIndexSet *)sections;
 - (void)deleteSections:(NSIndexSet *)sections;
 
 - (void)insertItemsAtIndexPaths:(NSArray *)indexPaths;
 - (void)deleteItemsAtIndexPaths:(NSArray *)indexPaths;
-- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths asDeleteAndInsertAtIndexPaths:(NSArray *)insertIndexPaths;
+- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths;
+- (void)updateItemsAtIndexPaths:(NSArray *)indexPaths;
 - (void)moveItemAtIndexPath:(NSIndexPath *)indexPath toIndexPath:(NSIndexPath *)newIndexPath;
-
-- (id)cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

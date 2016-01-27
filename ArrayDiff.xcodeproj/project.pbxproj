@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BDF15A313D9DD61773F46E6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D888ACF50FE3358F532AE2E /* libPods.a */; };
 		57FD1278D3C549E598593857 /* libPods-ArrayDiffTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1E69DA8B464A3F8AC22FCF /* libPods-ArrayDiffTests.a */; };
 		A718306218FB431F00245806 /* NNArrayDiffChange.m in Sources */ = {isa = PBXBuildFile; fileRef = A718306118FB431F00245806 /* NNArrayDiffChange.m */; };
 		A718306518FB49FA00245806 /* NNSectionsDiffChange.m in Sources */ = {isa = PBXBuildFile; fileRef = A718306418FB49FA00245806 /* NNSectionsDiffChange.m */; };
@@ -14,7 +15,6 @@
 		A71BC2701A33DB28001DADB7 /* NNArrayDiffCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = A71BC26F1A33DB28001DADB7 /* NNArrayDiffCalculator.m */; };
 		A71BC2731A33EA92001DADB7 /* NNSectionsDiffCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = A71BC2721A33EA92001DADB7 /* NNSectionsDiffCalculator.m */; };
 		A741ECC2190C814000197F44 /* NNDiffReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A741ECC1190C814000197F44 /* NNDiffReloader.m */; };
-		A741ECC5190C862E00197F44 /* NNSectionsDiffTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = A741ECC4190C862E00197F44 /* NNSectionsDiffTracker.m */; };
 		A792C71118F98A780095EA22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C71018F98A780095EA22 /* Foundation.framework */; };
 		A792C71618F98A780095EA22 /* NNArrayDiff.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = A792C71518F98A780095EA22 /* NNArrayDiff.h */; };
 		A792C71818F98A780095EA22 /* NNArrayDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C71718F98A780095EA22 /* NNArrayDiff.m */; };
@@ -27,8 +27,8 @@
 		A792C75718F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75118F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m */; };
 		A792C75818F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */; };
 		A792C75918F9EBA90095EA22 /* UITableView+NNSectionsDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = A792C75618F9EBA90095EA22 /* UITableView+NNSectionsDiff.m */; };
-		A7C5F5AA1903CC4B0087C063 /* NNTableViewReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5A91903CC4B0087C063 /* NNTableViewReloader.m */; };
-		A7C5F5AD1903CD770087C063 /* NNCollectionViewReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5AC1903CD770087C063 /* NNCollectionViewReloader.m */; };
+		A7C5F5AA1903CC4B0087C063 /* NNDiffTableViewReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5A91903CC4B0087C063 /* NNDiffTableViewReloader.m */; };
+		A7C5F5AD1903CD770087C063 /* NNDiffCollectionViewReloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5AC1903CD770087C063 /* NNDiffCollectionViewReloader.m */; };
 		A7C5F5B619042DE10087C063 /* NNArrayDiffSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5B519042DE10087C063 /* NNArrayDiffSpec.m */; };
 		A7C5F5B919044D570087C063 /* NNTestItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5B819044D570087C063 /* NNTestItem.m */; };
 		A7C5F5C8190476FA0087C063 /* NNSection.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C5F5C7190476FA0087C063 /* NNSection.m */; };
@@ -63,7 +63,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2F44AD71A1DE55DB2928F27A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4C1E69DA8B464A3F8AC22FCF /* libPods-ArrayDiffTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ArrayDiffTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D888ACF50FE3358F532AE2E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		790F96FEDE667E76C364A3D8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A718306018FB431F00245806 /* NNArrayDiffChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNArrayDiffChange.h; sourceTree = "<group>"; };
 		A718306118FB431F00245806 /* NNArrayDiffChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNArrayDiffChange.m; sourceTree = "<group>"; };
 		A718306318FB49FA00245806 /* NNSectionsDiffChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSectionsDiffChange.h; sourceTree = "<group>"; };
@@ -77,8 +80,6 @@
 		A71BC2771A340676001DADB7 /* NNDiffChangeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NNDiffChangeType.h; sourceTree = "<group>"; };
 		A741ECC0190C814000197F44 /* NNDiffReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDiffReloader.h; sourceTree = "<group>"; };
 		A741ECC1190C814000197F44 /* NNDiffReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDiffReloader.m; sourceTree = "<group>"; };
-		A741ECC3190C862E00197F44 /* NNSectionsDiffTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSectionsDiffTracker.h; sourceTree = "<group>"; };
-		A741ECC4190C862E00197F44 /* NNSectionsDiffTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSectionsDiffTracker.m; sourceTree = "<group>"; };
 		A792C70D18F98A780095EA22 /* libArrayDiff.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libArrayDiff.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A792C71018F98A780095EA22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A792C71418F98A780095EA22 /* ArrayDiff-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArrayDiff-Prefix.pch"; sourceTree = "<group>"; };
@@ -97,10 +98,10 @@
 		A792C75418F9EBA90095EA22 /* UICollectionView+NNSectionsDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+NNSectionsDiff.m"; sourceTree = "<group>"; };
 		A792C75518F9EBA90095EA22 /* UITableView+NNSectionsDiff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+NNSectionsDiff.h"; sourceTree = "<group>"; };
 		A792C75618F9EBA90095EA22 /* UITableView+NNSectionsDiff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+NNSectionsDiff.m"; sourceTree = "<group>"; };
-		A7C5F5A81903CC4B0087C063 /* NNTableViewReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNTableViewReloader.h; sourceTree = "<group>"; };
-		A7C5F5A91903CC4B0087C063 /* NNTableViewReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNTableViewReloader.m; sourceTree = "<group>"; };
-		A7C5F5AB1903CD770087C063 /* NNCollectionViewReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCollectionViewReloader.h; sourceTree = "<group>"; };
-		A7C5F5AC1903CD770087C063 /* NNCollectionViewReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCollectionViewReloader.m; sourceTree = "<group>"; };
+		A7C5F5A81903CC4B0087C063 /* NNDiffTableViewReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDiffTableViewReloader.h; sourceTree = "<group>"; };
+		A7C5F5A91903CC4B0087C063 /* NNDiffTableViewReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDiffTableViewReloader.m; sourceTree = "<group>"; };
+		A7C5F5AB1903CD770087C063 /* NNDiffCollectionViewReloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDiffCollectionViewReloader.h; sourceTree = "<group>"; };
+		A7C5F5AC1903CD770087C063 /* NNDiffCollectionViewReloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDiffCollectionViewReloader.m; sourceTree = "<group>"; };
 		A7C5F5B419042CAE0087C063 /* ArrayDiffTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArrayDiffTests-Prefix.pch"; sourceTree = "<group>"; };
 		A7C5F5B519042DE10087C063 /* NNArrayDiffSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNArrayDiffSpec.m; sourceTree = "<group>"; };
 		A7C5F5B719044D570087C063 /* NNTestItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNTestItem.h; sourceTree = "<group>"; };
@@ -125,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A792C71118F98A780095EA22 /* Foundation.framework in Frameworks */,
+				3BDF15A313D9DD61773F46E6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,6 +172,7 @@
 				A792C71E18F98A780095EA22 /* XCTest.framework */,
 				A792C72118F98A780095EA22 /* UIKit.framework */,
 				4C1E69DA8B464A3F8AC22FCF /* libPods-ArrayDiffTests.a */,
+				5D888ACF50FE3358F532AE2E /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -261,12 +264,10 @@
 			children = (
 				A741ECC0190C814000197F44 /* NNDiffReloader.h */,
 				A741ECC1190C814000197F44 /* NNDiffReloader.m */,
-				A7C5F5A81903CC4B0087C063 /* NNTableViewReloader.h */,
-				A7C5F5A91903CC4B0087C063 /* NNTableViewReloader.m */,
-				A7C5F5AB1903CD770087C063 /* NNCollectionViewReloader.h */,
-				A7C5F5AC1903CD770087C063 /* NNCollectionViewReloader.m */,
-				A741ECC3190C862E00197F44 /* NNSectionsDiffTracker.h */,
-				A741ECC4190C862E00197F44 /* NNSectionsDiffTracker.m */,
+				A7C5F5A81903CC4B0087C063 /* NNDiffTableViewReloader.h */,
+				A7C5F5A91903CC4B0087C063 /* NNDiffTableViewReloader.m */,
+				A7C5F5AB1903CD770087C063 /* NNDiffCollectionViewReloader.h */,
+				A7C5F5AC1903CD770087C063 /* NNDiffCollectionViewReloader.m */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -287,6 +288,8 @@
 			children = (
 				EBB6810C58D201553E68FB6D /* Pods-ArrayDiffTests.debug.xcconfig */,
 				EA5D5D24CCF25FAA13E7E961 /* Pods-ArrayDiffTests.release.xcconfig */,
+				2F44AD71A1DE55DB2928F27A /* Pods.debug.xcconfig */,
+				790F96FEDE667E76C364A3D8 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -298,9 +301,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A792C73018F98A780095EA22 /* Build configuration list for PBXNativeTarget "ArrayDiff" */;
 			buildPhases = (
+				830A554E48F4EFE06B5435D3 /* Check Pods Manifest.lock */,
 				A792C70918F98A780095EA22 /* Sources */,
 				A792C70A18F98A780095EA22 /* Frameworks */,
 				A792C70B18F98A780095EA22 /* CopyFiles */,
+				7A5F42D92C885788619BC218 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -401,6 +406,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ArrayDiffTests/Pods-ArrayDiffTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7A5F42D92C885788619BC218 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		830A554E48F4EFE06B5435D3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		8E9C55A56DBE4A57992F8818 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -431,11 +466,10 @@
 				A71BC26D1A33D9F9001DADB7 /* NNDiffCalculator.m in Sources */,
 				A718306518FB49FA00245806 /* NNSectionsDiffChange.m in Sources */,
 				A792C71818F98A780095EA22 /* NNArrayDiff.m in Sources */,
-				A7C5F5AA1903CC4B0087C063 /* NNTableViewReloader.m in Sources */,
+				A7C5F5AA1903CC4B0087C063 /* NNDiffTableViewReloader.m in Sources */,
 				A71BC2701A33DB28001DADB7 /* NNArrayDiffCalculator.m in Sources */,
 				A741ECC2190C814000197F44 /* NNDiffReloader.m in Sources */,
-				A741ECC5190C862E00197F44 /* NNSectionsDiffTracker.m in Sources */,
-				A7C5F5AD1903CD770087C063 /* NNCollectionViewReloader.m in Sources */,
+				A7C5F5AD1903CD770087C063 /* NNDiffCollectionViewReloader.m in Sources */,
 				A718306218FB431F00245806 /* NNArrayDiffChange.m in Sources */,
 				A7C5F5C8190476FA0087C063 /* NNSection.m in Sources */,
 				A792C75718F9EBA90095EA22 /* NNFetchedResultsControllerDiffAdapter.m in Sources */,
@@ -548,6 +582,7 @@
 		};
 		A792C73118F98A780095EA22 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F44AD71A1DE55DB2928F27A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/ArrayDiff.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -561,6 +596,7 @@
 		};
 		A792C73218F98A780095EA22 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 790F96FEDE667E76C364A3D8 /* Pods.release.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/ArrayDiff.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

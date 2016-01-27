@@ -1,5 +1,5 @@
 //
-//  NNTableViewReloader.h
+//  NNDiffTableViewReloader.h
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 20/04/14.
@@ -12,7 +12,7 @@
 
 @import UIKit;
 
-@interface NNTableViewReloader : NNDiffReloader
+@interface NNDiffTableViewReloader : NNDiffReloader
 
 - (instancetype)initWithTableView:(UITableView *)tableView animations:(NNTableViewDiffReloadAnimations *)animations;
 

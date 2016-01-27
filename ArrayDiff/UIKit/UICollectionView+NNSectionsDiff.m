@@ -7,7 +7,7 @@
 //
 
 #import "UICollectionView+NNSectionsDiff.h"
-#import "NNCollectionViewReloader.h"
+#import "NNDiffCollectionViewReloader.h"
 
 @implementation UICollectionView (NNSectionsDiff)
 
@@ -23,7 +23,7 @@
         options = [[NNDiffReloadOptions alloc] init];
     }
     
-    NNCollectionViewReloader *reloader = [[NNCollectionViewReloader alloc] initWithCollectionView:self];
+    NNDiffCollectionViewReloader *reloader = [[NNDiffCollectionViewReloader alloc] initWithCollectionView:self];
     [reloader reloadWithSectionsDiff:sectionsDiff options:options completion:completion];
 }
 

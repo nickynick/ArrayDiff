@@ -1,5 +1,5 @@
 //
-//  NNCollectionViewReloader.h 
+//  NNDiffCollectionViewReloader.h
 //  ArrayDiff
 //
 //  Created by Nick Tymchenko on 20/04/14.
@@ -11,7 +11,7 @@
 
 @import UIKit;
 
-@interface NNCollectionViewReloader : NNDiffReloader
+@interface NNDiffCollectionViewReloader : NNDiffReloader
 
 - (instancetype)initWithCollectionView:(UICollectionView *)collectionView;
 

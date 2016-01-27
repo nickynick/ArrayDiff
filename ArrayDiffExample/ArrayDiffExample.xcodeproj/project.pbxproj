@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01A356DD1C49225F009969A3 /* libUIKitWorkarounds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A356DC1C49225F009969A3 /* libUIKitWorkarounds.a */; };
 		A718306818FB5F2300245806 /* StringsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A718306718FB5F2300245806 /* StringsViewController.m */; };
 		A792C76718F9ECD20095EA22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C76618F9ECD20095EA22 /* Foundation.framework */; };
 		A792C76918F9ECD20095EA22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C76818F9ECD20095EA22 /* CoreGraphics.framework */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01A356DA1C492256009969A3 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/nick/Development/Gold/ArrayDiff/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
+		01A356DC1C49225F009969A3 /* libUIKitWorkarounds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libUIKitWorkarounds.a; path = "/Users/nick/Development/Gold/ArrayDiff/Pods/../build/Debug-iphoneos/libUIKitWorkarounds.a"; sourceTree = "<absolute>"; };
 		A718306618FB5F2300245806 /* StringsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringsViewController.h; sourceTree = "<group>"; };
 		A718306718FB5F2300245806 /* StringsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringsViewController.m; sourceTree = "<group>"; };
 		A792C76318F9ECD20095EA22 /* ArrayDiffExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArrayDiffExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01A356DD1C49225F009969A3 /* libUIKitWorkarounds.a in Frameworks */,
 				A7FFB44718FAAEEA00510BF2 /* libArrayDiff.a in Frameworks */,
 				A792C76918F9ECD20095EA22 /* CoreGraphics.framework in Frameworks */,
 				A792C76D18F9ECD20095EA22 /* CoreData.framework in Frameworks */,
@@ -139,6 +143,8 @@
 		A792C76518F9ECD20095EA22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01A356DC1C49225F009969A3 /* libUIKitWorkarounds.a */,
+				01A356DA1C492256009969A3 /* libPods.a */,
 				A7FFB44618FAAEEA00510BF2 /* libArrayDiff.a */,
 				A792C76618F9ECD20095EA22 /* Foundation.framework */,
 				A792C76818F9ECD20095EA22 /* CoreGraphics.framework */,
@@ -441,7 +447,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArrayDiffExample/ArrayDiffExample-Prefix.pch";
 				INFOPLIST_FILE = "ArrayDiffExample/ArrayDiffExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "Nick-Tymchenko.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -458,7 +464,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArrayDiffExample/ArrayDiffExample-Prefix.pch";
 				INFOPLIST_FILE = "ArrayDiffExample/ArrayDiffExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "Nick-Tymchenko.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
