@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01A28D861C598A14006F0A95 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A28D851C598A14006F0A95 /* Launch Screen.storyboard */; };
 		01A356DD1C49225F009969A3 /* libUIKitWorkarounds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A356DC1C49225F009969A3 /* libUIKitWorkarounds.a */; };
 		A718306818FB5F2300245806 /* StringsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A718306718FB5F2300245806 /* StringsViewController.m */; };
 		A792C76718F9ECD20095EA22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A792C76618F9ECD20095EA22 /* Foundation.framework */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01A28D851C598A14006F0A95 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		01A356DA1C492256009969A3 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/nick/Development/Gold/ArrayDiff/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
 		01A356DC1C49225F009969A3 /* libUIKitWorkarounds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libUIKitWorkarounds.a; path = "/Users/nick/Development/Gold/ArrayDiff/Pods/../build/Debug-iphoneos/libUIKitWorkarounds.a"; sourceTree = "<absolute>"; };
 		A718306618FB5F2300245806 /* StringsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringsViewController.h; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				A7C5F54018FFAC080087C063 /* MoveAndInsertSectionCrashViewController.m */,
 				A7C5F5AE1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.h */,
 				A7C5F5AF1903DC540087C063 /* MoveAndDeleteSectionCrashViewController.m */,
+				01A28D851C598A14006F0A95 /* Launch Screen.storyboard */,
 				A792C77D18F9ECD30095EA22 /* Images.xcassets */,
 				A792C77A18F9ECD30095EA22 /* ArrayDiffExample.xcdatamodeld */,
 				A792C76F18F9ECD30095EA22 /* Supporting Files */,
@@ -293,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01A28D861C598A14006F0A95 /* Launch Screen.storyboard in Resources */,
 				A792C77318F9ECD30095EA22 /* InfoPlist.strings in Resources */,
 				A792C77E18F9ECD30095EA22 /* Images.xcassets in Resources */,
 			);
