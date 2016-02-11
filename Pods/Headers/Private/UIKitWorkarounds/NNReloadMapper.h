@@ -1,1 +1,1 @@
-../../../UIKitWorkarounds/UIKitWorkarounds/UITableView + UICollectionView/Internal/NNReloadMapper.h
+../../../UIKitWorkarounds/UIKitWorkarounds/Reloaders/Internal/NNReloadMapper.h

@@ -86,12 +86,25 @@
 - (void)calculateIndexMappings {
     _indexMappingsPerSectionBefore = [NSMutableDictionary dictionary];
     
+    NSMutableIndexSet *deletedSections = [NSMutableIndexSet indexSet];
+    NSMutableIndexSet *insertedSections = [NSMutableIndexSet indexSet];
+    
+    for (NNSectionReloadOperation *operation in self.operations.sectionOperations) {
+        if (operation.type == NNReloadOperationTypeDelete) {
+            [deletedSections addIndex:operation.before];
+        } else if (operation.type == NNReloadOperationTypeInsert) {
+            [insertedSections addIndex:operation.after];
+        }
+    }
+    
     NSMutableDictionary<NSNumber *, NSMutableIndexSet *> *deletedIndexesPerSectionBefore = [NSMutableDictionary dictionary];
     NSMutableDictionary<NSNumber *, NSMutableIndexSet *> *insertedIndexesPerSectionBefore = [NSMutableDictionary dictionary];
     NSMutableIndexSet *affectedSectionsBefore = [NSMutableIndexSet indexSet];
     
     for (NNIndexPathReloadOperation *operation in self.operations.indexPathOperations) {
-        if (operation.type == NNReloadOperationTypeDelete || operation.type == NNReloadOperationTypeMove) {
+        if ((operation.type == NNReloadOperationTypeDelete || operation.type == NNReloadOperationTypeMove) &&
+            ![deletedSections containsIndex:operation.before.section])
+        {
             NSInteger sectionBefore = operation.before.section;
             
             NSMutableIndexSet *deletedIndexes = deletedIndexesPerSectionBefore[@(sectionBefore)];
@@ -105,7 +118,9 @@
             [deletedIndexes addIndex:operation.before.row];
         }
         
-        if (operation.type == NNReloadOperationTypeInsert || operation.type == NNReloadOperationTypeMove) {
+        if ((operation.type == NNReloadOperationTypeInsert || operation.type == NNReloadOperationTypeMove) &&
+            ![insertedSections containsIndex:operation.after.section])
+        {
             NSInteger sectionBefore = [_sectionMapping indexAfterToIndexBefore:operation.after.section];
             
             NSMutableIndexSet *insertedIndexes = insertedIndexesPerSectionBefore[@(sectionBefore)];

@@ -1,1 +1,1 @@
-../../../UIKitWorkarounds/UIKitWorkarounds/UITableView + UICollectionView/Internal/NNReloadOperationSanitizer.h
+../../../UIKitWorkarounds/UIKitWorkarounds/Reloaders/Internal/NNReloadOperationSanitizer.h

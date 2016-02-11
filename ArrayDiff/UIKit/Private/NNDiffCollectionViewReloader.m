@@ -7,7 +7,7 @@
 //
 
 #import "NNDiffCollectionViewReloader.h"
-#import <UIKitWorkarounds/NNCollectionViewReloader.h>
+#import <UIKitWorkarounds/UIKitWorkarounds.h>
 
 @interface NNDiffCollectionViewReloader ()
 

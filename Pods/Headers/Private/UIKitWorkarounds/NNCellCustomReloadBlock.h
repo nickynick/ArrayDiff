@@ -1,1 +1,1 @@
-../../../UIKitWorkarounds/UIKitWorkarounds/UITableView + UICollectionView/NNCellCustomReloadBlock.h
+../../../UIKitWorkarounds/UIKitWorkarounds/Reloaders/NNCellCustomReloadBlock.h

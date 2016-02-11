@@ -1,7 +1,7 @@
 platform :ios, '7.0'
 xcodeproj 'ArrayDiff'
 
-pod 'UIKitWorkarounds', :git => 'https://github.com/nickynick/UIKitWorkarounds.git', :branch => 'master'
+pod 'UIKitWorkarounds', '>= 0.2.1'
 
 target :ArrayDiffTests, :exclusive => true do
   pod 'Specta', '~> 1.0.5'

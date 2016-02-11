@@ -1,1 +1,1 @@
-../../../UIKitWorkarounds/UIKitWorkarounds/UITableView + UICollectionView/Internal/NNIndexMapping.h
+../../../UIKitWorkarounds/UIKitWorkarounds/Reloaders/Internal/NNIndexMapping.h

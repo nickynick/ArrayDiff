@@ -1,1 +1,1 @@
-../../../UIKitWorkarounds/UIKitWorkarounds/UITableView + UICollectionView/NNTableViewReloader.h
+../../../UIKitWorkarounds/UIKitWorkarounds/Reloaders/NNTableViewReloader.h

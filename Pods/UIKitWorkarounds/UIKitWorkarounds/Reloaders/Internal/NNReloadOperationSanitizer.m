@@ -144,10 +144,10 @@
 }
 
 - (void)sanitizeReloadedAndMovedIndexPaths {
-    // We can't move and reload the same cell at once. There are two options:
+    // We can't move and reload cells at once. There are two options:
     //
     // 1) Use custom reload to achieve reloading
-    // 2) Replace move + reload with delete + insert
+    // 2) Replace reload with delete + insert
     
     NSSet<NSIndexPath *> *movedFromIndexPaths = [self movedFromIndexPaths];
 

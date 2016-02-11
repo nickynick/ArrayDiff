@@ -1,16 +1,18 @@
 {
   "name": "UIKitWorkarounds",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "summary": "A modular collection of workarounds and fixes for our favorite iOS framework.",
-  "description": "A detailed description will be here soon. Someday.",
   "homepage": "https://github.com/nickynick/UIKitWorkarounds",
-  "license": "MIT",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
   "authors": {
     "Nick Tymchenko": "t.nick.a@gmail.com"
   },
   "source": {
     "git": "https://github.com/nickynick/UIKitWorkarounds.git",
-    "tag": "0.1.0"
+    "tag": "0.2.0"
   },
   "social_media_url": "https://twitter.com/nickynick42",
   "platforms": {
